@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,9 +13,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import at.fh.swenga.dao.PersonDao;
-import at.fh.swenga.model.PersonModel;
+import at.fh.swenga.model.Person;
 
 @Controller
 public class PersonController {
@@ -23,24 +25,30 @@ public class PersonController {
 
 	@RequestMapping(value = { "/", "list" })
 	public String index(Model model) {
-		List<PersonModel> persons = personDao.getPersons();
+		List<Person> persons = personDao.getPersons();
 
 		model.addAttribute("persons", persons);
 		return "index";
 	}
 
+	/**
+	 * generates test data
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/fillData")
 	@Transactional
 	public String fillData(Model model) {
 		Date now = new Date();
 
-		PersonModel p1 = new PersonModel("Johann", "Blauensteiner", now);
+		Person p1 = new Person("Johann", "Blauensteiner", now);
 		personDao.persist(p1);
 
-		PersonModel p2 = new PersonModel("Max", "Mustermann", now);
+		Person p2 = new Person("Max", "Mustermann", now);
 		personDao.persist(p2);
 
-		PersonModel p3 = new PersonModel("Jane", "Doe", now);
+		Person p3 = new Person("Jane", "Doe", now);
 		personDao.persist(p3);
 
 		return "forward:list";
@@ -56,7 +64,6 @@ public class PersonController {
 	@RequestMapping("/delete")
 	public String deleteData(Model model, @RequestParam int id) {
 		personDao.delete(id);
-
 		return "forward:list";
 	}
 
@@ -69,14 +76,10 @@ public class PersonController {
 	public String handleAllException(Exception ex) {
 		return "error";
 	}
-	/*
-	 * @ExceptionHandler()
-	 * 
-	 * @ResponseStatus(code=HttpStatus.FORBIDDEN) public String handle403(Exception
-	 * ex) {
-	 * 
-	 * return "login";
-	 * 
-	 * }
-	 */
+
+	@ExceptionHandler()
+	@ResponseStatus(code = HttpStatus.FORBIDDEN)
+	public String handle403(Exception ex) {
+		return "login";
+	}
 }

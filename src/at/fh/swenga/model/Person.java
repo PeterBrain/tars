@@ -11,31 +11,43 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "person")
-public class PersonModel implements java.io.Serializable {
+public class Person implements java.io.Serializable {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int personId;
 
-	@Column(nullable = false, length = 30)
+	@Column(name = "firstname", nullable = false, length = 30)
 	private String firstName;
 
-	@Column(nullable = false, length = 30)
+	@Column(name = "lastname", nullable = false, length = 30)
 	private String lastName;
 
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd.MM.yyyy")
+	@NotNull(message = "Date of birth cannot be null")
+	@Column(name = "dob", nullable = false)
 	private Date dayOfBirth;
+	
+	/*@Column(name = "email", nullable = false, length = 50)
+	private String email;
+	
+	@Column(name = "enabled", nullable = false)
+	private boolean enabled;*/
 
 	@Version
 	long version;
 
-	public PersonModel() {
+	public Person() {
 	}
 
-	public PersonModel(String firstName, String lastName, Date dayOfBirth) {
+	public Person(String firstName, String lastName, Date dayOfBirth) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;

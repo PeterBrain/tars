@@ -10,7 +10,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import at.fh.swenga.model.PersonModel;
+import at.fh.swenga.model.Person;
 
 @Repository
 @Transactional
@@ -19,45 +19,43 @@ public class PersonDao {
 	@PersistenceContext
 	protected EntityManager entityManager;
 
-	public List<PersonModel> getPersons() {
-		TypedQuery<PersonModel> typedQuery = entityManager.createQuery("SELECT e FROM PersonModel e",
-				PersonModel.class);
-		List<PersonModel> typedResultList = typedQuery.getResultList();
+	public List<Person> getPersons() {
+		TypedQuery<Person> typedQuery = entityManager.createQuery("SELECT e FROM Person e", Person.class);
+		List<Person> typedResultList = typedQuery.getResultList();
 		return typedResultList;
 	}
 
-	public List<PersonModel> searchPersons(String searchString) {
-		TypedQuery<PersonModel> typedQuery = entityManager.createQuery(
-				"SELECT e FROM PersonModel e WHERE e.firstName LIKE :search or e.lastName LIKE :search",
-				PersonModel.class);
+	public List<Person> searchPersons(String searchString) {
+		TypedQuery<Person> typedQuery = entityManager.createQuery(
+				"SELECT e FROM Person e WHERE e.firstName LIKE :search or e.lastName LIKE :search", Person.class);
 		typedQuery.setParameter("search", "%" + searchString + "%");
-		List<PersonModel> typedResultList = typedQuery.getResultList();
+		List<Person> typedResultList = typedQuery.getResultList();
 		return typedResultList;
 	}
 
-	public PersonModel getPerson(int i) throws DataAccessException {
-		return entityManager.find(PersonModel.class, i);
+	public Person getPerson(int i) throws DataAccessException {
+		return entityManager.find(Person.class, i);
 	}
 
-	public void persist(PersonModel person) {
+	public void persist(Person person) {
 		entityManager.persist(person);
 	}
 
-	public PersonModel merge(PersonModel person) {
+	public Person merge(Person person) {
 		return entityManager.merge(person);
 	}
 
-	public void delete(PersonModel person) {
+	public void delete(Person person) {
 		entityManager.remove(person);
 	}
 
 	public int deleteAllPersons() {
-		int count = entityManager.createQuery("DELETE FROM PersonModel").executeUpdate();
+		int count = entityManager.createQuery("DELETE FROM Person").executeUpdate();
 		return count;
 	}
 
 	public void delete(int id) {
-		PersonModel person = getPerson(id);
+		Person person = getPerson(id);
 		if (person != null) {
 			delete(person);
 		}
