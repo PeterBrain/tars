@@ -1,27 +1,30 @@
 package at.fh.swenga.model;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import javax.persistence.Version;
 
-public class UserRole {
+@Entity
+@Table(name = "user_roles")
+public class UserRole implements java.io.Serializable {
 	@Id
 	@Column(name = "roleId")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int roleId;
 
-	@Column(nullable = false, length = 30)
+	@Column(name = "name", nullable = false, length = 45)
 	private String name;
 
-	@OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "userRoles", fetch = FetchType.LAZY)
 	@OrderBy("lastname, firstname")
 	private Set<User> users;
 
@@ -50,12 +53,5 @@ public class UserRole {
 
 	public void setUsers(Set<User> users) {
 		this.users = users;
-	}
-
-	public void addUser(User user) {
-		if (users == null) {
-			users = new HashSet<User>();
-		}
-		users.add(user);
 	}
 }

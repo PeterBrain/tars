@@ -1,105 +1,101 @@
 package at.fh.swenga.model;
 
-import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Table(name = "User")
-@NamedQueries({
-		@NamedQuery(name = "User.findByNamedQuery", query = "SELECT u FROM User u WHERE u.firstname LIKE :searchString OR u.lastname LIKE :searchString") })
 public class User implements java.io.Serializable {
 	@Id
 	@Column(name = "userId")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int userId;
 
-	@Column(nullable = false, length = 30)
-	private String firstName;
+	@Column(name = "username", nullable = false, length = 45, unique = true)
+	private String userName;
 
-	@Column(nullable = false, length = 30)
-	private String lastName;
+	@Column(name = "password", nullable = false, length = 60)
+	private String password;
 
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd.MM.yyyy")
-	@NotNull(message = "Date of birth cannot be null")
-	private Date dob;
+	@Column(name = "enabled", nullable = false)
+	private boolean enabled;
 
-	@Column(nullable = false, length = 30)
-	private String email;
-
-	/*@ManyToOne(cascade = CascadeType.PERSIST)
-	private UserRole role;*/
-
-	private boolean active;
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	private Set<UserRole> userRoles;
 
 	// constructor
 	public User() {
 	} // default
 
-	public User(int userId, String firstName, String lastName, String email, /*UserRole role,*/ boolean active) {
+	public User(String userName, String password, boolean enabled) {
 		super();
-		this.userId = userId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		//this.role = role;
-		this.active = active;
+		this.userName = userName;
+		this.password = password;
+		this.enabled = enabled;
 	}
 
 	// getter & setter
-	public int getId() {
+	public int getUserId() {
 		return userId;
 	}
 
-	public void setId(int userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public String getEmail() {
-		return email;
+	public boolean isEnabled() {
+		return enabled;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
-	public boolean isActive() {
-		return active;
+	public Set<UserRole> getUserRoles() {
+		return userRoles;
 	}
 
-	public void setActive(boolean active) {
-		this.active = active;
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
+	}
+
+	public void addUserRole(UserRole userRole) {
+		if (userRoles == null)
+			userRoles = new HashSet<UserRole>();
+		userRoles.add(userRole);
+	}
+
+	public void encryptPassword() {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		password = passwordEncoder.encode(password);
 	}
 
 	/**
@@ -132,8 +128,7 @@ public class User implements java.io.Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", active=" + active + "]";
+		return "User [userId=" + userId + ", userName=" + userName + ", password=" + password + ", enabled=" + enabled
+				+ ", userRoles=" + userRoles + "]";
 	}
-
 }

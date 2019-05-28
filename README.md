@@ -3,9 +3,9 @@
 Don't forget to edit your **db.properties** file at the root of **src**!
 
 ```
-db.url=
-db.username=
-db.password=
+db.url=jdbc:mysql://localhost/xxx
+db.username=xxx
+db.password=xxx
 ```
 
 ---
