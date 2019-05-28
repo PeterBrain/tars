@@ -16,10 +16,10 @@ import javax.persistence.Table;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
-@Table(name = "User")
+@Table(name = "user")
 public class User implements java.io.Serializable {
 	@Id
-	@Column(name = "userId")
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int userId;
 

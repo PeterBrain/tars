@@ -14,15 +14,15 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 @Entity
-@Table(name = "user_roles")
+@Table(name = "user_role")
 public class UserRole implements java.io.Serializable {
 	@Id
-	@Column(name = "roleId")
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int roleId;
 
-	@Column(name = "name", nullable = false, length = 45)
-	private String name;
+	@Column(name = "role", nullable = false, length = 45)
+	private String roleName;
 
 	@ManyToMany(mappedBy = "userRoles", fetch = FetchType.LAZY)
 	@OrderBy("lastname, firstname")
@@ -34,17 +34,17 @@ public class UserRole implements java.io.Serializable {
 	public UserRole() {
 	}
 
-	public UserRole(String name) {
+	public UserRole(String roleName) {
 		super();
-		this.name = name;
+		this.roleName = roleName;
 	}
 
-	public String getName() {
-		return name;
+	public String getRoleName() {
+		return roleName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
 
 	public Set<User> getUsers() {
