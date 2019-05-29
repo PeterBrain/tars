@@ -8,5 +8,12 @@ db.username=xxx
 db.password=xxx
 ```
 
+## ToDo
+* Project Entity
+* Cateogry Entity
+* Bootstrap template
+* nearly all features
+    * CRUD
+
 ---
 This project was set up for the "Software engineering advanced" lecture at [FH JOANNEUM](https://www.fh-joanneum.at/) Graz.

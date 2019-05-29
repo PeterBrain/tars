@@ -15,19 +15,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import at.fh.swenga.dao.PersonDao;
-import at.fh.swenga.model.Person;
+import at.fh.swenga.dao.EntryDao;
+import at.fh.swenga.model.Entry;
 
 @Controller
-public class PersonController {
+public class EntryController {
 	@Autowired
-	PersonDao personDao;
+	EntryDao entryDao;
 
 	@RequestMapping(value = { "/", "list" })
 	public String index(Model model) {
-		List<Person> persons = personDao.getPersons();
+		List<Entry> entries = entryDao.getEntries();
 
-		model.addAttribute("persons", persons);
+		model.addAttribute("entries", entries);
 		return "index";
 	}
 
@@ -42,28 +42,28 @@ public class PersonController {
 	public String fillData(Model model) {
 		Date now = new Date();
 
-		Person p1 = new Person("Johann", "Blauensteiner", now);
-		personDao.persist(p1);
+		/*Entry p1 = new Entry("Johann", "Blauensteiner", now);
+		entryDao.persist(p1);
 
-		Person p2 = new Person("Max", "Mustermann", now);
-		personDao.persist(p2);
+		Entry p2 = new Entry("Max", "Mustermann", now);
+		entryDao.persist(p2);
 
-		Person p3 = new Person("Jane", "Doe", now);
-		personDao.persist(p3);
+		Entry p3 = new Entry("Jane", "Doe", now);
+		entryDao.persist(p3);*/
 
 		return "forward:list";
 	}
 
-	@RequestMapping("/searchPersons")
+	@RequestMapping("/searchEntries")
 	public String search(Model model, @RequestParam String searchString) {
-		model.addAttribute("persons", personDao.searchPersons(searchString));
+		model.addAttribute("entries", entryDao.searchEntries(searchString));
 		return "index";
 	}
 
 	@Secured("ROLE_ADMIN")
 	@RequestMapping("/delete")
 	public String deleteData(Model model, @RequestParam int id) {
-		personDao.delete(id);
+		entryDao.delete(id);
 		return "forward:list";
 	}
 

@@ -16,12 +16,12 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name = "person")
-public class Person implements java.io.Serializable {
+@Table(name = "entry")
+public class Entry implements java.io.Serializable {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int personId;
+	private int entryId;
 
 	@Column(name = "firstname", nullable = false, length = 30)
 	private String firstName;
@@ -44,22 +44,22 @@ public class Person implements java.io.Serializable {
 	@Version
 	long version;
 
-	public Person() {
+	public Entry() {
 	}
 
-	public Person(String firstName, String lastName, Date dayOfBirth) {
+	public Entry(String firstName, String lastName, Date dayOfBirth) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.dayOfBirth = dayOfBirth;
 	}
 
-	public int getPersonId() {
-		return personId;
+	public int getEntryId() {
+		return entryId;
 	}
 
-	public void setPersonId(int personId) {
-		this.personId = personId;
+	public void setEntryId(int entryId) {
+		this.entryId = entryId;
 	}
 
 	public String getFirstName() {
