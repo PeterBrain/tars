@@ -1,5 +1,7 @@
 package at.fh.swenga.controller;
 
+import java.util.Date;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +36,16 @@ public class SecurityController {
 		if (userRole == null) {
 			userRole = new UserRole("ROLE_USER");
 		}
+		
+		Date now = new Date();
 
-		User admin = new User("admin", "password", true);
+		User admin = new User("Hans", "Maier", now, "admin@example.com", "admin", "password", true);
 		admin.encryptPassword();
 		admin.addUserRole(userRole);
 		admin.addUserRole(adminRole);
 		userDao.persist(admin);
 
-		User user = new User("user", "password", true);
+		User user = new User("Max", "Mustermann", now, "user@example.com", "user", "password", true);
 		user.encryptPassword();
 		user.addUserRole(userRole);
 		userDao.persist(user);

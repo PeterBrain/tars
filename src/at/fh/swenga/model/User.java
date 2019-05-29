@@ -1,5 +1,6 @@
 package at.fh.swenga.model;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,7 +13,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
@@ -22,11 +27,26 @@ public class User implements java.io.Serializable {
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int userId;
+	
+	@Column(name = "firstname", nullable = false, length = 45)
+	private String firstName;
+
+	@Column(name = "lastname", nullable = false, length = 45)
+	private String lastName;
+
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd.MM.yyyy")
+	@NotNull(message = "Date of birth cannot be null")
+	@Column(name = "dob", nullable = false)
+	private Date dayOfBirth;
+	
+	@Column(name = "email", nullable = false, length = 45, unique = true)
+	private String email;
 
 	@Column(name = "username", nullable = false, length = 45, unique = true)
 	private String userName;
 
-	@Column(name = "password", nullable = false, length = 60)
+	@Column(name = "password", nullable = false)
 	private String password;
 
 	@Column(name = "enabled", nullable = false)
@@ -38,13 +58,19 @@ public class User implements java.io.Serializable {
 	// constructor
 	public User() {
 	} // default
-
-	public User(String userName, String password, boolean enabled) {
+	
+	public User(String firstName, String lastName, @NotNull(message = "Date of birth cannot be null") Date dayOfBirth,
+			String email, String userName, String password, boolean enabled) {
 		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.dayOfBirth = dayOfBirth;
+		this.email = email;
 		this.userName = userName;
 		this.password = password;
 		this.enabled = enabled;
 	}
+
 
 	// getter & setter
 	public int getUserId() {
@@ -53,6 +79,38 @@ public class User implements java.io.Serializable {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public Date getDayOfBirth() {
+		return dayOfBirth;
+	}
+
+	public void setDayOfBirth(Date dayOfBirth) {
+		this.dayOfBirth = dayOfBirth;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getUserName() {
@@ -128,7 +186,9 @@ public class User implements java.io.Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", userName=" + userName + ", password=" + password + ", enabled=" + enabled
-				+ ", userRoles=" + userRoles + "]";
+		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", dayOfBirth="
+				+ dayOfBirth + ", email=" + email + ", userName=" + userName + ", password=" + password + ", enabled="
+				+ enabled + ", userRoles=" + userRoles + "]";
 	}
+	
 }
