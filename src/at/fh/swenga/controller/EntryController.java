@@ -20,6 +20,7 @@ import at.fh.swenga.model.Entry;
 
 @Controller
 public class EntryController {
+	
 	@Autowired
 	EntryDao entryDao;
 

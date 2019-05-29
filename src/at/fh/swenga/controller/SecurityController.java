@@ -17,6 +17,7 @@ import at.fh.swenga.model.UserRole;
 
 @Controller
 public class SecurityController {
+	
 	@Autowired
 	UserDao userDao;
 

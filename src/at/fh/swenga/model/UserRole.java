@@ -16,6 +16,7 @@ import javax.persistence.Version;
 @Entity
 @Table(name = "user_role")
 public class UserRole implements java.io.Serializable {
+
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

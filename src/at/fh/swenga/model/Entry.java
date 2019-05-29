@@ -2,11 +2,14 @@ package at.fh.swenga.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -18,72 +21,48 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "entry")
 public class Entry implements java.io.Serializable {
+	
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int entryId;
+	
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
+	@NotNull(message = "timestamp cannot be null")
+	@Column(name = "timestamp", nullable = false)
+	private Date timestamp;
 
-	@Column(name = "firstname", nullable = false, length = 30)
-	private String firstName;
+	@Column(name = "note", nullable = false, length = 30)
+	private String note;
 
-	@Column(name = "lastname", nullable = false, length = 30)
-	private String lastName;
+	@Column(name = "activity", nullable = false, length = 30)
+	private String activity;
 
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd.MM.yyyy")
-	@NotNull(message = "Date of birth cannot be null")
-	@Column(name = "dob", nullable = false)
-	private Date dayOfBirth;
-	
-	/*@Column(name = "email", nullable = false, length = 50)
-	private String email;
-	
+	@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
+	@NotNull(message = "create time cannot be null")
+	@Column(name = "created", nullable = false)
+	private Date timestampCreated;
+
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
+	@NotNull(message = "modify time cannot be null")
+	@Column(name = "modified", nullable = false)
+	private Date timestampModified;
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	private User editor;
+
 	@Column(name = "enabled", nullable = false)
-	private boolean enabled;*/
+	private boolean enabled;
 
 	@Version
 	long version;
 
+	// constructor
 	public Entry() {
 	}
 
-	public Entry(String firstName, String lastName, Date dayOfBirth) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.dayOfBirth = dayOfBirth;
-	}
-
-	public int getEntryId() {
-		return entryId;
-	}
-
-	public void setEntryId(int entryId) {
-		this.entryId = entryId;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public Date getDayOfBirth() {
-		return dayOfBirth;
-	}
-
-	public void setDayOfBirth(Date dayOfBirth) {
-		this.dayOfBirth = dayOfBirth;
-	}
-
+	// getter & setter
 }

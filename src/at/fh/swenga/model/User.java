@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,6 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Entity
 @Table(name = "user")
 public class User implements java.io.Serializable {
+	
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,6 +56,9 @@ public class User implements java.io.Serializable {
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Set<UserRole> userRoles;
+	
+	@OneToMany(mappedBy = "editor", fetch = FetchType.LAZY)
+	private Set<Entry> entries;
 
 	// constructor
 	public User() {
@@ -150,6 +155,20 @@ public class User implements java.io.Serializable {
 			userRoles = new HashSet<UserRole>();
 		userRoles.add(userRole);
 	}
+	
+	public Set<Entry> getEntries() {
+		return entries;
+	}
+
+	public void setEntries(Set<Entry> entries) {
+		this.entries = entries;
+	}
+
+	public void addEntry(Entry entry) {
+		if (entries == null)
+			entries = new HashSet<Entry>();
+		entries.add(entry);
+	}
 
 	public void encryptPassword() {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -188,7 +207,7 @@ public class User implements java.io.Serializable {
 	public String toString() {
 		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", dayOfBirth="
 				+ dayOfBirth + ", email=" + email + ", userName=" + userName + ", password=" + password + ", enabled="
-				+ enabled + ", userRoles=" + userRoles + "]";
+				+ enabled + ", userRoles=" + userRoles + ", entries=" + entries + "]";
 	}
 	
 }

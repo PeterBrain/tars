@@ -14,6 +14,7 @@ import at.fh.swenga.model.User;
 @Repository
 @Transactional
 public class UserDao {
+
 	@PersistenceContext
 	protected EntityManager entityManager;
 
