@@ -1,19 +1,70 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Error Page</title>
-	</head>
-	<body>
-		<h1>Error</h1>
-		Exception: <span th:text="${#request.getAttribute('javax.servlet.error.exception')}"></span>
-		<br />
-		Status Code: <span th:text="${#request.getAttribute('javax.servlet.error.status_code')}"></span>
-		<br />
-		Request-URI: <span th:text="${#request.getAttribute('javax.servlet.error.request_uri')}"></span>
-		<br />
-		Servlet Name: <span th:text="${#request.getAttribute('javax.servlet.error.servlet_name')}"></span>
-		<br />
-		<a href="./">back</a>
-	</body>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" lang="en">
+<head>
+	<div th:replace="~{./includes/meta :: META}" />
+	<title>TARS - Time &amp; Activity Recording Software</title>
+	<div th:replace="~{./includes/css :: CSS}" />
+</head>
+<body>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+  
+  	<div th:replace="~{./includes/sidebar :: sidebar}" />
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+      
+      	<div th:replace="~{./includes/navbar :: navbar}" />
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- 404 Error Text -->
+          <div class="text-center">
+            <div class="error mx-auto" data-text="404">404</div>
+            <p class="lead text-gray-800 mb-5">Page Not Found</p>
+            <p class="text-gray-500 mb-0">It looks like you found a glitch in the matrix...</p>
+            <a href="index.html">&larr; Back to Dashboard</a>
+          </div>
+          
+          Exception: <span th:text="${#request.getAttribute('javax.servlet.error.exception')}"></span>
+          <br />
+          Status Code: <span th:text="${#request.getAttribute('javax.servlet.error.status_code')}"></span>
+          <br />
+          Request-URI: <span th:text="${#request.getAttribute('javax.servlet.error.request_uri')}"></span>
+          <br />
+          Servlet Name: <span th:text="${#request.getAttribute('javax.servlet.error.servlet_name')}"></span>
+          <br />
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <div th:replace="~{./includes/footer :: footer}" />
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <div th:replace="~{./includes/logout_modal :: logout_modal}" />
+  
+  <div th:replace="~{./includes/js :: JS}" />
+
+</body>
+
 </html>
