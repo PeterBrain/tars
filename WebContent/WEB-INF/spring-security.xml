@@ -11,7 +11,9 @@
 		<csrf disabled="true" />
 		<intercept-url pattern="/login" access="permitAll" />
 		<intercept-url pattern="/fillUsers" access="permitAll" />
-		<intercept-url pattern="/images/**" access="permitAll" />
+		<intercept-url pattern="/img/**" access="permitAll" />
+		<intercept-url pattern="/css/**" access="permitAll" />
+		<intercept-url pattern="/js/**" access="permitAll" />
 
 		<!-- intercept-url pattern="/**" access="hasRole('USER')" / -->
 		<!-- intercept-url pattern="/**" access="hasRole('USER') or hasRole('ADMIN')" / -->
