@@ -25,12 +25,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Entity
 @Table(name = "user")
 public class User implements java.io.Serializable {
-	
+
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int userId;
-	
+
 	@Column(name = "firstname", nullable = false, length = 45)
 	private String firstName;
 
@@ -42,7 +42,7 @@ public class User implements java.io.Serializable {
 	@NotNull(message = "Date of birth cannot be null")
 	@Column(name = "dob", nullable = false)
 	private Date dayOfBirth;
-	
+
 	@Column(name = "email", nullable = false, length = 45, unique = true)
 	private String email;
 
@@ -57,17 +57,17 @@ public class User implements java.io.Serializable {
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Set<UserRole> userRoles;
-	
+
 	@OneToMany(mappedBy = "editor", fetch = FetchType.LAZY)
 	private Set<Entry> entries;
-	
+
 	@Version
 	private long version;
 
 	// constructor
 	public User() {
 	} // default
-	
+
 	public User(String firstName, String lastName, @NotNull(message = "Date of birth cannot be null") Date dayOfBirth,
 			String email, String userName, String password, boolean enabled) {
 		super();
@@ -79,7 +79,6 @@ public class User implements java.io.Serializable {
 		this.password = password;
 		this.enabled = enabled;
 	}
-
 
 	// getter & setter
 	public int getUserId() {
@@ -155,11 +154,12 @@ public class User implements java.io.Serializable {
 	}
 
 	public void addUserRole(UserRole userRole) {
-		if (userRoles == null)
+		if (userRoles == null) {
 			userRoles = new HashSet<UserRole>();
+		}
 		userRoles.add(userRole);
 	}
-	
+
 	public Set<Entry> getEntries() {
 		return entries;
 	}
@@ -213,5 +213,5 @@ public class User implements java.io.Serializable {
 				+ dayOfBirth + ", email=" + email + ", userName=" + userName + ", password=" + password + ", enabled="
 				+ enabled + ", userRoles=" + userRoles + ", entries=" + entries + "]";
 	}
-	
+
 }
