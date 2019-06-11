@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -59,6 +60,9 @@ public class User implements java.io.Serializable {
 	
 	@OneToMany(mappedBy = "editor", fetch = FetchType.LAZY)
 	private Set<Entry> entries;
+	
+	@Version
+	private long version;
 
 	// constructor
 	public User() {

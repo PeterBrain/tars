@@ -30,7 +30,7 @@ public class UserRole implements java.io.Serializable {
 	private Set<User> users;
 
 	@Version
-	long version;
+	private long version;
 
 	public UserRole() {
 	}

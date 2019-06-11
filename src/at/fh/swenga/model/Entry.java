@@ -58,7 +58,7 @@ public class Entry implements java.io.Serializable {
 	private boolean enabled;
 
 	@Version
-	long version;
+	private long version;
 
 	// constructor
 	public Entry() {
