@@ -11,7 +11,6 @@ db.password=xxx
 ## ToDo
 * Project Entity
 * Cateogry Entity
-* Bootstrap template
 * nearly all features
     * CRUD
 
