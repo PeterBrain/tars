@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -24,12 +23,12 @@ public class EntryController {
 	@Autowired
 	EntryDao entryDao;
 
-	@RequestMapping(value = { "/", "list" })
-	public String index(Model model) {
+	@RequestMapping(value = { "listEntries" })
+	public String listEntries(Model model) {
 		List<Entry> entries = entryDao.getEntries();
 
 		model.addAttribute("entries", entries);
-		return "index";
+		return "listEntries";
 	}
 
 	/**
@@ -66,11 +65,6 @@ public class EntryController {
 	public String deleteData(Model model, @RequestParam int id) {
 		entryDao.delete(id);
 		return "forward:list";
-	}
-
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String handleLogin() {
-		return "login";
 	}
 
 	@ExceptionHandler(Exception.class)

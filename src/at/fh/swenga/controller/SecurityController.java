@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import at.fh.swenga.dao.UserDao;
 import at.fh.swenga.dao.UserRoleDao;
@@ -17,12 +18,22 @@ import at.fh.swenga.model.UserRole;
 
 @Controller
 public class SecurityController {
-	
+
 	@Autowired
 	UserDao userDao;
 
 	@Autowired
 	UserRoleDao userRoleDao;
+
+	@RequestMapping(value = { "/", "dashboard" })
+	public String index(Model model) {
+		return "index";
+	}
+	
+	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
+	public String handleLogin() {
+		return "login";
+	}
 
 	@RequestMapping("/fillUsers")
 	@Transactional
@@ -37,7 +48,7 @@ public class SecurityController {
 		if (userRole == null) {
 			userRole = new UserRole("ROLE_USER");
 		}
-		
+
 		Date now = new Date();
 
 		User admin = new User("Hans", "Maier", now, "admin@example.com", "admin", "password", true);
