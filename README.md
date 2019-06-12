@@ -10,9 +10,17 @@ db.password=xxx
 
 ## ToDo
 * Project Entity
-* Cateogry Entity
-* nearly all features
-    * CRUD
+* Category Entity
+* Methods:
+    * UserManagement
+        * editUser
+    * Archive
+        * addEntry
+        * editEntry
+        * deleteEntry
+    * Password
+        * Password reset
+        * Password policy
 
 ---
 This project was set up for the "Software engineering advanced" lecture at [FH JOANNEUM](https://www.fh-joanneum.at/) Graz.

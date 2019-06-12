@@ -24,19 +24,35 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<div
-						class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">Archive</h1>
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-0 text-gray-800">Archiv</h1>
 						<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
 							<i class="fas fa-download fa-sm text-white-50"></i>
 							Generate Report
 						</a>
 					</div>
+					
+					<!-- error message -->
+					<div th:unless="${errorMessage} == null" th:utext="${errorMessage}" class="alert alert-danger" role="alert"></div>
+					<!-- error message -->
+			
+					<!-- warning message -->
+					<div th:unless="${warningMessage} == null" th:utext="${warningMessage}" class="alert alert-warning" role="warning"></div>
+					<!-- warning message -->
+			
+					<!-- success message -->
+					<div th:unless="${message} == null" th:utext="${message}" class="alert alert-success" role="warning"></div>
+					<!-- success message -->
 
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">User entries</h6>
+							<div class="row">
+								<h6 class="m-0 font-weight-bold text-primary col align-self-center">User entries</h6>
+								<a th:href="@{/addUser}" class="btn btn-success btn-circle float-right">
+									<i class="fas fa-plus"></i>
+								</a>
+							</div>
 						</div>
 						<div class="card-body">
 							<div class="table-responsive">
@@ -50,282 +66,29 @@
 											<th>Action</th>
 										</tr>
 									</thead>
-									<!-- <tfoot>
+									<tfoot>
 										<tr>
-											<th>Name</th>
-											<th>Position</th>
-											<th>Office</th>
-											<th>Age</th>
-											<th>Start date</th>
-											<th>Salary</th>
+											<th>ID</th>
+											<th>Timestamp</th>
+											<th>Note</th>
+											<th>Activity</th>
+											<th>Action</th>
 										</tr>
-									</tfoot> -->
+									</tfoot>
 									<tbody>
 										<tr th:each="entry : ${entries}">
 											<td th:text="${entry.entryId}"></td>
 											<td th:text="${#dates.format(entry.timestamp,'dd.MM.yyyy HH:mm')}"></td>
 											<td th:text="${entry.note}"></td>
 											<td th:text="${entry.activity}"></td>
-											<td><a th:href="@{/delete(id=${entry.entryId})}" class="btn btn-danger">Delete</a></td>
-										</tr>
-										<tr>
-											<td>Tiger Nixon</td>
-											<td>System Architect</td>
-											<td>Edinburgh</td>
-											<td>61</td>
-											<td>2011/04/25</td>
-										</tr>
-										<tr>
-											<td>Garrett Winters</td>
-											<td>Accountant</td>
-											<td>Tokyo</td>
-											<td>63</td>
-											<td>2011/07/25</td>
-										</tr>
-										<tr>
-											<td>Ashton Cox</td>
-											<td>Junior Technical Author</td>
-											<td>San Francisco</td>
-											<td>66</td>
-											<td>2009/01/12</td>
-										</tr>
-										<tr>
-											<td>Cedric Kelly</td>
-											<td>Senior Javascript Developer</td>
-											<td>Edinburgh</td>
-											<td>22</td>
-											<td>2012/03/29</td>
-										</tr>
-										<tr>
-											<td>Airi Satou</td>
-											<td>Accountant</td>
-											<td>Tokyo</td>
-											<td>33</td>
-											<td>2008/11/28</td>
-										</tr>
-										<tr>
-											<td>Brielle Williamson</td>
-											<td>Integration Specialist</td>
-											<td>New York</td>
-											<td>61</td>
-											<td>2012/12/02</td>
-										</tr>
-										<tr>
-											<td>Herrod Chandler</td>
-											<td>Sales Assistant</td>
-											<td>San Francisco</td>
-											<td>59</td>
-											<td>2012/08/06</td>
-										</tr>
-										<tr>
-											<td>Rhona Davidson</td>
-											<td>Integration Specialist</td>
-											<td>Tokyo</td>
-											<td>55</td>
-											<td>2010/10/14</td>
-										</tr>
-										<tr>
-											<td>Colleen Hurst</td>
-											<td>Javascript Developer</td>
-											<td>San Francisco</td>
-											<td>39</td>
-											<td>2009/09/15</td>
-										</tr>
-										<tr>
-											<td>Sonya Frost</td>
-											<td>Software Engineer</td>
-											<td>Edinburgh</td>
-											<td>23</td>
-											<td>2008/12/13</td>
-										</tr>
-										<tr>
-											<td>Garrett Winters</td>
-											<td>Accountant</td>
-											<td>Tokyo</td>
-											<td>63</td>
-											<td>2011/07/25</td>
-										</tr>
-										<tr>
-											<td>Ashton Cox</td>
-											<td>Junior Technical Author</td>
-											<td>San Francisco</td>
-											<td>66</td>
-											<td>2009/01/12</td>
-										</tr>
-										<tr>
-											<td>Cedric Kelly</td>
-											<td>Senior Javascript Developer</td>
-											<td>Edinburgh</td>
-											<td>22</td>
-											<td>2012/03/29</td>
-										</tr>
-										<tr>
-											<td>Airi Satou</td>
-											<td>Accountant</td>
-											<td>Tokyo</td>
-											<td>33</td>
-											<td>2008/11/28</td>
-										</tr>
-										<tr>
-											<td>Brielle Williamson</td>
-											<td>Integration Specialist</td>
-											<td>New York</td>
-											<td>61</td>
-											<td>2012/12/02</td>
-										</tr>
-										<tr>
-											<td>Herrod Chandler</td>
-											<td>Sales Assistant</td>
-											<td>San Francisco</td>
-											<td>59</td>
-											<td>2012/08/06</td>
-										</tr>
-										<tr>
-											<td>Rhona Davidson</td>
-											<td>Integration Specialist</td>
-											<td>Tokyo</td>
-											<td>55</td>
-											<td>2010/10/14</td>
-										</tr>
-										<tr>
-											<td>Colleen Hurst</td>
-											<td>Javascript Developer</td>
-											<td>San Francisco</td>
-											<td>39</td>
-											<td>2009/09/15</td>
-										</tr>
-										<tr>
-											<td>Sonya Frost</td>
-											<td>Software Engineer</td>
-											<td>Edinburgh</td>
-											<td>23</td>
-											<td>2008/12/13</td>
-										</tr>
-										<tr>
-											<td>Garrett Winters</td>
-											<td>Accountant</td>
-											<td>Tokyo</td>
-											<td>63</td>
-											<td>2011/07/25</td>
-										</tr>
-										<tr>
-											<td>Ashton Cox</td>
-											<td>Junior Technical Author</td>
-											<td>San Francisco</td>
-											<td>66</td>
-											<td>2009/01/12</td>
-										</tr>
-										<tr>
-											<td>Cedric Kelly</td>
-											<td>Senior Javascript Developer</td>
-											<td>Edinburgh</td>
-											<td>22</td>
-											<td>2012/03/29</td>
-										</tr>
-										<tr>
-											<td>Airi Satou</td>
-											<td>Accountant</td>
-											<td>Tokyo</td>
-											<td>33</td>
-											<td>2008/11/28</td>
-										</tr>
-										<tr>
-											<td>Brielle Williamson</td>
-											<td>Integration Specialist</td>
-											<td>New York</td>
-											<td>61</td>
-											<td>2012/12/02</td>
-										</tr>
-										<tr>
-											<td>Herrod Chandler</td>
-											<td>Sales Assistant</td>
-											<td>San Francisco</td>
-											<td>59</td>
-											<td>2012/08/06</td>
-										</tr>
-										<tr>
-											<td>Rhona Davidson</td>
-											<td>Integration Specialist</td>
-											<td>Tokyo</td>
-											<td>55</td>
-											<td>2010/10/14</td>
-										</tr>
-										<tr>
-											<td>Colleen Hurst</td>
-											<td>Javascript Developer</td>
-											<td>San Francisco</td>
-											<td>39</td>
-											<td>2009/09/15</td>
-										</tr>
-										<tr>
-											<td>Sonya Frost</td>
-											<td>Software Engineer</td>
-											<td>Edinburgh</td>
-											<td>23</td>
-											<td>2008/12/13</td>
-										</tr>
-										<tr>
-											<td>Garrett Winters</td>
-											<td>Accountant</td>
-											<td>Tokyo</td>
-											<td>63</td>
-											<td>2011/07/25</td>
-										</tr>
-										<tr>
-											<td>Ashton Cox</td>
-											<td>Junior Technical Author</td>
-											<td>San Francisco</td>
-											<td>66</td>
-											<td>2009/01/12</td>
-										</tr>
-										<tr>
-											<td>Cedric Kelly</td>
-											<td>Senior Javascript Developer</td>
-											<td>Edinburgh</td>
-											<td>22</td>
-											<td>2012/03/29</td>
-										</tr>
-										<tr>
-											<td>Airi Satou</td>
-											<td>Accountant</td>
-											<td>Tokyo</td>
-											<td>33</td>
-											<td>2008/11/28</td>
-										</tr>
-										<tr>
-											<td>Brielle Williamson</td>
-											<td>Integration Specialist</td>
-											<td>New York</td>
-											<td>61</td>
-											<td>2012/12/02</td>
-										</tr>
-										<tr>
-											<td>Herrod Chandler</td>
-											<td>Sales Assistant</td>
-											<td>San Francisco</td>
-											<td>59</td>
-											<td>2012/08/06</td>
-										</tr>
-										<tr>
-											<td>Rhona Davidson</td>
-											<td>Integration Specialist</td>
-											<td>Tokyo</td>
-											<td>55</td>
-											<td>2010/10/14</td>
-										</tr>
-										<tr>
-											<td>Colleen Hurst</td>
-											<td>Javascript Developer</td>
-											<td>San Francisco</td>
-											<td>39</td>
-											<td>2009/09/15</td>
-										</tr>
-										<tr>
-											<td>Sonya Frost</td>
-											<td>Software Engineer</td>
-											<td>Edinburgh</td>
-											<td>23</td>
-											<td>2008/12/13</td>
+											<td>
+												<a th:href="@{/editEntry(id=${entry.entryId})}" class="btn btn-warning btn-circle" sec:authorize="hasRole('ADMIN')">
+													<i class="fas fa-edit"></i>
+												</a>
+												<a th:href="@{/deleteEntry(id=${entry.entryId})}" class="btn btn-danger btn-circle" sec:authorize="hasRole('ADMIN')">
+													<i class="fas fa-trash"></i>
+												</a>
+											</td>
 										</tr>
 									</tbody>
 								</table>
