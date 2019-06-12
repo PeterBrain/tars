@@ -30,7 +30,7 @@ public class SecurityController {
 	@RequestMapping(value = { "/", "dashboard" })
 	public String index(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String username = authentication.getName();
+		String username = authentication.getName().toUpperCase();
 
 		model.addAttribute("user", username);
 		return "index";
@@ -39,6 +39,11 @@ public class SecurityController {
 	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
 	public String handleLogin() {
 		return "login";
+	}
+	
+	@RequestMapping(value = { "/editPassword" }, method = RequestMethod.GET)
+	public String editPassword() {
+		return "editPassword";
 	}
 
 	@RequestMapping("/fillUsers")
