@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import at.fh.swenga.dao.EntryDao;
 import at.fh.swenga.dao.UserDao;
@@ -49,13 +47,17 @@ public class EntryController {
 	public String fillData(Model model) {
 		Date now = new Date();
 
-		/*
-		 * Entry p1 = new Entry("Johann", "Blauensteiner", now); entryDao.persist(p1);
-		 * 
-		 * Entry p2 = new Entry("Max", "Mustermann", now); entryDao.persist(p2);
-		 * 
-		 * Entry p3 = new Entry("Jane", "Doe", now); entryDao.persist(p3);
-		 */
+		Entry p1 = new Entry(entryDao.getEntries().size() + 1, now, "Test1", "Work1", now, now, true);
+		p1.setEditor(userDao.getUserById(1));
+		entryDao.persist(p1);
+
+		Entry p2 = new Entry(entryDao.getEntries().size() + 1, now, "Test2", "Work2", now, now, true);
+		p2.setEditor(userDao.getUserById(1));
+		entryDao.persist(p2);
+
+		Entry p3 = new Entry(entryDao.getEntries().size() + 1, now, "Test3", "Work3", now, now, true);
+		p3.setEditor(userDao.getUserById(1));
+		entryDao.persist(p3);
 
 		return "forward:list";
 	}
@@ -73,14 +75,15 @@ public class EntryController {
 		return "forward:list";
 	}
 
+	/**
+	 * 
+	 * handle errors
+	 * 
+	 * @param ex
+	 * @return
+	 */
 	@ExceptionHandler(Exception.class)
 	public String handleAllException(Exception ex) {
 		return "error";
-	}
-
-	@ExceptionHandler()
-	@ResponseStatus(code = HttpStatus.FORBIDDEN)
-	public String handle403(Exception ex) {
-		return "login";
 	}
 }

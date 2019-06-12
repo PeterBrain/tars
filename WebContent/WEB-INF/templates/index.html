@@ -60,7 +60,7 @@
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
 										<div class="col mr-2">
-											<div class="text-xs font-weight-bold text-success text-uppercase mb-1">Over time</div>
+											<div class="text-xs font-weight-bold text-success text-uppercase mb-1">Over time (Annualy)</div>
 											<div class="row no-gutters align-items-center">
 												<div class="col-auto">
 													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">12%</div>
@@ -106,6 +106,60 @@
 						</div>
 						
 					</div>
+					<!-- End of Content Row -->
+					
+					<!-- Content Row -->
+					<div class="row">
+					
+						<!-- Area Chart -->
+						<div class="col-xl-12 col-lg-6">
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
+								</div>
+								<div class="card-body">
+									<div class="chart-area">
+										<canvas id="myAreaChart"></canvas>
+									</div>
+									<hr>
+								</div>
+							</div>
+						</div>
+						
+						<!-- Bar Chart -->
+						<div class="col-xl-8 col-lg-6">
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
+								</div>
+								<div class="card-body">
+									<div class="chart-bar">
+										<canvas id="myBarChart"></canvas>
+									</div>
+									<hr>
+								</div>
+							</div>
+						</div>
+						
+						<!-- Donut Chart -->
+						<div class="col-xl-4 col-lg-6">
+							<div class="card shadow mb-4">
+								<!-- Card Header - Dropdown -->
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">Donut Chart</h6>
+								</div>
+								<!-- Card Body -->
+								<div class="card-body">
+									<div class="chart-pie pt-4">
+										<canvas id="myPieChart"></canvas>
+									</div>
+									<hr>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					
 				</div>
 				
 			</div>
@@ -126,6 +180,13 @@
 
     <div th:replace="~{./includes/logout_modal :: logout_modal}" />
     <div th:replace="~{./includes/js :: JS}" />
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    
+	<!-- Page level custom scripts -->
+	<script src="./js/chart-area-demo.js"></script>
+	<script src="./js/chart-pie-demo.js"></script>
+	<script src="./js/chart-bar-demo.js"></script>
 
   </body>
 </html>

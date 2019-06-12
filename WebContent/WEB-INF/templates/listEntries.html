@@ -82,10 +82,10 @@
 											<td th:text="${entry.note}"></td>
 											<td th:text="${entry.activity}"></td>
 											<td>
-												<a th:href="@{/editEntry(id=${entry.entryId})}" class="btn btn-warning btn-circle" sec:authorize="hasRole('ADMIN')">
+												<a th:href="@{/editEntry(id=${entry.entryId})}" class="btn btn-warning btn-circle btn-sm" sec:authorize="hasRole('ADMIN')">
 													<i class="fas fa-edit"></i>
 												</a>
-												<a th:href="@{/deleteEntry(id=${entry.entryId})}" class="btn btn-danger btn-circle" sec:authorize="hasRole('ADMIN')">
+												<a th:href="@{/deleteEntry(id=${entry.entryId})}" class="btn btn-danger btn-circle btn-sm" sec:authorize="hasRole('ADMIN')">
 													<i class="fas fa-trash"></i>
 												</a>
 											</td>

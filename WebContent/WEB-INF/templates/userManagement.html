@@ -88,10 +88,10 @@
 										<td th:text="${user.userName}"></td>
 										<td th:text="${user.email}"></td>
 										<td>
-											<a th:href="@{/editUser(id=${user.userId})}" class="btn btn-warning btn-circle">
+											<a th:href="@{/editUser(id=${user.userId})}" class="btn btn-warning btn-circle btn-sm">
 												<i class="fas fa-edit"></i>
 											</a>
-											<a th:href="@{/deleteUser(id=${user.userId})}" class="btn btn-danger btn-circle">
+											<a th:href="@{/deleteUser(id=${user.userId})}" class="btn btn-danger btn-circle btn-sm">
 												<i class="fas fa-trash"></i>
 											</a>
 										</td>

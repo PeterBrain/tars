@@ -15,12 +15,16 @@ db.password=xxx
     * UserManagement
         * editUser
     * Archive
+        * fillData (detached error)
         * addEntry
         * editEntry
         * deleteEntry
     * Password
         * Password reset
         * Password policy
+    * Export
+        * excel
+        * email
 
 ---
 This project was set up for the "Software engineering advanced" lecture at [FH JOANNEUM](https://www.fh-joanneum.at/) Graz.

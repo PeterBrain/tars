@@ -12,7 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
-import at.fh.swenga.model.Entry;
 import at.fh.swenga.model.User;
 
 @Repository
@@ -30,35 +29,43 @@ public class UserDao {
 		return typedResultList;
 	}
 
-	public void persist(User user) {
-		entityManager.persist(user);
-	}
-	
 	public String getCurrentUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName().toUpperCase();
-		
+
 		return username;
 	}
-	
+
+	/*
+	 * public Object getCurrentUserObj() { Authentication authentication =
+	 * SecurityContextHolder.getContext().getAuthentication(); Object user =
+	 * authentication.getPrincipal();
+	 * 
+	 * return user; }
+	 */
+
 	public User getUserById(int i) throws DataAccessException {
 		return entityManager.find(User.class, i);
 	}
-	
+
 	public List<User> getUsers() {
 		TypedQuery<User> typedQuery = entityManager.createQuery("SELECT u FROM User u", User.class);
 		List<User> typedResultList = typedQuery.getResultList();
 		return typedResultList;
 	}
-	
+
 	public void delete(int id) {
 		User user = getUserById(id);
 		if (user != null) {
 			delete(user);
 		}
 	}
-	
+
 	public void delete(User user) {
 		entityManager.remove(user);
+	}
+
+	public void persist(User user) {
+		entityManager.persist(user);
 	}
 }

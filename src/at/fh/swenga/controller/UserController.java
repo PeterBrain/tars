@@ -189,26 +189,45 @@ public class UserController {
 	public String editPassword(Model model) {
 		String username = userDao.getCurrentUser();
 		model.addAttribute("user", username);
+		
+		List<User> users = userDao.findByUsername(username);
+		model.addAttribute(users);
 
 		return "editPassword";
 	}
 
-	/*
-	 * @RequestMapping("/changePassword")
+	/**
 	 * 
-	 * @Transactional public String changePassword(Model model, @RequestParam int
-	 * id, @RequestParam String pass_old, @RequestParam String
-	 * pass_new, @RequestParam String pass_repeat) { User user =
-	 * userDao.getUserById(id);
+	 * change users password
 	 * 
-	 * String encrypted_old = pass_old.encryptPassword();
-	 * 
-	 * if (user.getPassword() == encrypted_old)
-	 * 
-	 * user.encryptPassword(); userDao.persist(user);
-	 * 
-	 * return "editPassword"; }
+	 * @param model
+	 * @param id
+	 * @param pass_old
+	 * @param pass_new
+	 * @param pass_repeat
+	 * @return
 	 */
+	@RequestMapping("/changePassword")
+	@Transactional
+	public String changePassword(Model model, @RequestParam int id, @RequestParam String pass_old,
+			@RequestParam String pass_new, @RequestParam String pass_repeat) {
+		User user = userDao.getUserById(id);
+		
+		if (pass_new.equals(pass_repeat)) { // old password need to be checked too
+			user.encryptPassword();
+			userDao.persist(user);
+			model.addAttribute("message", "Password successfully changed");
+		} else {
+			model.addAttribute("errorMessage", "Something went wrong");
+		}
+		return "editPassword";
+	}
+	
+	/*@ExceptionHandler()
+	@ResponseStatus(code = HttpStatus.FORBIDDEN)
+	public String handle403(Exception ex) {
+		return "login";
+	}*/
 
 	/**
 	 * 

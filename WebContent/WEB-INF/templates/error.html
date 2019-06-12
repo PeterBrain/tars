@@ -29,17 +29,16 @@
             <div class="error mx-auto" data-text="404">404</div>
             <p class="lead text-gray-800 mb-5">Page Not Found</p>
             <p class="text-gray-500 mb-0">It looks like you found a glitch in the matrix...</p>
-            <a href="index.html">&larr; Back to Dashboard</a>
+            <a href="dashboard">&larr; Back to Dashboard</a>
           </div>
           
-          Exception: <span th:text="${#request.getAttribute('javax.servlet.error.exception')}"></span>
-          <br />
-          Status Code: <span th:text="${#request.getAttribute('javax.servlet.error.status_code')}"></span>
-          <br />
-          Request-URI: <span th:text="${#request.getAttribute('javax.servlet.error.request_uri')}"></span>
-          <br />
-          Servlet Name: <span th:text="${#request.getAttribute('javax.servlet.error.servlet_name')}"></span>
-          <br />
+          <div class="mt-5">
+            <h2>Error Stack Trace</h2>
+            <p><span class="font-weight-bold">Exception:</span>&nbsp;<span th:text="${#request.getAttribute('javax.servlet.error.exception')}"></span></p>
+            <p><span class="font-weight-bold">Status Code:</span>&nbsp;<span th:text="${#request.getAttribute('javax.servlet.error.status_code')}"></span></p>
+            <p><span class="font-weight-bold">Request-URI:</span>&nbsp;<span th:text="${#request.getAttribute('javax.servlet.error.request_uri')}"></span></p>
+            <p><span class="font-weight-bold">Servlet Name:</span>&nbsp;<span th:text="${#request.getAttribute('javax.servlet.error.servlet_name')}"></span></p>
+          </div>
 
         </div>
         <!-- /.container-fluid -->
