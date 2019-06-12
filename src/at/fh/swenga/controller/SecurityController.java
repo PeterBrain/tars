@@ -36,13 +36,24 @@ public class SecurityController {
 	}
 	
 	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
-	public String handleLogin() {
+	public String handleLogin(Model model) {
 		return "login";
 	}
 	
 	@RequestMapping(value = { "/editPassword" }, method = RequestMethod.GET)
-	public String editPassword() {
+	public String editPassword(Model model) {
+		String username = userDao.getCurrentUser();
+		model.addAttribute("user", username);
+		
 		return "editPassword";
+	}
+	
+	@RequestMapping(value = { "/listUsers" }, method = RequestMethod.GET)
+	public String listUsers(Model model) {
+		String username = userDao.getCurrentUser();
+		model.addAttribute("user", username);
+		
+		return "userManagement";
 	}
 
 	@RequestMapping("/fillUsers")
