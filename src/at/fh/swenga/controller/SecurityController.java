@@ -29,10 +29,9 @@ public class SecurityController {
 
 	@RequestMapping(value = { "/", "dashboard" })
 	public String index(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String username = authentication.getName().toUpperCase();
-
+		String username = userDao.getCurrentUser();
 		model.addAttribute("user", username);
+		
 		return "index";
 	}
 	

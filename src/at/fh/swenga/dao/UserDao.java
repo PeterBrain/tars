@@ -7,6 +7,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import at.fh.swenga.model.User;
@@ -28,5 +30,12 @@ public class UserDao {
 
 	public void persist(User user) {
 		entityManager.persist(user);
+	}
+	
+	public String getCurrentUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName().toUpperCase();
+		
+		return username;
 	}
 }

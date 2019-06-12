@@ -6,8 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -17,25 +15,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import at.fh.swenga.dao.EntryDao;
+import at.fh.swenga.dao.UserDao;
 import at.fh.swenga.model.Entry;
 
 @Controller
 public class EntryController {
-	
+
 	@Autowired
 	EntryDao entryDao;
+
+	@Autowired
+	UserDao userDao;
 
 	@RequestMapping(value = { "listEntries" })
 	public String listEntries(Model model) {
 		List<Entry> entries = entryDao.getEntries();
-
 		model.addAttribute("entries", entries);
-		
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String username = authentication.getName();
 
+		String username = userDao.getCurrentUser();
 		model.addAttribute("user", username);
-		
+
 		return "listEntries";
 	}
 
@@ -50,14 +49,13 @@ public class EntryController {
 	public String fillData(Model model) {
 		Date now = new Date();
 
-		/*Entry p1 = new Entry("Johann", "Blauensteiner", now);
-		entryDao.persist(p1);
-
-		Entry p2 = new Entry("Max", "Mustermann", now);
-		entryDao.persist(p2);
-
-		Entry p3 = new Entry("Jane", "Doe", now);
-		entryDao.persist(p3);*/
+		/*
+		 * Entry p1 = new Entry("Johann", "Blauensteiner", now); entryDao.persist(p1);
+		 * 
+		 * Entry p2 = new Entry("Max", "Mustermann", now); entryDao.persist(p2);
+		 * 
+		 * Entry p3 = new Entry("Jane", "Doe", now); entryDao.persist(p3);
+		 */
 
 		return "forward:list";
 	}
