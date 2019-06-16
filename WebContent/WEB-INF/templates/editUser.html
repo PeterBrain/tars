@@ -34,48 +34,66 @@
 						<!-- Page Heading -->
 						<div
 							class="d-sm-flex align-items-center justify-content-between mb-4">
-							<h1 class="h3 mb-0 text-gray-800">Create User</h1>
+							<h1 class="h3 mb-0 text-gray-800">Edit User</h1>
 						</div>
 					</div>
 
 					<div class="row justify-content-md-center">
 						<div class="col-lg-4">
-							<form class="user" th:action="${app} ? @{/editUser(id=${user.id})} : @{/createUser}" method="post">
+							<form class="user" th:action="@{/editUser}" method="post">
+
+								<!----------------  firstname ------------------------>
 								<div class="form-group">
 									<input type="text" id="firstname" placeholder="Firstname"
-										name="firstname" required autofocus
-										class="form-control form-control-user">
+										name="firstname" th:value="${user} ? ${user.firstname}"
+										required autofocus class="form-control form-control-user">
 								</div>
+
+								<!----------------  lastname ------------------------>
 								<div class="form-group">
 									<input type="text" id="lastname" placeholder="Lastname"
-										name="lastname" required
-										class="form-control form-control-user">
-								</div>
-								<div class="form-group">
-									<input type="text" id="dateOfBirth" placeholder="Date"
-										name="dateOfBirth" class="form_datetime" readonly>
-								</div>
-								<div class="form-group">
-									<input type="email" id="email" placeholder="E-Mail address"
-										name="email" required class="form-control form-control-user">
-								</div>
-								<div class="form-group">
-									<input type="text" id="username" placeholder="Username"
-										name="username" required
-										class="form-control form-control-user">
-								</div>
-								<div class="form-group">
-									<input type="password" id="password" placeholder="Password"
-										name="password" required
-										class="form-control form-control-user">
-								</div>
-								<div class="form-group">
-									<input type="password" id="password_repeat"
-										placeholder="Repeat Password" name="password_repeat" required
+										name="lastname" th:value="${user} ? ${user.lastname}" required
 										class="form-control form-control-user">
 								</div>
 
-								<button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+								<!----------------  dateOfBirth ------------------------>
+								<div class="form-group">
+									<input type="text" id="dateOfBirth" placeholder="Date"
+										name="dateOfBirth" class="form_datetime"
+										th:value="${user} ? ${#dates.format(user.dayOfBirth, 'dd.MM.yyyy')}"
+										readonly>
+								</div>
+
+								<!----------------  email ------------------------>
+								<div class="form-group">
+									<input type="email" id="email" placeholder="E-Mail address"
+										name="email" th:value="${user} ? ${user.email}" required
+										class="form-control form-control-user">
+								</div>
+
+								<!----------------  username ------------------------>
+								<div class="form-group">
+									<input type="text" id="username" placeholder="Username"
+										name="username" th:value="${user} ? ${user.username}" required
+										class="form-control form-control-user">
+								</div>
+
+								<!----------------  password ------------------------>
+								<div class="form-group">
+									<input type="password" id="password" placeholder="Password"
+										name="password" th:value="${user} ? ${user.password}" required
+										class="form-control form-control-user">
+								</div>
+
+								<!----------------  password repeated ------------------------>
+								<div class="form-group">
+									<input type="password" id="password_repeat"
+										placeholder="Repeat Password" name="password_repeat"
+										th:value="${user} ? ${user.password}" required
+										class="form-control form-control-user">
+								</div>
+
+								<button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
 							</form>
 
 							<hr>

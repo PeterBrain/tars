@@ -177,7 +177,23 @@ public class UserController {
 
 	/**
 	 * 
-	 * open addUser page
+	 * open editUser page
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(value = { "/editUser" }, method = RequestMethod.GET)
+	public String editUser(Model model) {
+		String username = userDao.getCurrentUser();
+		model.addAttribute("user", username);
+
+		return "editUser";
+	}
+	
+	/**
+	 * 
+	 * open deleteUser page
 	 * 
 	 * @param model
 	 * @return
@@ -189,6 +205,7 @@ public class UserController {
 
 		List<User> users = userDao.getUsers();
 		model.addAttribute("users", users);
+		model.addAttribute("message", "User deleted");
 
 		return "userManagement";
 	}
