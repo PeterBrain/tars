@@ -16,11 +16,14 @@
 		<intercept-url pattern="/js/**" access="permitAll" />
 
 		<!-- intercept-url pattern="/**" access="hasRole('USER')" / -->
-		<!-- intercept-url pattern="/**" access="hasRole('USER') or hasRole('ADMIN')" / -->
+		<!-- intercept-url pattern="/**" access="hasRole('USER') or hasRole('ADMIN')" 
+			/ -->
 		<intercept-url pattern="/**" access="authenticated" />
-		<intercept-url pattern="/delete" access="hasRole('ADMIN')" />
+		<intercept-url pattern="/delete"
+			access="hasRole('ADMIN')" />
 
-		<form-login login-page="/login" default-target-url='/' always-use-default-target='true' />
+		<form-login login-page="/login" default-target-url='/'
+			always-use-default-target='true' />
 		<logout logout-url="/logout" />
 	</http>
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.fluttercode.datafactory.impl.DataFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -50,6 +51,10 @@ public class UserController {
 			userRole = new UserRole("ROLE_USER");
 		}
 
+		DataFactory df = new DataFactory();
+
+		// produces a date between 1/1/2000 and the current date
+		Date minDate = df.getDate(2020, 1, 1);
 		Date now = new Date();
 
 		User admin = new User("Hans", "Maier", now, "admin@example.com", "admin", "password", true);
@@ -58,10 +63,20 @@ public class UserController {
 		admin.addUserRole(adminRole);
 		userDao.persist(admin);
 
-		User user = new User("Max", "Mustermann", now, "user@example.com", "user", "password", true);
-		user.encryptPassword();
-		user.addUserRole(userRole);
-		userDao.persist(user);
+		for (int i = 0; i <= 26; i++) {
+			String firstname = df.getFirstName();
+			User user = new User(firstname, df.getLastName(), df.getDateBetween(minDate, now),
+					firstname + "@example.com", firstname, "password", true);
+			user.encryptPassword();
+			user.addUserRole(userRole);
+			userDao.persist(user);
+		}
+
+
+//		User user = new User("Max", "Mustermann", now, "user@example.com", "user", "password", true);
+//		user.encryptPassword();
+//		user.addUserRole(userRole);
+//		userDao.persist(user);
 
 		return "forward:login";
 	}
@@ -189,7 +204,7 @@ public class UserController {
 	public String editPassword(Model model) {
 		String username = userDao.getCurrentUser();
 		model.addAttribute("user", username);
-		
+
 		List<User> users = userDao.findByUsername(username);
 		model.addAttribute(users);
 
@@ -212,7 +227,7 @@ public class UserController {
 	public String changePassword(Model model, @RequestParam int id, @RequestParam String pass_old,
 			@RequestParam String pass_new, @RequestParam String pass_repeat) {
 		User user = userDao.getUserById(id);
-		
+
 		if (pass_new.equals(pass_repeat)) { // old password need to be checked too
 			user.encryptPassword();
 			userDao.persist(user);
@@ -222,12 +237,13 @@ public class UserController {
 		}
 		return "editPassword";
 	}
-	
-	/*@ExceptionHandler()
-	@ResponseStatus(code = HttpStatus.FORBIDDEN)
-	public String handle403(Exception ex) {
-		return "login";
-	}*/
+
+	/*
+	 * @ExceptionHandler()
+	 * 
+	 * @ResponseStatus(code = HttpStatus.FORBIDDEN) public String
+	 * handle403(Exception ex) { return "login"; }
+	 */
 
 	/**
 	 * 

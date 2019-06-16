@@ -87,9 +87,9 @@
 		<property name="entityManagerFactory"
 			ref="entityManagerFactory" />
 	</bean>
-	
+
 	<tx:annotation-driven />
-	
+
 	<bean id="persistenceExceptionTranslationPostProcessor"
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 </beans>
