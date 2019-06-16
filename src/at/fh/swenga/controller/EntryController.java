@@ -53,24 +53,24 @@ public class EntryController {
 		Date minDate = df.getDate(2020, 1, 1);
 		Date now = new Date();
 
-		for (int i = 0; i <= 28; i++) {
-			Entry p1 = new Entry(entryDao.getEntries().size() + 1, now, "My note: " + df.getRandomWord(),
-					"My activity" + df.getRandomWord(), now, df.getDateBetween(minDate, now), true);
-			p1.setEditor(userDao.getUserById(1));
-			entryDao.persist(p1);
-		}
+//		for (int i = 0; i <= 28; i++) {
+//			Entry p1 = new Entry(entryDao.getEntries().size() + 1, now, "My note: " + df.getRandomWord(),
+//					"My activity" + df.getRandomWord(), now, df.getDateBetween(minDate, now), true);
+//			p1.setEditor(userDao.getUserById(1));
+//			entryDao.persist(p1);
+//		}
 
-//		Entry p1 = new Entry(entryDao.getEntries().size() + 1, now, "Test1", "Work1", now, now, true);
-//		p1.setEditor(userDao.getUserById(1));
-//		entryDao.persist(p1);
-//
-//		Entry p2 = new Entry(entryDao.getEntries().size() + 1, now, "Test2", "Work2", now, now, true);
-//		p2.setEditor(userDao.getUserById(1));
-//		entryDao.persist(p2);
-//
-//		Entry p3 = new Entry(entryDao.getEntries().size() + 1, now, "Test3", "Work3", now, now, true);
-//		p3.setEditor(userDao.getUserById(1));
-//		entryDao.persist(p3);
+		Entry p1 = new Entry(entryDao.getEntries().size() + 1, now, "Test1", "Work1", now, now, true);
+		p1.setEditor(userDao.getUserById(1));
+		entryDao.persist(p1);
+
+		Entry p2 = new Entry(entryDao.getEntries().size() + 1, now, "Test2", "Work2", now, now, true);
+		p2.setEditor(userDao.getUserById(1));
+		entryDao.persist(p2);
+
+		Entry p3 = new Entry(entryDao.getEntries().size() + 1, now, "Test3", "Work3", now, now, true);
+		p3.setEditor(userDao.getUserById(1));
+		entryDao.persist(p3);
 
 		return "forward:list";
 	}
