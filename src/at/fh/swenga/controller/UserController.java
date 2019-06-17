@@ -105,7 +105,7 @@ public class UserController {
 	 */
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/editUser" }, method = RequestMethod.GET)
-	public String addUser(Model model) {
+	public String editUser(Model model) {
 		String username = userDao.getCurrentUser();
 		model.addAttribute("user", username);
 
@@ -128,7 +128,7 @@ public class UserController {
 	 */
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/changeUser" }, method = RequestMethod.POST)
-	public String createUser(Model model, @RequestParam String firstname, @RequestParam String lastname,
+	public String changeUser(Model model, @RequestParam String firstname, @RequestParam String lastname,
 			@RequestParam String email, @RequestParam String username, @RequestParam String dateOfBirth,
 			@RequestParam String password, @RequestParam String password_repeat) {
 		String currentUsername = userDao.getCurrentUser();
@@ -151,7 +151,7 @@ public class UserController {
 			dob = sdf.parse(dateOfBirth);
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", "Date of birth invalid");
-			return "addUser";
+			return "editUser";
 		}
 
 		if (password.equals(password_repeat)) {
@@ -167,24 +167,8 @@ public class UserController {
 			return "forward:userManagement";
 		} else {
 			model.addAttribute("errorMessage", "Passwords do not match");
-			return "addUser";
+			return "editUser";
 		}
-	}
-
-	/**
-	 * 
-	 * open editUser page
-	 * 
-	 * @param model
-	 * @return
-	 */
-	@Secured("ROLE_ADMIN")
-	@RequestMapping(value = { "/editUser" }, method = RequestMethod.GET)
-	public String editUser(Model model) {
-		String username = userDao.getCurrentUser();
-		model.addAttribute("user", username);
-
-		return "editUser";
 	}
 
 	/**

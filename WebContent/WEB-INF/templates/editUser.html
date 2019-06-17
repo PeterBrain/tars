@@ -40,7 +40,7 @@
 
 					<div class="row justify-content-md-center">
 						<div class="col-lg-4">
-							<form class="user" th:action="${user} ? @{/editUser(id=${user.id})} : @{/addUser}" method="post">
+							<form class="user" th:action="${user} ? @{/editUser(id=${user.id})} : @{/changeUser}" method="post">
 
 								<!----------------  firstname ------------------------>
 								<div class="form-group">
