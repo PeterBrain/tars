@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import at.fh.swenga.dao.EntryDao;
 import at.fh.swenga.dao.UserDao;
 import at.fh.swenga.model.Entry;
-import at.fh.swenga.model.User;
 
 @Controller
 public class EntryController {
@@ -60,8 +59,8 @@ public class EntryController {
 		Date now = new Date();
 
 		for (int i = 0; i < 28; i++) {
-			Entry p1 = new Entry("My note: " + df.getRandomWord(),
-					"My activity: " + df.getRandomWord(), now, df.getDateBetween(minDate, now), true);
+			Entry p1 = new Entry("My note: " + df.getRandomWord(), "My activity: " + df.getRandomWord(), now,
+					df.getDateBetween(minDate, now), true);
 			p1.setEditor(userDao.getUserById(i));
 			entryDao.persist(p1);
 		}
@@ -93,33 +92,33 @@ public class EntryController {
 	public String handleAllException(Exception ex) {
 		return "error";
 	}
-	
-	@RequestMapping(value = { "/addEntry"}, method = RequestMethod.GET)
+
+	@RequestMapping(value = { "/addEntry" }, method = RequestMethod.GET)
 	public String addEntry(Model model) {
 		return "editEntry";
 	}
-	
-	@RequestMapping(value = { "/createEntry"}, method = RequestMethod.POST)
+
+	@RequestMapping(value = { "/createEntry" }, method = RequestMethod.POST)
 	public String createEntry(Model model, @RequestParam String note, @RequestParam String activity) {
-		//User currentUser = userDao.get
-		
+		// User currentUser = userDao.get
+
 		Date now = new Date();
-		
+
 		Entry new_entry = new Entry(note, activity, now, now, true);
-		
+
 		entryDao.persist(new_entry);
-		
+
 		List<Entry> entries = entryDao.getEntries();
 		model.addAttribute("entries", entries);
-		
+
 		model.addAttribute("message", "Created new Entry");
 		return "listEntries";
 	}
-	
-	@RequestMapping(value = { "/editEntry"}, method = RequestMethod.GET)
+
+	@RequestMapping(value = { "/editEntry" }, method = RequestMethod.GET)
 	public String editEntry(Model model, int id) {
 		Entry entry = entryDao.getEntryById(id);
-		
+
 		if (entry != null) {
 			model.addAttribute("entry", entry);
 			return "editEntry";
@@ -128,47 +127,44 @@ public class EntryController {
 			return "forward:/listEntries";
 		}
 	}
-	
-	@RequestMapping(value = {"/changeEntry"}, method = RequestMethod.POST)
+
+	@RequestMapping(value = { "/changeEntry" }, method = RequestMethod.POST)
 	public String changeEntry(@Valid Entry changedEntry, BindingResult bindingResult, Model model) {
-		
-		//any errors? create string of all errors and return to page
+
+		// any errors? create string of all errors and return to page
 		if (bindingResult.hasErrors()) {
 			String errorMessage = "";
-			for(FieldError fieldError : bindingResult.getFieldErrors()) {
+			for (FieldError fieldError : bindingResult.getFieldErrors()) {
 				errorMessage += fieldError.getField() + " is invalid: " + fieldError.getCode() + "<br>";
 			}
 			model.addAttribute("errorMessage", errorMessage);
 			return "listEntries";
 		}
-		
+
 		Entry entry = entryDao.getEntryById(changedEntry.getEntryId());
-		
+
 		if (entry == null) {
 			model.addAttribute("errorMessage", "Entry does not exist! <br>");
 		} else {
-			
+
 			Date now = new Date();
-			
+
 			entry.setActivity(changedEntry.getActivity());
 			entry.setNote(changedEntry.getActivity());
 			entry.setTimestampCreated(changedEntry.getTimestampCreated());
 			entry.setTimestampModified(now);
-			
+
 			model.addAttribute("message", "Changed entry " + changedEntry.getActivity());
-			
+
 		}
 		return "listEntries";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@RequestMapping(value = { "/deleteEntry" }, method = RequestMethod.GET)
+	public String deleteEntry(Model model, @RequestParam int id) {
+		entryDao.delete(id);
+
+		return "listEntries";
+	}
+
 }
