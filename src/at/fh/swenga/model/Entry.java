@@ -51,7 +51,7 @@ public class Entry implements java.io.Serializable {
 	@Column(name = "modified", nullable = false)
 	private Date timestampModified;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST) // maybe remove Cascade type
 	private User editor;
 
 	@Column(name = "enabled", nullable = false)
@@ -64,11 +64,10 @@ public class Entry implements java.io.Serializable {
 	public Entry() {
 	}
 
-	public Entry(int entryId, @NotNull(message = "timestamp cannot be null") Date timestamp, String note,
+	public Entry(@NotNull(message = "timestamp cannot be null") Date timestamp, String note,
 			String activity, @NotNull(message = "create time cannot be null") Date timestampCreated,
 			@NotNull(message = "modify time cannot be null") Date timestampModified, boolean enabled) {
 		super();
-		this.entryId = entryId;
 		this.timestamp = timestamp;
 		this.note = note;
 		this.activity = activity;
