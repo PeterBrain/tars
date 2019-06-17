@@ -22,6 +22,8 @@ db.password=xxx
     * Export
         * excel
         * email
+    * Modification History
+        * addHistoryEntry
 
 ---
 This project was set up for the "Software engineering advanced" lecture at [FH JOANNEUM](https://www.fh-joanneum.at/) Graz.
