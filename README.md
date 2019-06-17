@@ -10,22 +10,14 @@ db.password=xxx
 
 ## ToDo
 * Methods:
-    * UserManagement
-        * editUser
     * Archive
-        * addEntry
         * editEntry
-        * deleteEntry
     * Category
-        * addCategory
         * editCategory
-        * deleteCategory
     * Project
-        * addProject
         * editProject
-        * deleteProject
     * Password
-        * Password reset
+        * Password reset (user)
         * Password policy
     * Export
         * excel

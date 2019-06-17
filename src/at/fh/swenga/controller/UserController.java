@@ -71,7 +71,7 @@ public class UserController {
 		for (int i = 0; i <= 26; i++) {
 			String firstname = df.getFirstName();
 			User user = new User(firstname, df.getLastName(), df.getDateBetween(minDate, now),
-					firstname + "@example.com", firstname, "password", true);
+					firstname + "@example.com", firstname.toLowerCase(), "password", true);
 			user.encryptPassword();
 			user.addUserRole(userRole);
 			userDao.persist(user);
