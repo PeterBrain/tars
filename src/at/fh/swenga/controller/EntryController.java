@@ -155,7 +155,8 @@ public class EntryController {
 			entry.setTimestampModified(now);
 
 			model.addAttribute("message", "Changed entry " + changedEntry.getActivity());
-
+			
+			entryDao.persist(entry);
 		}
 		return "listEntries";
 	}
