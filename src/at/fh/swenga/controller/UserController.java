@@ -217,20 +217,20 @@ public class UserController {
 		if (user == null) {
 			model.addAttribute("errorMessage", "User does not exist!<br>");
 		} else {
-			
-			System.out.println(changedUser.toString());
-			
 			// Change the attributes
 			user.setFirstName(changedUser.getFirstName());
 			user.setLastName(changedUser.getLastName());
 			user.setDateOfBirth(changedUser.getDateOfBirth());
 			user.setEmail(changedUser.getEmail());
 			user.setUserName(changedUser.getUserName());
+			userDao.persist(user);
 
 			if (changedUser.getPassword().isEmpty()) {
 				System.out.println("in if password with empty");
 			}
 
+			System.out.println(changedUser.toString());
+			
 			// Save a message for the web page
 			model.addAttribute("message",
 					"Changed user " + changedUser.getFirstName() + " " + changedUser.getLastName());
