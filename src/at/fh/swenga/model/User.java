@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotWNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -55,7 +55,7 @@ public class User implements java.io.Serializable {
 	@Column(name = "enabled", nullable = false)
 	private boolean enabled;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@ManyToMany(fetch = FetchType.LAZY)//, cascade = CascadeType.PERSIST)
 	private Set<UserRole> userRoles;
 
 	@OneToMany(mappedBy = "editor", fetch = FetchType.LAZY)

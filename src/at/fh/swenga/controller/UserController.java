@@ -44,11 +44,13 @@ public class UserController {
 		UserRole adminRole = userRoleDao.getRole("ROLE_ADMIN");
 		if (adminRole == null) {
 			adminRole = new UserRole("ROLE_ADMIN");
+			userRoleDao.persist(adminRole);
 		}
 
 		UserRole userRole = userRoleDao.getRole("ROLE_USER");
 		if (userRole == null) {
 			userRole = new UserRole("ROLE_USER");
+			userRoleDao.persist(userRole);
 		}
 
 		DataFactory df = new DataFactory();
@@ -71,12 +73,6 @@ public class UserController {
 			user.addUserRole(userRole);
 			userDao.persist(user);
 		}
-
-
-//		User user = new User("Max", "Mustermann", now, "user@example.com", "user", "password", true);
-//		user.encryptPassword();
-//		user.addUserRole(userRole);
-//		userDao.persist(user);
 
 		return "forward:login";
 	}
@@ -108,7 +104,7 @@ public class UserController {
 	 * @return
 	 */
 	@Secured("ROLE_ADMIN")
-	@RequestMapping(value = { "/addUser" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/editUser" }, method = RequestMethod.GET)
 	public String addUser(Model model) {
 		String username = userDao.getCurrentUser();
 		model.addAttribute("user", username);
@@ -131,7 +127,7 @@ public class UserController {
 	 * @return
 	 */
 	@Secured("ROLE_ADMIN")
-	@RequestMapping(value = { "/createUser" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/changeUser" }, method = RequestMethod.POST)
 	public String createUser(Model model, @RequestParam String firstname, @RequestParam String lastname,
 			@RequestParam String email, @RequestParam String username, @RequestParam String dateOfBirth,
 			@RequestParam String password, @RequestParam String password_repeat) {
@@ -168,7 +164,7 @@ public class UserController {
 			model.addAttribute("users", users);
 
 			model.addAttribute("message", "Created new user");
-			return "userManagement";
+			return "forward:userManagement";
 		} else {
 			model.addAttribute("errorMessage", "Passwords do not match");
 			return "addUser";
@@ -190,7 +186,7 @@ public class UserController {
 
 		return "editUser";
 	}
-	
+
 	/**
 	 * 
 	 * open deleteUser page
