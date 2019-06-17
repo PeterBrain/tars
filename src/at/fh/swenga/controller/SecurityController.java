@@ -39,7 +39,12 @@ public class SecurityController {
 	 */
 	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
 	public String handleLogin(Model model) {
-		return "login";
+		if (userDao.getCurrentUser().equals("ANONYMOUSUSER")) {
+			return "login";
+		}
+		else {
+			return "index";
+		}
 	}
 
 	/**
