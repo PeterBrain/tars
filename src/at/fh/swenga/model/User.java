@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotWNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -60,6 +60,9 @@ public class User implements java.io.Serializable {
 
 	@OneToMany(mappedBy = "editor", fetch = FetchType.LAZY)
 	private Set<Entry> entries;
+	
+	@OneToMany(mappedBy = "projectLeader", fetch = FetchType.LAZY)
+	private Set<Project> projects;
 
 	@Version
 	private long version;
