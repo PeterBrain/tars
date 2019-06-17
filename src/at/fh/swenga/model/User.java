@@ -60,6 +60,9 @@ public class User implements java.io.Serializable {
 
 	@OneToMany(mappedBy = "editor", fetch = FetchType.LAZY)
 	private Set<Entry> entries;
+	
+	@OneToMany(mappedBy = "projectLeader", fetch = FetchType.LAZY)
+	private Set<Project> projects;
 
 	@Version
 	private long version;

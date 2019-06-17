@@ -56,6 +56,9 @@ public class Entry implements java.io.Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Category category;
+	
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	private Project project;
 
 	@Column(name = "enabled", nullable = false)
 	private boolean enabled;
