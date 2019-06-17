@@ -54,14 +54,13 @@ public class User implements java.io.Serializable {
 	@Column(name = "enabled", nullable = false)
 	private boolean enabled;
 
-	@ManyToMany(fetch = FetchType.LAZY) // , cascade = CascadeType.PERSIST is not used because insert user would not
-										// work
+	@ManyToMany(fetch = FetchType.EAGER) // cascade = CascadeType.PERSIST is not used because insert user would not work
 	private Set<UserRole> userRoles;
 
-	@OneToMany(mappedBy = "editor", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "editor", fetch = FetchType.EAGER)
 	private Set<Entry> entries;
 
-	@OneToMany(mappedBy = "projectLeader", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "projectLeader", fetch = FetchType.EAGER)
 	private Set<Project> projects;
 
 	@Version

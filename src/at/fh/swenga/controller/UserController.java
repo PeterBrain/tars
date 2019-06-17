@@ -200,8 +200,6 @@ public class UserController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/changeUser" }, method = RequestMethod.POST)
 	public String changeUser(@Valid User changedUser, BindingResult bindingResult, Model model) {
-		System.out.println(changedUser.getDateOfBirth());
-
 		// Any errors? -> Create a String out of all errors and return to the page
 		if (bindingResult.hasErrors()) {
 			String errorMessage = "";
@@ -219,16 +217,15 @@ public class UserController {
 		if (user == null) {
 			model.addAttribute("errorMessage", "User does not exist!<br>");
 		} else {
+			
+			System.out.println(changedUser.toString());
+			
 			// Change the attributes
 			user.setFirstName(changedUser.getFirstName());
 			user.setLastName(changedUser.getLastName());
 			user.setDateOfBirth(changedUser.getDateOfBirth());
 			user.setEmail(changedUser.getEmail());
 			user.setUserName(changedUser.getUserName());
-
-			if (changedUser.getPassword().equals(null)) {
-				System.out.println("in if password with equals");
-			}
 
 			if (changedUser.getPassword().isEmpty()) {
 				System.out.println("in if password with empty");
@@ -259,7 +256,7 @@ public class UserController {
 		model.addAttribute("users", users);
 		model.addAttribute("message", "User deleted");
 
-		return "userManagement";
+		return "forward:/userManagement";
 	}
 
 	/**
