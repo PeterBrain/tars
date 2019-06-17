@@ -26,6 +26,9 @@ public class Project implements java.io.Serializable {
 	@Column(name = "name", length = 45)
 	private String name;
 	
+	@Column(name = "description", length = 45)
+	private String description;
+	
 	@OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
 	private Set<Entry> entries;
 	
@@ -41,9 +44,10 @@ public class Project implements java.io.Serializable {
 	}
 
 
-	public Project(String name, User projectLeader) {
+	public Project(String name, String description, User projectLeader) {
 		super();
 		this.name = name;
+		this.description = description;
 		this.projectLeader = projectLeader;
 	}
 
@@ -62,11 +66,21 @@ public class Project implements java.io.Serializable {
 		return name;
 	}
 
-
+	
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	
+	public String getDescription() {
+		return description;
+	}
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 
 	public Set<Entry> getEntries() {
 		return entries;
@@ -124,7 +138,7 @@ public class Project implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "Project [projectId=" + projectId + ", name=" + name + ", entries=" + entries + ", projectLeader="
+		return "Project [projectId=" + projectId + ", name=" + name + ", description=" + description + ", entries=" + entries + ", projectLeader="
 				+ projectLeader + "]";
 	}
 	

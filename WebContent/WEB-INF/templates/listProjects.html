@@ -61,6 +61,7 @@
 										<tr>
 											<th>ID</th>
 											<th>Name</th>
+											<th>Description</th>
 											<th>Project Leader</th>
 											<th>Action</th>
 										</tr>
@@ -69,6 +70,7 @@
 										<tr>
 											<th>ID</th>
 											<th>Name</th>
+											<th>Description</th>
 											<th>Project Leader</th>
 											<th>Action</th>
 										</tr>
@@ -77,6 +79,7 @@
 										<tr th:each="project : ${projects}">
 											<td th:text="${project.projectId}"></td>
 											<td th:text="${project.name}"></td>
+											<td th:text="${project.description}"></td>
 											<td th:text="${project.projectLeader}"></td>
 											<td>
 												<a th:href="@{/editProject(id=${project.projectId})}" class="btn btn-warning btn-circle btn-sm" sec:authorize="hasRole('ADMIN')">

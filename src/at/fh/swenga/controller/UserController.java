@@ -128,9 +128,12 @@ public class UserController {
 	 */
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/createUser" }, method = RequestMethod.POST)
-	public String createUser(Model model, @RequestParam String firstname, @RequestParam String lastname,
-			@RequestParam String email, @RequestParam String username, @RequestParam String dateOfBirth,
+	public String createUser(Model model, @RequestParam String firstName, @RequestParam String lastName,
+			@RequestParam String email, @RequestParam String userName, @RequestParam String dateOfBirth,
 			@RequestParam String password, @RequestParam String password_repeat) {
+		
+		System.out.println(firstName);
+		
 		String currentUsername = userDao.getCurrentUser();
 		model.addAttribute("user", currentUsername);
 
@@ -155,7 +158,7 @@ public class UserController {
 		}
 
 		if (password.equals(password_repeat)) {
-			User new_user = new User(firstname, lastname, dob, email, username, password, true);
+			User new_user = new User(firstName, lastName, dob, email, userName, password, true);
 			new_user.encryptPassword();
 			new_user.addUserRole(userRole);
 			userDao.persist(new_user);
@@ -256,7 +259,7 @@ public class UserController {
 		model.addAttribute("users", users);
 		model.addAttribute("message", "User deleted");
 
-		return "forward:/userManagement";
+		return "userManagement";
 	}
 
 	/**

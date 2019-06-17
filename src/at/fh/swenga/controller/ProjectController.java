@@ -7,12 +7,14 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.dao.ProjectDao;
 import at.fh.swenga.dao.UserDao;
+import at.fh.swenga.model.Category;
 import at.fh.swenga.model.Project;
 import at.fh.swenga.model.User;
 
@@ -33,11 +35,11 @@ public class ProjectController {
 		return "listProjects";
 	}
 
-	@RequestMapping(value = { "fillProjects" })
 	@Transactional
+	@RequestMapping(value = { "fillProjects" })
 	public String fillProjects(Model model) {
 
-		Project project1 = new Project("Project ", userDao.getUserById(0));
+		Project project1 = new Project("Project ", "Default description", userDao.getUserById(0));
 		projectDao.persist(project1);
 
 		return "forward:listProjects";
@@ -50,5 +52,31 @@ public class ProjectController {
 		model.addAttribute("message", "Project deleted");
 
 		return "forward:listProjects";
+	}
+	
+	@RequestMapping(value = { "/addProject" }, method = RequestMethod.GET)
+	public String addProject(Model model) {
+		return "editProject";
+	}
+	
+	@RequestMapping(value = { "/createProject" }, method = RequestMethod.POST)
+	public String createProject(Model model, @RequestParam String name, @RequestParam String description) {
+		Project new_project = new Project(name, description, userDao.getUserById(0));
+		projectDao.persist(new_project);
+
+		model.addAttribute("message", "Created new Project");
+		return "forward:listProjects";
+	}
+	
+	/**
+	 * 
+	 * handle errors
+	 * 
+	 * @param ex
+	 * @return
+	 */
+	@ExceptionHandler(Exception.class)
+	public String handleAllException(Exception ex) {
+		return "error";
 	}
 }
