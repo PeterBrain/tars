@@ -109,7 +109,7 @@ public class UserController {
 		String username = userDao.getCurrentUser();
 		model.addAttribute("user", username);
 
-		return "addUser";
+		return "editUser";
 	}
 
 	/**
