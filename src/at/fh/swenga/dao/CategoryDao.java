@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import at.fh.swenga.model.Category;
+import at.fh.swenga.model.Entry;
 
 @Repository
 @Transactional
@@ -22,5 +23,13 @@ public class CategoryDao {
 		TypedQuery<Category> typedQuery = entityManager.createQuery("SELECT c FROM Category c", Category.class);
 		List<Category> typedResultList = typedQuery.getResultList();
 		return typedResultList;
+	}
+	
+	public void persist(Category category) {
+		entityManager.persist(category);
+	}
+	
+	public void delete(Category category) {
+		entityManager.remove(category);
 	}
 }

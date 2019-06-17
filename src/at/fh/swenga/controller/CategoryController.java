@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,5 +23,21 @@ public class CategoryController {
 		model.addAttribute("categories", categories);
 
 		return "listCategories";
+	}
+
+	@RequestMapping(value = { "/fillCategories" })
+	@Transactional
+	public String fillCategories(Model model) {
+
+		Category category1 = new Category("Customer");
+		categoryDao.persist(category1);
+
+		Category category2 = new Category("Important");
+		categoryDao.persist(category2);
+
+		Category category3 = new Category("Test");
+		categoryDao.persist(category3);
+
+		return "forward:listCategories";
 	}
 }

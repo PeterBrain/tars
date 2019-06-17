@@ -38,9 +38,9 @@ public class EntryDao {
 		return entityManager.find(Entry.class, i);
 	}
 	
-	public Entry getEntry(int i) throws DataAccessException {
+	/*public Entry getEntry(int i) throws DataAccessException {
 		return entityManager.find(Entry.class, i);
-	}
+	}*/
 
 	public void persist(Entry entry) {
 		entityManager.persist(entry);
@@ -60,7 +60,7 @@ public class EntryDao {
 	}
 
 	public void delete(int id) {
-		Entry entry = getEntry(id);
+		Entry entry = getEntryById(id);
 		if (entry != null) {
 			delete(entry);
 		}

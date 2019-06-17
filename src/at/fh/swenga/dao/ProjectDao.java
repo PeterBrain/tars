@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
+import at.fh.swenga.model.Category;
 import at.fh.swenga.model.Project;
 
 @Repository
@@ -22,5 +23,9 @@ public class ProjectDao {
 		TypedQuery<Project> typedQuery = entityManager.createQuery("SELECT p FROM Project p", Project.class);
 		List<Project> typedResultList = typedQuery.getResultList();
 		return typedResultList;
+	}
+	
+	public void persist(Project project) {
+		entityManager.persist(project);
 	}
 }
