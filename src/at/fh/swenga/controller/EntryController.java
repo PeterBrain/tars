@@ -3,12 +3,16 @@ package at.fh.swenga.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.fluttercode.datafactory.impl.DataFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -112,6 +116,7 @@ public class EntryController {
 		return "listEntries";
 	}
 	
+	@RequestMapping(value = { "/editEntry"}, method = RequestMethod.GET)
 	public String editEntry(Model model, int id) {
 		Entry entry = entryDao.getEntryById(id);
 		
@@ -122,6 +127,38 @@ public class EntryController {
 			model.addAttribute("errorMessage", "Couldn't find entry with id: " + id);
 			return "forward:/listEntries";
 		}
+	}
+	
+	@RequestMapping(value = {"/changeEntry"}, method = RequestMethod.POST)
+	public String changeEntry(@Valid Entry changedEntry, BindingResult bindingResult, Model model) {
+		
+		//any errors? create string of all errors and return to page
+		if (bindingResult.hasErrors()) {
+			String errorMessage = "";
+			for(FieldError fieldError : bindingResult.getFieldErrors()) {
+				errorMessage += fieldError.getField() + " is invalid: " + fieldError.getCode() + "<br>";
+			}
+			model.addAttribute("errorMessage", errorMessage);
+			return "listEntries";
+		}
+		
+		Entry entry = entryDao.getEntryById(changedEntry.getEntryId());
+		
+		if (entry == null) {
+			model.addAttribute("errorMessage", "Entry does not exist! <br>");
+		} else {
+			
+			Date now = new Date();
+			
+			entry.setActivity(changedEntry.getActivity());
+			entry.setNote(changedEntry.getActivity());
+			entry.setTimestampCreated(changedEntry.getTimestampCreated());
+			entry.setTimestampModified(now);
+			
+			model.addAttribute("message", "Changed entry " + changedEntry.getActivity());
+			
+		}
+		return "listEntries";
 	}
 	
 	

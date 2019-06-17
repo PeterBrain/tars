@@ -42,8 +42,8 @@
 
 					<div class="row justify-content-md-center">
 						<div class="col-lg-4">
-							<form class="user"
-								th:action="${user} ? @{/editEntry(id=${entry.entryId})} : @{/createEntry}"
+							<form class="entry"
+								th:action="${entry} ? @{/changeEntry(id=${entry.entryId})} : @{/createEntry}"
 								method="post">
 
 
@@ -63,7 +63,7 @@
 
 
 								<button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
-								<a href="listUsers" class="btn btn-default"> Cancel </a>
+								<a href="listEntries" class="btn btn-default"> Cancel </a>
 							</form>
 
 							<hr>
