@@ -34,13 +34,13 @@
 						<!-- Page Heading -->
 						<div
 							class="d-sm-flex align-items-center justify-content-between mb-4">
-							<h1 class="h3 mb-0 text-gray-800">Edit User</h1>
+							<h1 class="h3 mb-0 text-gray-800" th:text="${user}? 'Change User' : 'New User'">New/Change User</h1>
 						</div>
 					</div>
 
 					<div class="row justify-content-md-center">
 						<div class="col-lg-4">
-							<form class="user" th:action="@{/editUser}" method="post">
+							<form class="user" th:action="${user} ? @{/editUser(id=${user.id})} : @{/addUser}" method="post">
 
 								<!----------------  firstname ------------------------>
 								<div class="form-group">
@@ -94,6 +94,7 @@
 								</div>
 
 								<button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
+								<a href="listUsers" class="btn btn-default"> Cancel </a>
 							</form>
 
 							<hr>
