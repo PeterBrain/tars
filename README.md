@@ -15,7 +15,6 @@ db.password=xxx
     * UserManagement
         * editUser
     * Archive
-        * fillData (detached error)
         * addEntry
         * editEntry
         * deleteEntry

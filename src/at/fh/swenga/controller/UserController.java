@@ -44,11 +44,13 @@ public class UserController {
 		UserRole adminRole = userRoleDao.getRole("ROLE_ADMIN");
 		if (adminRole == null) {
 			adminRole = new UserRole("ROLE_ADMIN");
+			userRoleDao.persist(adminRole);
 		}
 
 		UserRole userRole = userRoleDao.getRole("ROLE_USER");
 		if (userRole == null) {
 			userRole = new UserRole("ROLE_USER");
+			userRoleDao.persist(userRole);
 		}
 
 		DataFactory df = new DataFactory();
@@ -149,7 +151,7 @@ public class UserController {
 			dob = sdf.parse(dateOfBirth);
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", "Date of birth invalid");
-			return "editUser";
+			return "forward:addUser";
 		}
 
 		if (password.equals(password_repeat)) {
@@ -165,7 +167,7 @@ public class UserController {
 			return "forward:userManagement";
 		} else {
 			model.addAttribute("errorMessage", "Passwords do not match");
-			return "editUser";
+			return "forward:addUser";
 		}
 	}
 
@@ -184,7 +186,7 @@ public class UserController {
 
 		return "editUser";
 	}
-	
+
 	/**
 	 * 
 	 * open deleteUser page
