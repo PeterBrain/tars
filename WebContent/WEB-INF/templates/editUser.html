@@ -4,7 +4,7 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 <div th:replace="~{./includes/meta :: META}" />
-<title>Create User &#124; TARS - Time &amp; Activity Recording
+<title th:text="${user}? 'Change User' : 'New User'">New/Change User &#124; TARS - Time &amp; Activity Recording
 	Software</title>
 <div th:replace="~{./includes/css :: CSS}" />
 
@@ -40,7 +40,7 @@
 
 					<div class="row justify-content-md-center">
 						<div class="col-lg-4">
-							<form class="user" th:action="${user} ? @{/editUser(id=${user.id})} : @{/changeUser}" method="post">
+							<form class="user" th:action="${user} ? @{/editUser(id=${user.id})} : @{/createUser}" method="post">
 
 								<!----------------  firstname ------------------------>
 								<div class="form-group">

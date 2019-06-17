@@ -127,8 +127,8 @@ public class UserController {
 	 * @return
 	 */
 	@Secured("ROLE_ADMIN")
-	@RequestMapping(value = { "/changeUser" }, method = RequestMethod.POST)
-	public String changeUser(Model model, @RequestParam String firstname, @RequestParam String lastname,
+	@RequestMapping(value = { "/createUser" }, method = RequestMethod.POST)
+	public String createUser(Model model, @RequestParam String firstname, @RequestParam String lastname,
 			@RequestParam String email, @RequestParam String username, @RequestParam String dateOfBirth,
 			@RequestParam String password, @RequestParam String password_repeat) {
 		String currentUsername = userDao.getCurrentUser();
