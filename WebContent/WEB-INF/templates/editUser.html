@@ -46,17 +46,24 @@
 								th:action="${user} ? @{/changeUser(id=${user.userId})} : @{/createUser}"
 								method="post">
 
+								<!------------------  userId ------------------>
+								<div class="form-group">
+									<input class="form-control" id="userId" type="hidden"
+										name="userId" th:value="${user} ? ${user.userId}"
+										th:readonly="${userId}">
+								</div>
+
 								<!----------------  firstname ------------------------>
 								<div class="form-group">
-									<input type="text" id="firstname" placeholder="Firstname"
-										name="firstname" th:value="${user} ? ${user.firstName}"
+									<input type="text" id="firstName" placeholder="Firstname"
+										name="firstName" th:value="${user} ? ${user.firstName}"
 										required autofocus class="form-control form-control-user">
 								</div>
 
 								<!----------------  lastname ------------------------>
 								<div class="form-group">
-									<input type="text" id="lastname" placeholder="Lastname"
-										name="lastname" th:value="${user} ? ${user.lastName}" required
+									<input type="text" id="lastName" placeholder="Lastname"
+										name="lastName" th:value="${user} ? ${user.lastName}" required
 										class="form-control form-control-user">
 								</div>
 
@@ -77,8 +84,8 @@
 
 								<!----------------  username ------------------------>
 								<div class="form-group">
-									<input type="text" id="username" placeholder="Username"
-										name="username" th:value="${user} ? ${user.userName}" required
+									<input type="text" id="userName" placeholder="Username"
+										name="userName" th:value="${user} ? ${user.userName}" required
 										class="form-control form-control-user">
 								</div>
 
