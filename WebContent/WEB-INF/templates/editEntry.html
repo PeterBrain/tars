@@ -133,14 +133,16 @@
 	<script>
 		$(function() {
 			$(".form_datetime").datetimepicker({
-				format : "dd.mm.yyyy",
+				format : "dd.mm.yyyy hh:ii",
 				pickerPosition : "bottom-left",
 				autoclose : true,
 				todayBtn : true,
 				todayHighlight : true,
 				keyboardNavigation : true,
-				minView : 2,
-				maxView : 4
+				minView : 0,
+				maxView : 3,
+				minuteStep : 1,
+				weekStart : 1
 			});
 		});
 	</script>

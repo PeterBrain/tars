@@ -33,25 +33,25 @@ public class Entry implements java.io.Serializable {
 	@Column(name = "activity", nullable = false, length = 30)
 	private String activity;
 	
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
 	@NotNull(message = "create time cannot be null")
 	@Column(name = "start", nullable = false)
 	private Date timestampStart;
 	
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
 	@NotNull(message = "create time cannot be null")
 	@Column(name = "end", nullable = false)
 	private Date timestampEnd;
 
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
 	@NotNull(message = "create time cannot be null")
 	@Column(name = "created", nullable = false)
 	private Date timestampCreated;
 
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
 	@NotNull(message = "modify time cannot be null")
 	@Column(name = "modified", nullable = false)

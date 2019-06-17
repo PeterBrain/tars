@@ -119,7 +119,7 @@ public class EntryController {
 		Date tsEnd = new Date();
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-			tsEnd = sdf.parse(timestampStart);
+			tsEnd = sdf.parse(timestampEnd);
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", "End Date invalid");
 			return "editEntry";
