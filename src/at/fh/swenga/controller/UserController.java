@@ -151,7 +151,7 @@ public class UserController {
 			dob = sdf.parse(dateOfBirth);
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", "Date of birth invalid");
-			return "forward:addUser";
+			return "addUser";
 		}
 
 		if (password.equals(password_repeat)) {
@@ -167,7 +167,7 @@ public class UserController {
 			return "forward:userManagement";
 		} else {
 			model.addAttribute("errorMessage", "Passwords do not match");
-			return "forward:addUser";
+			return "addUser";
 		}
 	}
 
