@@ -60,6 +60,22 @@
 										name="activity" th:value="${entry} ? ${entry.activity}" required
 										class="form-control form-control-user">
 								</div>
+								
+								<!----------------  Timestamp Start ------------------------>
+								<div class="form-group">
+									<input type="text" id="timestampStart" placeholder="Start"
+										name="timestampStart" class="form_datetime"
+										th:value="${entry} ? ${#dates.format(entry.timestampStart, 'dd.MM.yyyy HH:mm')}"
+										readonly>
+								</div>
+								
+								<!----------------  Timestamp End ------------------------>
+								<div class="form-group">
+									<input type="text" id="timestampEnd" placeholder="End"
+										name="timestampEnd" class="form_datetime"
+										th:value="${entry} ? ${#dates.format(entry.timestampEnd, 'dd.MM.yyyy HH:mm')}"
+										readonly>
+								</div>
 
 
 								<button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>

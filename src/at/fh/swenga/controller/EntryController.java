@@ -1,5 +1,6 @@
 package at.fh.swenga.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class EntryController {
 
 		for (int i = 0; i < 28; i++) {
 			Entry p1 = new Entry("My note: " + df.getRandomWord(), "My activity: " + df.getRandomWord(), now,
-					df.getDateBetween(minDate, now), true);
+					df.getDateBetween(minDate, now), now, now, true);
 			p1.setEditor(userDao.getUserById(i));
 			entryDao.persist(p1);
 		}
@@ -99,20 +100,37 @@ public class EntryController {
 	}
 
 	@RequestMapping(value = { "/createEntry" }, method = RequestMethod.POST)
-	public String createEntry(Model model, @RequestParam String note, @RequestParam String activity) {
+	public String createEntry(Model model, @RequestParam String note, @RequestParam String activity, @RequestParam String timestampStart, @RequestParam String timestampEnd) {
 		// User currentUser = userDao.get
 
 		Date now = new Date();
+		
+		// convert string to date
+		Date tsStart = new Date();
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+			tsStart = sdf.parse(timestampStart);
+		} catch (Exception e) {
+			model.addAttribute("errorMessage", "Start date invalid");
+			return "editEntry";
+		}
 
-		Entry new_entry = new Entry(note, activity, now, now, true);
+		// convert string to date
+		Date tsEnd = new Date();
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+			tsEnd = sdf.parse(timestampStart);
+		} catch (Exception e) {
+			model.addAttribute("errorMessage", "End Date invalid");
+			return "editEntry";
+		}
+		
+		Entry new_entry = new Entry(note, activity, tsStart, tsEnd, now, now, true);
 
 		entryDao.persist(new_entry);
 
-		List<Entry> entries = entryDao.getEntries();
-		model.addAttribute("entries", entries);
-
 		model.addAttribute("message", "Created new Entry");
-		return "listEntries";
+		return "forward:listEntries";
 	}
 
 	@RequestMapping(value = { "/editEntry" }, method = RequestMethod.GET)
@@ -153,6 +171,8 @@ public class EntryController {
 			entry.setNote(changedEntry.getActivity());
 			entry.setTimestampCreated(changedEntry.getTimestampCreated());
 			entry.setTimestampModified(now);
+			entry.setTimestampStart(changedEntry.getTimestampStart());
+			entry.setTimestampEnd(changedEntry.getTimestampEnd());
 
 			model.addAttribute("message", "Changed entry " + changedEntry.getActivity());
 			

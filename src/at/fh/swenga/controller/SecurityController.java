@@ -46,7 +46,13 @@ public class SecurityController {
 			return "index";
 		}
 	}
-
+	
+	/*
+	@RequestMapping(value = { "/changePassword"}, method = RequestMethod.POST)
+	public String changePassword(Model model) {
+		
+	}
+/*
 	/**
 	 * 
 	 * handle errors
