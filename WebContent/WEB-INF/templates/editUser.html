@@ -4,8 +4,8 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 <div th:replace="~{./includes/meta :: META}" />
-<title th:text="${user}? 'Change User' : 'New User'">New/Change User &#124; TARS - Time &amp; Activity Recording
-	Software</title>
+<title th:text="${user}? 'Change User' : 'New User'">New/Change
+	User &#124; TARS - Time &amp; Activity Recording Software</title>
 <div th:replace="~{./includes/css :: CSS}" />
 
 <link
@@ -34,25 +34,29 @@
 						<!-- Page Heading -->
 						<div
 							class="d-sm-flex align-items-center justify-content-between mb-4">
-							<h1 class="h3 mb-0 text-gray-800" th:text="${user} ? 'Change User' : 'New User'">New/Change User</h1>
+							<h1 class="h3 mb-0 text-gray-800"
+								th:text="${user} ? 'Change User' : 'New User'">New/Change
+								User</h1>
 						</div>
 					</div>
 
 					<div class="row justify-content-md-center">
 						<div class="col-lg-4">
-							<form class="user" th:action="${user} ? @{/editUser(id=${user.id})} : @{/createUser}" method="post">
+							<form class="user"
+								th:action="${user} ? @{/changeUser(id=${user.userId})} : @{/createUser}"
+								method="post">
 
 								<!----------------  firstname ------------------------>
 								<div class="form-group">
 									<input type="text" id="firstname" placeholder="Firstname"
-										name="firstname" th:value="${user} ? ${user.firstname}"
+										name="firstname" th:value="${user} ? ${user.firstName}"
 										required autofocus class="form-control form-control-user">
 								</div>
 
 								<!----------------  lastname ------------------------>
 								<div class="form-group">
 									<input type="text" id="lastname" placeholder="Lastname"
-										name="lastname" th:value="${user} ? ${user.lastname}" required
+										name="lastname" th:value="${user} ? ${user.lastName}" required
 										class="form-control form-control-user">
 								</div>
 
@@ -74,22 +78,20 @@
 								<!----------------  username ------------------------>
 								<div class="form-group">
 									<input type="text" id="username" placeholder="Username"
-										name="username" th:value="${user} ? ${user.username}" required
+										name="username" th:value="${user} ? ${user.userName}" required
 										class="form-control form-control-user">
 								</div>
 
 								<!----------------  password ------------------------>
 								<div class="form-group">
-									<input type="password" id="password" placeholder="Password"
-										name="password" th:value="${user} ? ${user.password}" required
-										class="form-control form-control-user">
+									<input type="password" id="password" placeholder="New Password"
+										name="password" class="form-control form-control-user">
 								</div>
 
 								<!----------------  password repeated ------------------------>
 								<div class="form-group">
 									<input type="password" id="password_repeat"
 										placeholder="Repeat Password" name="password_repeat"
-										th:value="${user} ? ${user.password}" required
 										class="form-control form-control-user">
 								</div>
 

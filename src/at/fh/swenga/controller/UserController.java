@@ -183,7 +183,7 @@ public class UserController {
 	public String editUser(Model model, int id) {
 
 		User user = userDao.getUserById(id);
-		
+
 		if (user != null) {
 			model.addAttribute("user", user);
 			return "editUser";
@@ -208,26 +208,40 @@ public class UserController {
 				errorMessage += fieldError.getField() + " is invalid: " + fieldError.getCode() + "<br>";
 			}
 			model.addAttribute("errorMessage", errorMessage);
-			return "forward:/listUsers";
+//			return "forward:/listUsers";
+			return "userManagement";
 		}
-//
-//		// Get the employee we want to change
-//		EmployeeModel employee = employeeService.getEmployeeBySSN(changedEmployeeModel.getSsn());
-//
-//		if (employee == null) {
-//			model.addAttribute("errorMessage", "Employee does not exist!<br>");
-//		} else {
-//			// Change the attributes
-//			employee.setSsn(changedEmployeeModel.getSsn());
-//			employee.setFirstName(changedEmployeeModel.getFirstName());
-//			employee.setLastName(changedEmployeeModel.getLastName());
-//			employee.setDayOfBirth(changedEmployeeModel.getDayOfBirth());
-//
-//			// Save a message for the web page
-//			model.addAttribute("message", "Changed employee " + changedEmployeeModel.getSsn());
-//		}
 
-		return "forward:/listEmployees";
+		// Get the user we want to change
+		User user = userDao.getUserById(changedUser.getUserId());
+
+		if (user == null) {
+			model.addAttribute("errorMessage", "User does not exist!<br>");
+		} else {
+			
+			System.out.println(changedUser.getDayOfBirth());
+			
+			// Change the attributes
+			user.setFirstName(changedUser.getFirstName());
+			user.setLastName(changedUser.getLastName());
+			user.setDayOfBirth(changedUser.getDayOfBirth());
+			user.setEmail(changedUser.getEmail());
+			user.setUserName(changedUser.getUserName());
+			
+			if (changedUser.getPassword().equals(null)) {
+				System.out.println("in if password with equals");
+			}
+			
+			if (changedUser.getPassword().isEmpty()) {
+				System.out.println("in if password with empty");
+			}
+			
+			// Save a message for the web page
+			model.addAttribute("message", "Changed user " + changedUser.getFirstName() + " " + changedUser.getLastName());
+		}
+
+//		return "forward:/listUsers";
+		return "userManagement";
 	}
 
 	/**
