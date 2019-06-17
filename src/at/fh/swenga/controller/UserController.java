@@ -183,19 +183,14 @@ public class UserController {
 	public String editUser(Model model, int id) {
 
 		User user = userDao.getUserById(id);
-
+		
 		if (user != null) {
 			model.addAttribute("user", user);
 			return "editUser";
 		} else {
-			model.addAttribute("errorMessage", "Couldn't find user " + id);
+			model.addAttribute("errorMessage", "Couldn't find user with id:  " + id);
 			return "forward:/listUsers";
 		}
-
-//		String username = userDao.getCurrentUser();
-//		model.addAttribute("user", username);
-//
-//		return "editUser";
 	}
 
 	/**
