@@ -53,6 +53,9 @@ public class Entry implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST) // maybe remove Cascade type
 	private User editor;
+	
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	private Category category;
 
 	@Column(name = "enabled", nullable = false)
 	private boolean enabled;
