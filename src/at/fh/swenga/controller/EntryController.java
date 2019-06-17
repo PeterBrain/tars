@@ -164,7 +164,7 @@ public class EntryController {
 	public String deleteEntry(Model model, @RequestParam int id) {
 		entryDao.delete(id);
 
-		return "listEntries";
+		return "forward:listEntries";
 	}
 
 }
