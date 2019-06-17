@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -54,7 +55,7 @@ public class User implements java.io.Serializable {
 	@Column(name = "enabled", nullable = false)
 	private boolean enabled;
 
-	@ManyToMany(fetch = FetchType.LAZY) // cascade = CascadeType.PERSIST is not used because insert user would not work
+	@ManyToMany(fetch = FetchType.LAZY) // cascade = CascadeType.MERGE would work for user insert
 	private Set<UserRole> userRoles;
 
 	@OneToMany(mappedBy = "editor", fetch = FetchType.LAZY)
