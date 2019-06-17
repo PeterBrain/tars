@@ -55,7 +55,7 @@ public class User implements java.io.Serializable {
 	@Column(name = "enabled", nullable = false)
 	private boolean enabled;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@ManyToMany(fetch = FetchType.LAZY)//, cascade = CascadeType.PERSIST)
 	private Set<UserRole> userRoles;
 
 	@OneToMany(mappedBy = "editor", fetch = FetchType.LAZY)
