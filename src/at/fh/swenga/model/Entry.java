@@ -32,6 +32,18 @@ public class Entry implements java.io.Serializable {
 
 	@Column(name = "activity", nullable = false, length = 30)
 	private String activity;
+	
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
+	@NotNull(message = "create time cannot be null")
+	@Column(name = "start", nullable = false)
+	private Date timestampStart;
+	
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
+	@NotNull(message = "create time cannot be null")
+	@Column(name = "end", nullable = false)
+	private Date timestampEnd;
 
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
@@ -64,12 +76,16 @@ public class Entry implements java.io.Serializable {
 	public Entry() {
 	}
 
-	public Entry(String note,
-			String activity, @NotNull(message = "create time cannot be null") Date timestampCreated,
+	
+	public Entry(String note, String activity, @NotNull(message = "create time cannot be null") Date timestampStart,
+			@NotNull(message = "create time cannot be null") Date timestampEnd,
+			@NotNull(message = "create time cannot be null") Date timestampCreated,
 			@NotNull(message = "modify time cannot be null") Date timestampModified, boolean enabled) {
 		super();
 		this.note = note;
 		this.activity = activity;
+		this.timestampStart = timestampStart;
+		this.timestampEnd = timestampEnd;
 		this.timestampCreated = timestampCreated;
 		this.timestampModified = timestampModified;
 		this.enabled = enabled;
@@ -133,6 +149,26 @@ public class Entry implements java.io.Serializable {
 		this.enabled = enabled;
 	}
 
+	public Date getTimestampStart() {
+		return timestampStart;
+	}
+
+
+	public void setTimestampStart(Date timestampStart) {
+		this.timestampStart = timestampStart;
+	}
+
+
+	public Date getTimestampEnd() {
+		return timestampEnd;
+	}
+
+
+	public void setTimestampEnd(Date timestampEnd) {
+		this.timestampEnd = timestampEnd;
+	}
+
+
 	// equals & hashcode
 	@Override
 	public int hashCode() {
@@ -159,9 +195,12 @@ public class Entry implements java.io.Serializable {
 	// toString
 	@Override
 	public String toString() {
-		return "Entry [entryId=" + entryId + ", note=" + note + ", activity=" + activity
-				+ ", timestampCreated=" + timestampCreated + ", timestampModified=" + timestampModified + ", editor="
-				+ editor + ", enabled=" + enabled + ", version=" + version + "]";
+		return "Entry [entryId=" + entryId + ", note=" + note + ", activity=" + activity + ", timestampStart="
+				+ timestampStart + ", timestampEnd=" + timestampEnd + ", timestampCreated=" + timestampCreated
+				+ ", timestampModified=" + timestampModified + ", editor=" + editor + ", category=" + category
+				+ ", project=" + project + ", enabled=" + enabled + ", version=" + version + "]";
 	}
+
+
 
 }
