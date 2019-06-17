@@ -202,7 +202,7 @@ public class UserController {
 
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/changeUser" }, method = RequestMethod.POST)
-	public String changeUser(@Valid User changedUser, BindingResult bindingResult, Model model) {
+	public String changeUser(@Valid User changedUser, BindingResult bindingResult, Model model, @RequestParam String password_repeat) {
 		// Any errors? -> Create a String out of all errors and return to the page
 		if (bindingResult.hasErrors()) {
 			String errorMessage = "";
@@ -210,7 +210,7 @@ public class UserController {
 				errorMessage += fieldError.getField() + " is invalid: " + fieldError.getCode() + "<br>";
 			}
 			model.addAttribute("errorMessage", errorMessage);
-//			return "forward:/listUsers";
+
 			return "userManagement";
 		}
 
@@ -226,20 +226,25 @@ public class UserController {
 			user.setDateOfBirth(changedUser.getDateOfBirth());
 			user.setEmail(changedUser.getEmail());
 			user.setUserName(changedUser.getUserName());
-			userDao.persist(user);
 
-			if (changedUser.getPassword().isEmpty()) {
-				System.out.println("in if password with empty");
+			if (!changedUser.getPassword().isEmpty()) {
+				if (changedUser.getPassword().equals(password_repeat)) {
+					user.setPassword(password_repeat);
+					user.encryptPassword();
+				}
 			}
 
-			System.out.println(changedUser.toString());
+			userDao.merge(user);
 			
 			// Save a message for the web page
 			model.addAttribute("message",
 					"Changed user " + changedUser.getFirstName() + " " + changedUser.getLastName());
+			
 		}
 
-//		return "forward:/listUsers";
+		List<User> users = userDao.getUsers();
+		model.addAttribute("users", users);
+
 		return "userManagement";
 	}
 

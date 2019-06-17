@@ -68,4 +68,8 @@ public class UserDao {
 	public void persist(User user) {
 		entityManager.persist(user);
 	}
+
+	public User merge(User user) {
+		return entityManager.merge(user);
+	}
 }
