@@ -27,12 +27,6 @@ public class Entry implements java.io.Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int entryId;
 
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
-	@NotNull(message = "timestamp cannot be null")
-	@Column(name = "timestamp", nullable = false)
-	private Date timestamp;
-
 	@Column(name = "note", nullable = false, length = 30)
 	private String note;
 
@@ -70,11 +64,10 @@ public class Entry implements java.io.Serializable {
 	public Entry() {
 	}
 
-	public Entry(@NotNull(message = "timestamp cannot be null") Date timestamp, String note,
+	public Entry(String note,
 			String activity, @NotNull(message = "create time cannot be null") Date timestampCreated,
 			@NotNull(message = "modify time cannot be null") Date timestampModified, boolean enabled) {
 		super();
-		this.timestamp = timestamp;
 		this.note = note;
 		this.activity = activity;
 		this.timestampCreated = timestampCreated;
@@ -91,13 +84,6 @@ public class Entry implements java.io.Serializable {
 		this.entryId = entryId;
 	}
 
-	public Date getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
-	}
 
 	public String getNote() {
 		return note;
@@ -173,7 +159,7 @@ public class Entry implements java.io.Serializable {
 	// toString
 	@Override
 	public String toString() {
-		return "Entry [entryId=" + entryId + ", timestamp=" + timestamp + ", note=" + note + ", activity=" + activity
+		return "Entry [entryId=" + entryId + ", note=" + note + ", activity=" + activity
 				+ ", timestampCreated=" + timestampCreated + ", timestampModified=" + timestampModified + ", editor="
 				+ editor + ", enabled=" + enabled + ", version=" + version + "]";
 	}

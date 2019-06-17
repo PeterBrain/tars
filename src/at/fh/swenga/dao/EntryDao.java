@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import at.fh.swenga.model.Entry;
+import at.fh.swenga.model.User;
 
 @Repository
 @Transactional
@@ -32,7 +33,11 @@ public class EntryDao {
 		List<Entry> typedResultList = typedQuery.getResultList();
 		return typedResultList;
 	}
-
+	
+	public Entry getEntryById(int i) throws DataAccessException {
+		return entityManager.find(Entry.class, i);
+	}
+	
 	public Entry getEntry(int i) throws DataAccessException {
 		return entityManager.find(Entry.class, i);
 	}

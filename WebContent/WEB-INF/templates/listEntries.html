@@ -49,7 +49,7 @@
 						<div class="card-header py-3">
 							<div class="row">
 								<h6 class="m-0 font-weight-bold text-primary col align-self-center">User entries</h6>
-								<a th:href="@{/addUser}" class="btn btn-success btn-circle float-right">
+								<a th:href="@{/addEntry}" class="btn btn-success btn-circle float-right">
 									<i class="fas fa-plus"></i>
 								</a>
 							</div>
@@ -60,7 +60,7 @@
 									<thead>
 										<tr>
 											<th>ID</th>
-											<th>Timestamp</th>
+											<th>Timestamp Created</th>
 											<th>Note</th>
 											<th>Activity</th>
 											<th>Action</th>
@@ -69,7 +69,7 @@
 									<tfoot>
 										<tr>
 											<th>ID</th>
-											<th>Timestamp</th>
+											<th>Timestamp Created</th>
 											<th>Note</th>
 											<th>Activity</th>
 											<th>Action</th>
@@ -78,7 +78,7 @@
 									<tbody>
 										<tr th:each="entry : ${entries}">
 											<td th:text="${entry.entryId}"></td>
-											<td th:text="${#dates.format(entry.timestamp,'dd.MM.yyyy HH:mm')}"></td>
+											<td th:text="${#dates.format(entry.timestampCreated,'dd.MM.yyyy HH:mm')}"></td>
 											<td th:text="${entry.note}"></td>
 											<td th:text="${entry.activity}"></td>
 											<td>

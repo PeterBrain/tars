@@ -11,11 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.dao.EntryDao;
 import at.fh.swenga.dao.UserDao;
 import at.fh.swenga.model.Entry;
+import at.fh.swenga.model.User;
 
 @Controller
 public class EntryController {
@@ -54,7 +56,7 @@ public class EntryController {
 		Date now = new Date();
 
 		for (int i = 0; i < 28; i++) {
-			Entry p1 = new Entry(now, "My note: " + df.getRandomWord(),
+			Entry p1 = new Entry("My note: " + df.getRandomWord(),
 					"My activity: " + df.getRandomWord(), now, df.getDateBetween(minDate, now), true);
 			p1.setEditor(userDao.getUserById(i));
 			entryDao.persist(p1);
@@ -87,4 +89,49 @@ public class EntryController {
 	public String handleAllException(Exception ex) {
 		return "error";
 	}
+	
+	@RequestMapping(value = { "/addEntry"}, method = RequestMethod.GET)
+	public String addEntry(Model model) {
+		return "editEntry";
+	}
+	
+	@RequestMapping(value = { "/createEntry"}, method = RequestMethod.POST)
+	public String createEntry(Model model, @RequestParam String note, @RequestParam String activity) {
+		//User currentUser = userDao.get
+		
+		Date now = new Date();
+		
+		Entry new_entry = new Entry(note, activity, now, now, true);
+		
+		entryDao.persist(new_entry);
+		
+		List<Entry> entries = entryDao.getEntries();
+		model.addAttribute("entries", entries);
+		
+		model.addAttribute("message", "Created new Entry");
+		return "listEntries";
+	}
+	
+	public String editEntry(Model model, int id) {
+		Entry entry = entryDao.getEntryById(id);
+		
+		if (entry != null) {
+			model.addAttribute("entry", entry);
+			return "editEntry";
+		} else {
+			model.addAttribute("errorMessage", "Couldn't find entry with id: " + id);
+			return "forward:/listEntries";
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
