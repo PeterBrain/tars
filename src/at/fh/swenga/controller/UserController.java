@@ -200,6 +200,7 @@ public class UserController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/changeUser" }, method = RequestMethod.POST)
 	public String changeUser(@Valid User changedUser, BindingResult bindingResult, Model model) {
+		System.out.println(changedUser.getDateOfBirth());
 
 		// Any errors? -> Create a String out of all errors and return to the page
 		if (bindingResult.hasErrors()) {
@@ -218,26 +219,24 @@ public class UserController {
 		if (user == null) {
 			model.addAttribute("errorMessage", "User does not exist!<br>");
 		} else {
-			
-			System.out.println(changedUser.getDayOfBirth());
-			
 			// Change the attributes
 			user.setFirstName(changedUser.getFirstName());
 			user.setLastName(changedUser.getLastName());
-			user.setDayOfBirth(changedUser.getDayOfBirth());
+			user.setDateOfBirth(changedUser.getDateOfBirth());
 			user.setEmail(changedUser.getEmail());
 			user.setUserName(changedUser.getUserName());
-			
+
 			if (changedUser.getPassword().equals(null)) {
 				System.out.println("in if password with equals");
 			}
-			
+
 			if (changedUser.getPassword().isEmpty()) {
 				System.out.println("in if password with empty");
 			}
-			
+
 			// Save a message for the web page
-			model.addAttribute("message", "Changed user " + changedUser.getFirstName() + " " + changedUser.getLastName());
+			model.addAttribute("message",
+					"Changed user " + changedUser.getFirstName() + " " + changedUser.getLastName());
 		}
 
 //		return "forward:/listUsers";

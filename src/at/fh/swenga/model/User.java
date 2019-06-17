@@ -40,7 +40,7 @@ public class User implements java.io.Serializable {
 	@DateTimeFormat(pattern = "dd.MM.yyyy")
 	@NotNull(message = "Date of birth cannot be null")
 	@Column(name = "dob", nullable = false)
-	private Date dayOfBirth;
+	private Date dateOfBirth;
 
 	@Column(name = "email", nullable = false, length = 45, unique = true)
 	private String email;
@@ -54,12 +54,13 @@ public class User implements java.io.Serializable {
 	@Column(name = "enabled", nullable = false)
 	private boolean enabled;
 
-	@ManyToMany(fetch = FetchType.LAZY)//, cascade = CascadeType.PERSIST is not used because insert user would not work
+	@ManyToMany(fetch = FetchType.LAZY) // , cascade = CascadeType.PERSIST is not used because insert user would not
+										// work
 	private Set<UserRole> userRoles;
 
 	@OneToMany(mappedBy = "editor", fetch = FetchType.LAZY)
 	private Set<Entry> entries;
-	
+
 	@OneToMany(mappedBy = "projectLeader", fetch = FetchType.LAZY)
 	private Set<Project> projects;
 
@@ -70,12 +71,12 @@ public class User implements java.io.Serializable {
 	public User() {
 	} // default
 
-	public User(String firstName, String lastName, @NotNull(message = "Date of birth cannot be null") Date dayOfBirth,
+	public User(String firstName, String lastName, @NotNull(message = "Date of birth cannot be null") Date dateOfBirth,
 			String email, String userName, String password, boolean enabled) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.dayOfBirth = dayOfBirth;
+		this.dateOfBirth = dateOfBirth;
 		this.email = email;
 		this.userName = userName;
 		this.password = password;
@@ -107,12 +108,20 @@ public class User implements java.io.Serializable {
 		this.lastName = lastName;
 	}
 
-	public Date getDayOfBirth() {
-		return dayOfBirth;
+	public Date getDateOfBirth() {
+		return dateOfBirth;
 	}
 
-	public void setDayOfBirth(Date dayOfBirth) {
-		this.dayOfBirth = dayOfBirth;
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public Set<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(Set<Project> projects) {
+		this.projects = projects;
 	}
 
 	public String getEmail() {
@@ -211,9 +220,9 @@ public class User implements java.io.Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", dayOfBirth="
-				+ dayOfBirth + ", email=" + email + ", userName=" + userName + ", password=" + password + ", enabled="
-				+ enabled + ", userRoles=" + userRoles + ", entries=" + entries + "]";
+		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", dateOfBirth="
+				+ dateOfBirth + ", email=" + email + ", userName=" + userName + ", password=" + password + ", enabled="
+				+ enabled + ", userRoles=" + userRoles + ", entries=" + entries + ", projects=" + projects
+				+ ", version=" + version + "]";
 	}
-
 }

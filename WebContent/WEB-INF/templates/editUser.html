@@ -64,7 +64,7 @@
 								<div class="form-group">
 									<input type="text" id="dateOfBirth" placeholder="Date"
 										name="dateOfBirth" class="form_datetime"
-										th:value="${user} ? ${#dates.format(user.dayOfBirth, 'dd.MM.yyyy')}"
+										th:value="${user} ? ${#dates.format(user.dateOfBirth, 'dd.MM.yyyy')}"
 										readonly>
 								</div>
 
