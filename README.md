@@ -9,8 +9,6 @@ db.password=xxx
 ```
 
 ## ToDo
-* Project Entity
-* Category Entity
 * Methods:
     * UserManagement
         * editUser
@@ -18,6 +16,14 @@ db.password=xxx
         * addEntry
         * editEntry
         * deleteEntry
+    * Category
+        * addCategory
+        * editCategory
+        * deleteCategory
+    * Project
+        * addProject
+        * editProject
+        * deleteProject
     * Password
         * Password reset
         * Password policy

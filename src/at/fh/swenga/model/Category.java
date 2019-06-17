@@ -34,10 +34,9 @@ public class Category implements java.io.Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Category(String name/* , Set<Entry> entries */) {
+	public Category(String name) {
 		super();
 		this.name = name;
-		// this.entries = entries;
 	}
 
 	public int getCategoryId() {
