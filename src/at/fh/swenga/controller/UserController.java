@@ -5,12 +5,15 @@ import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 import org.fluttercode.datafactory.impl.DataFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -104,11 +107,8 @@ public class UserController {
 	 * @return
 	 */
 	@Secured("ROLE_ADMIN")
-	@RequestMapping(value = { "/editUser" }, method = RequestMethod.GET)
-	public String editUser(Model model) {
-		String username = userDao.getCurrentUser();
-		model.addAttribute("user", username);
-
+	@RequestMapping(value = { "/addUser" }, method = RequestMethod.GET)
+	public String addUser(Model model) {
 		return "editUser";
 	}
 
@@ -164,11 +164,75 @@ public class UserController {
 			model.addAttribute("users", users);
 
 			model.addAttribute("message", "Created new user");
-			return "forward:userManagement";
+			return "userManagement";
 		} else {
 			model.addAttribute("errorMessage", "Passwords do not match");
 			return "editUser";
 		}
+	}
+
+	/**
+	 * 
+	 * open editUser page
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(value = { "/editUser" }, method = RequestMethod.GET)
+	public String editUser(Model model, int id) {
+
+		User user = userDao.getUserById(id);
+
+		if (user != null) {
+			model.addAttribute("user", user);
+			return "editUser";
+		} else {
+			model.addAttribute("errorMessage", "Couldn't find user " + id);
+			return "forward:/listUsers";
+		}
+
+//		String username = userDao.getCurrentUser();
+//		model.addAttribute("user", username);
+//
+//		return "editUser";
+	}
+
+	/**
+	 * edit specific user details
+	 */
+
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(value = { "/changeUser" }, method = RequestMethod.POST)
+	public String changeUser(@Valid User changedUser, BindingResult bindingResult, Model model) {
+
+		// Any errors? -> Create a String out of all errors and return to the page
+		if (bindingResult.hasErrors()) {
+			String errorMessage = "";
+			for (FieldError fieldError : bindingResult.getFieldErrors()) {
+				errorMessage += fieldError.getField() + " is invalid: " + fieldError.getCode() + "<br>";
+			}
+			model.addAttribute("errorMessage", errorMessage);
+			return "forward:/listUsers";
+		}
+//
+//		// Get the employee we want to change
+//		EmployeeModel employee = employeeService.getEmployeeBySSN(changedEmployeeModel.getSsn());
+//
+//		if (employee == null) {
+//			model.addAttribute("errorMessage", "Employee does not exist!<br>");
+//		} else {
+//			// Change the attributes
+//			employee.setSsn(changedEmployeeModel.getSsn());
+//			employee.setFirstName(changedEmployeeModel.getFirstName());
+//			employee.setLastName(changedEmployeeModel.getLastName());
+//			employee.setDayOfBirth(changedEmployeeModel.getDayOfBirth());
+//
+//			// Save a message for the web page
+//			model.addAttribute("message", "Changed employee " + changedEmployeeModel.getSsn());
+//		}
+
+		return "forward:/listEmployees";
 	}
 
 	/**
