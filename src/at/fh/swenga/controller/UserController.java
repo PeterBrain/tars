@@ -198,7 +198,6 @@ public class UserController {
 	}
 
 	/**
-	 * 
 	 * edit specific user details
 	 * 
 	 * @param changedUser
@@ -285,10 +284,10 @@ public class UserController {
 	@RequestMapping(value = { "/editPassword" }, method = RequestMethod.GET)
 	public String editPassword(Model model) {
 		String username = userDao.getCurrentUser();
-		model.addAttribute("user", username);
-
 		List<User> users = userDao.findByUsername(username);
-		model.addAttribute(users);
+		User user = users.get(0);
+		
+		model.addAttribute("user", user);
 
 		return "editPassword";
 	}

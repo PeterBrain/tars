@@ -31,11 +31,11 @@ public class UserDao {
 
 	public String getCurrentUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String username = authentication.getName().toUpperCase();
+		String username = authentication.getName();
 
 		return username;
 	}
-
+	
 	/*
 	 * public Object getCurrentUserObj() { Authentication authentication =
 	 * SecurityContextHolder.getContext().getAuthentication(); Object user =

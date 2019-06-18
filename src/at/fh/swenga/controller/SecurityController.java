@@ -39,7 +39,7 @@ public class SecurityController {
 	 */
 	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
 	public String handleLogin(Model model) {
-		if (userDao.getCurrentUser().equals("ANONYMOUSUSER")) {
+		if (userDao.getCurrentUser().toUpperCase().equals("ANONYMOUSUSER")) {
 			return "login";
 		}
 		else {
