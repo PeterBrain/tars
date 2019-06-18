@@ -66,7 +66,8 @@ public class EntryController {
 
 		for (Entry entry : entries) {
 			float hours = (float) entry.getMinutes() / 60F;
-			entry.setMinutes(hours);
+			float hoursRounded = (float) Math.round(hours*100)/100;
+			entry.setMinutes(hoursRounded);
 		}
 
 		model.addAttribute("entries", entries);
