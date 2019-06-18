@@ -16,7 +16,7 @@ import at.fh.swenga.model.Project;
 @Repository
 @Transactional
 public class CategoryDao {
-	
+
 	@PersistenceContext
 	protected EntityManager entityManager;
 
@@ -25,23 +25,23 @@ public class CategoryDao {
 		List<Category> typedResultList = typedQuery.getResultList();
 		return typedResultList;
 	}
-	
+
 	public Category getCategoryById(int i) throws DataAccessException {
 		return entityManager.find(Category.class, i);
 	}
-	
+
 	public void persist(Category category) {
 		entityManager.persist(category);
 	}
-	
+
 	public Category merge(Category category) {
 		return entityManager.merge(category);
 	}
-	
+
 	public void delete(Category category) {
 		entityManager.remove(category);
 	}
-	
+
 	public void delete(int id) {
 		Category category = getCategoryById(id);
 		if (category != null) {

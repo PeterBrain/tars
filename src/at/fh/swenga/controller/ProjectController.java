@@ -5,7 +5,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -18,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.dao.ProjectDao;
 import at.fh.swenga.dao.UserDao;
-import at.fh.swenga.model.Category;
 import at.fh.swenga.model.Project;
 import at.fh.swenga.model.User;
+import at.fh.swenga.model.UserRole;
 
 @Controller
 public class ProjectController {
@@ -30,7 +29,7 @@ public class ProjectController {
 
 	@Autowired
 	UserDao userDao;
-	
+
 	@Transactional
 	@RequestMapping(value = { "fillProjects" })
 	public String fillProjects(Model model) {
@@ -48,7 +47,7 @@ public class ProjectController {
 
 		return "listProjects";
 	}
-	
+
 	@RequestMapping(value = { "/deleteProject" }, method = RequestMethod.GET)
 	public String deleteProject(Model model, @RequestParam int id) {
 		projectDao.delete(id);
@@ -57,24 +56,32 @@ public class ProjectController {
 
 		return "forward:listProjects";
 	}
-	
+
 	@RequestMapping(value = { "/addProject" }, method = RequestMethod.GET)
 	public String addProject(Model model) {
+
+		List<User> users = userDao.getUsers();
+		model.addAttribute("users", users);
+
 		return "editProject";
 	}
-	
+
 	@RequestMapping(value = { "/createProject" }, method = RequestMethod.POST)
-	public String createProject(Model model, @RequestParam String name, @RequestParam String description) {
-		Project new_project = new Project(name, description, userDao.getUserById(0));
+	public String createProject(Model model, @RequestParam String name, @RequestParam String description,
+			@RequestParam String new_projectLeader) {
+		Project new_project = new Project(name, description, userDao.getUserByUserName(new_projectLeader));
 		projectDao.persist(new_project);
 
 		model.addAttribute("message", "Created new Project");
 		return "forward:listProjects";
 	}
-	
-	//@Secured("PROJECT_LEADER")
+
+	// @Secured("PROJECT_LEADER")
 	@RequestMapping(value = { "/editProject" }, method = RequestMethod.GET)
 	public String editProject(Model model, int id) {
+
+		List<User> users = userDao.getUsers();
+		model.addAttribute("users", users);
 
 		Project project = projectDao.getProjectById(id);
 
@@ -86,11 +93,11 @@ public class ProjectController {
 			return "forward:/listProjects";
 		}
 	}
-	
-	/*@Secured("PROJECT_LEADER")*/
+
+	/* @Secured("PROJECT_LEADER") */
 	@RequestMapping(value = { "/changeProject" }, method = RequestMethod.POST)
-	public String changeProject(@Valid Project changedProject, BindingResult bindingResult, Model model) {
-		
+	public String changeProject(@Valid Project changedProject, BindingResult bindingResult, Model model, @RequestParam String new_projectLeader) {
+
 		if (bindingResult.hasErrors()) {
 			String errorMessage = "";
 			for (FieldError fieldError : bindingResult.getFieldErrors()) {
@@ -102,13 +109,14 @@ public class ProjectController {
 		}
 
 		Project project = projectDao.getProjectById(changedProject.getProjectId());
+		User user = userDao.getUserByUserName(new_projectLeader);
 
 		if (project == null) {
 			model.addAttribute("errorMessage", "Project does not exist!<br>");
 		} else {
 			project.setName(changedProject.getName());
 			project.setDescription(changedProject.getDescription());
-			//project.setProjectLeader();
+			project.setProjectLeader(user);
 
 			projectDao.merge(project);
 
@@ -117,7 +125,7 @@ public class ProjectController {
 
 		return "forward:listProjects";
 	}
-	
+
 	/**
 	 * 
 	 * handle errors

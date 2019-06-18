@@ -1,5 +1,7 @@
 package at.fh.swenga.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -8,6 +10,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
+import at.fh.swenga.model.Category;
 import at.fh.swenga.model.UserRole;
 
 @Repository
@@ -16,6 +19,12 @@ public class UserRoleDao {
 
 	@PersistenceContext
 	protected EntityManager entityManager;
+
+	public List<UserRole> getRoles() {
+		TypedQuery<UserRole> typedQuery = entityManager.createQuery("SELECT ur FROM UserRole ur", UserRole.class);
+		List<UserRole> typedResultList = typedQuery.getResultList();
+		return typedResultList;
+	}
 
 	public UserRole getRole(String roleName) {
 		try {

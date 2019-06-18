@@ -32,7 +32,7 @@ public class Project implements java.io.Serializable {
 	@OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
 	private Set<Entry> entries;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
 	private User projectLeader;
 	
 	@Version

@@ -8,14 +8,17 @@ db.username=xxx
 db.password=xxx
 ```
 
+## Inital setup steps
+1. call http://[ip-address]/Tars/fillUsers
+2. call http://[ip-address]/Tars/fillCategories
+3. call http://[ip-address]/Tars/fillProjects
+4. call http://[ip-address]/Tars/fillEntries
+
 ## ToDo
 * Methods:
     * Archive
         * editEntry
-    * Project
-        * editProject (set project leader)
     * Password
-        * Password reset (user)
         * Password policy
     * Export
         * excel
