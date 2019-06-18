@@ -114,7 +114,7 @@ public class EntryController {
 
 	@RequestMapping(value = { "/createEntry" }, method = RequestMethod.POST)
 	public String createEntry(Model model, @RequestParam String note, @RequestParam String activity,
-			@RequestParam String timestampStart, @RequestParam String timestampEnd, @RequestParam int project) {
+			@RequestParam String timestampStart, @RequestParam String timestampEnd, @RequestParam int new_project) {
 		// User currentUser = userDao.get
 
 		String currentUsername = userDao.getCurrentUser();
@@ -160,7 +160,7 @@ public class EntryController {
 		}
 		Entry new_entry = new Entry(note, activity, tsStart, tsEnd, now, now, true);
 		
-		new_entry.setProject(projectDao.getProjectById(project));
+		new_entry.setProject(projectDao.getProjectById(new_project));
 		
 		new_entry.setMinutes(duration);
 
