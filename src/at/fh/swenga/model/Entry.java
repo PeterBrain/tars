@@ -47,7 +47,7 @@ public class Entry implements java.io.Serializable {
 	private Date timestampEnd;
 	
 	@Column(name ="minutes", nullable = true)
-	private long minutes;
+	private float minutes;
 
 	//@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
@@ -196,12 +196,12 @@ public class Entry implements java.io.Serializable {
 		return true;
 	}
 
-	public long getMinutes() {
+	public float getMinutes() {
 		return minutes;
 	}
 
 
-	public void setMinutes(long minutes) {
+	public void setMinutes(float minutes) {
 		this.minutes = minutes;
 	}
 

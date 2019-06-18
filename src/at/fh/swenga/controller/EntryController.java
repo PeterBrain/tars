@@ -63,6 +63,12 @@ public class EntryController {
 	@RequestMapping(value = { "listEntries" })
 	public String listEntries(Model model) {
 		List<Entry> entries = entryDao.getEntries();
+
+		for (Entry entry : entries) {
+			float hours = (float) entry.getMinutes() / 60F;
+			entry.setMinutes(hours);
+		}
+
 		model.addAttribute("entries", entries);
 
 		return "listEntries";
@@ -95,7 +101,7 @@ public class EntryController {
 		User currentUser = userDao.getUserByUserName(currentUsername);
 
 		Date now = new Date();
-		
+
 		long duration = 0;
 
 		// convert string to date
@@ -108,7 +114,7 @@ public class EntryController {
 			return "editEntry";
 		}
 		Date tsEnd = null;
-		//if Start AND End time are filled in:
+		// if Start AND End time are filled in:
 		if (!(timestampEnd.isEmpty())) {
 
 			// convert string to date
@@ -120,12 +126,17 @@ public class EntryController {
 				model.addAttribute("errorMessage", "End Date invalid");
 				return "editEntry";
 			}
-			
-			duration = java.time.Duration.between(tsStart.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
-					tsEnd.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
-			.toMinutes();
 
-			
+			if (tsEnd.before(tsStart)) {
+				model.addAttribute("errorMessage", "End Date must be after Start Date");
+				return "editEntry";
+			} else {
+				duration = java.time.Duration
+						.between(tsStart.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
+								tsEnd.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
+						.toMinutes();
+			}
+
 		}
 		Entry new_entry = new Entry(note, activity, tsStart, tsEnd, now, now, true);
 
