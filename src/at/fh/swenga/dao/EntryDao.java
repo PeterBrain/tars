@@ -4,13 +4,16 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import at.fh.swenga.model.Entry;
+import at.fh.swenga.model.User;
 
 @Repository
 @Transactional
@@ -19,10 +22,22 @@ public class EntryDao {
 	@PersistenceContext
 	protected EntityManager entityManager;
 
+	@Autowired
+	UserDao userDao;
+	
 	public List<Entry> getEntries() {
-		TypedQuery<Entry> typedQuery = entityManager.createQuery("SELECT e FROM Entry e", Entry.class);
-		List<Entry> typedResultList = typedQuery.getResultList();
-		return typedResultList;
+		//TypedQuery<Entry> typedQuery = entityManager.createQuery("SELECT e FROM Entry e", Entry.class);
+		//List<Entry> typedResultList = typedQuery.getResultList();
+		//return typedResultList;
+		
+		String currentUserName = userDao.getCurrentUser();
+		User currentUser = userDao.getUserByUserName(currentUserName);
+		
+		Query query = entityManager.createNamedQuery("Entry.findByEditor");
+		query = query.setParameter("user", currentUser);
+		
+		List<Entry> resultList = query.getResultList();
+		return resultList;
 	}
 
 	public List<Entry> searchEntries(String searchString) {

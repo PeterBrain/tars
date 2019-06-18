@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,6 +21,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "entry")
+@NamedQuery(name="Entry.findByEditor", query = "SELECT e FROM Entry e WHERE e.editor = :user")
 public class Entry implements java.io.Serializable {
 
 	@Id
@@ -56,7 +58,7 @@ public class Entry implements java.io.Serializable {
 	@Column(name = "modified", nullable = false)
 	private Date timestampModified;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST) // maybe remove Cascade type
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE) // maybe remove Cascade type
 	private User editor;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
