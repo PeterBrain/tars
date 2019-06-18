@@ -55,38 +55,46 @@
 
 								<!----------------  note ------------------------>
 								<div class="form-group">
-									<input type="text" id="note" placeholder="Note" name="note"
+									<label for="note" class="control-label">Note</label> <input
+										type="text" id="note" placeholder="Note" name="note"
 										th:value="${entry} ? ${entry.note}" required autofocus
 										class="form-control form-control-user">
 								</div>
 
 								<!----------------  activity ------------------------>
 								<div class="form-group">
-									<input type="text" id="activity" placeholder="Activity"
+									<label for="activity" class="control-label">Activity</label> <input
+										type="text" id="activity" placeholder="Activity"
 										name="activity" th:value="${entry} ? ${entry.activity}"
 										required class="form-control form-control-user">
 								</div>
 
 								<!----------------  Timestamp Start ------------------------>
 								<div class="form-group">
-									<input type="text" id="timestampStart" placeholder="Start"
-										name="timestampStart" class="form_datetime"
+									<label for="timestampStart" class="control-label">Start</label>
+									<br> <input type="text" id="timestampStart"
+										placeholder="Start" name="timestampStart"
+										class="form_datetime"
 										th:value="${entry} ? ${#dates.format(entry.timestampStart, 'dd.MM.yyyy HH:mm')}"
 										readonly>
 								</div>
 
 								<!----------------  Timestamp End ------------------------>
 								<div class="form-group">
+									<label for="timestampEnd" class="control-label">End</label><br>
 									<input type="text" id="timestampEnd" placeholder="End"
 										name="timestampEnd" class="form_datetime"
 										th:value="${entry} ? ${#dates.format(entry.timestampEnd, 'dd.MM.yyyy HH:mm')}"
 										readonly>
 								</div>
-								
+
 								<!---------------- project --------------------------------->
 								<div class="form-group">
-									<select id="project" class="form-control" name="project">
-										<option th:each="project : ${projects}" th:value="${project.projectId}" th:text="${project.name}">Project</option>
+									<label for="project" class="control-label">Select
+										project</label> <select id="project" class="form-control"
+										name="project">
+										<option th:each="project : ${projects}"
+											th:value="${project.projectId}" th:text="${project.name}">Project</option>
 									</select>
 								</div>
 

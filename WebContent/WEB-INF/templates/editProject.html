@@ -41,7 +41,7 @@
 							<form class="entry"
 								th:action="${project} ? @{/changeProject(id=${project.projectId})} : @{/createProject}"
 								method="post">
-								
+
 								<!-- id -->
 								<div class="form-group">
 									<input class="form-control" id="projectId" type="hidden"
@@ -51,22 +51,28 @@
 
 								<!-- name -->
 								<div class="form-group">
-									<input type="text" id="name" placeholder="Name"
-										name="name" th:value="${project} ? ${project.name}"
-										required autofocus class="form-control form-control-user">
+									<label for="name" class="control-label">Name</label> <input
+										type="text" id="name" placeholder="Name" name="name"
+										th:value="${project} ? ${project.name}" required autofocus
+										class="form-control form-control-user">
 								</div>
-								
+
 								<!-- description -->
 								<div class="form-group">
-									<input type="text" id="description" placeholder="Description"
-										name="description" th:value="${project} ? ${project.description}"
-										required autofocus class="form-control form-control-user">
+									<label for="description" class="control-label">Description</label> <input
+										type="text" id="description" placeholder="Description"
+										name="description"
+										th:value="${project} ? ${project.description}" required
+										autofocus class="form-control form-control-user">
 								</div>
-								
+
 								<!-- project leader -->
 								<div class="form-group">
-									<select id="new_projectLeader" class="form-control" name="new_projectLeader">
-										<option th:each="user : ${users}" th:value="${user.userName}" th:text="${user.userName}">Project leader</option>
+									<label for="new_projectLeader" class="control-label">Project Leader</label> <select
+										id="new_projectLeader" class="form-control"
+										name="new_projectLeader">
+										<option th:each="user : ${users}" th:value="${user.userName}"
+											th:text="${user.userName}">Project leader</option>
 									</select>
 								</div>
 
