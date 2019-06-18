@@ -47,13 +47,26 @@ public class EntryController {
 		DataFactory df = new DataFactory();
 
 		// produces a date between 1/1/2020 and the current date
-		Date minDate = df.getDate(2020, 1, 1);
+		Date minDate = df.getDate(2019, 1, 1);
 		Date now = new Date();
+		
+		long duration = 0;
+		Date tsStart = new Date();
+		Date tsEnd = now;
 
-		for (int i = 0; i < 5; i++) {
-			Entry p1 = new Entry("My note: " + df.getRandomWord(), "My activity: " + df.getRandomWord(), now,
-					df.getDateBetween(minDate, now), now, now, true);
+		for (int i = 1; i < 5; i++) {
+			tsStart = df.getDateBetween(minDate, now);
+			
+			Entry p1 = new Entry("My note: " + df.getRandomWord(), "My activity: " + df.getRandomWord(),
+					tsStart, now, now, now, true);
 			p1.setEditor(userDao.getUserById(i));
+			
+			duration = java.time.Duration
+					.between(tsStart.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
+							tsEnd.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
+					.toMinutes();
+			
+			p1.setMinutes(duration);
 			entryDao.persist(p1);
 		}
 
@@ -66,7 +79,7 @@ public class EntryController {
 
 		for (Entry entry : entries) {
 			float hours = (float) entry.getMinutes() / 60F;
-			float hoursRounded = (float) Math.round(hours*100)/100;
+			float hoursRounded = (float) Math.round(hours * 100) / 100;
 			entry.setMinutes(hoursRounded);
 		}
 

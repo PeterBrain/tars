@@ -60,6 +60,7 @@
 									<thead>
 										<tr>
 											<th>ID</th>
+											<th>Username</th>
 											<th>Timestamp Created</th>
 											<th>Start</th>
 											<th>End</th>
@@ -72,6 +73,7 @@
 									<tfoot>
 										<tr>
 											<th>ID</th>
+											<th>Username</th>
 											<th>Timestamp Created</th>
 											<th>Start</th>
 											<th>End</th>
@@ -84,6 +86,7 @@
 									<tbody>
 										<tr th:each="entry : ${entries}">
 											<td th:text="${entry.entryId}"></td>
+											<td th:text="${entry.editor.userName}"></td>
 											<td th:text="${#dates.format(entry.timestampCreated,'dd.MM.yyyy HH:mm')}"></td>
 											<td th:text="${#dates.format(entry.timestampStart,'dd.MM.yyyy HH:mm')}"></td>
 											<td th:text="${#dates.format(entry.timestampEnd,'dd.MM.yyyy HH:mm')}"></td>
@@ -91,7 +94,7 @@
 											<td th:text="${entry.activity}"></td>
 											<td th:text="${entry.minutes}"></td>
 											<td>
-												<a th:href="@{/editEntry(id=${entry.entryId})}" class="btn btn-warning btn-circle btn-sm" sec:authorize="hasRole('ADMIN')">
+												<a th:href="@{/editEntry(id=${entry.entryId})}" class="btn btn-warning btn-circle btn-sm" sec:authorize="hasRole('USER')">
 													<i class="fas fa-edit"></i>
 												</a>
 												<a th:href="@{/deleteEntry(id=${entry.entryId})}" class="btn btn-danger btn-circle btn-sm" sec:authorize="hasRole('ADMIN')">

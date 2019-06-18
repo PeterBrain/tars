@@ -20,6 +20,12 @@ public class UserDao {
 
 	@PersistenceContext
 	protected EntityManager entityManager;
+	
+	public List<User> getUsersWithRoles() {
+		TypedQuery<User> typedQuery = entityManager.createQuery("SELECT  u.username, ur.role FROM user u JOIN u.id ur WHERE ur.id= :id", User.class);
+		List<User> typedResultList = typedQuery.getResultList();
+		return typedResultList;
+	}
 
 	public User getUserByUserName(String userName) {
 		TypedQuery<User> typedQuery = entityManager.createQuery("SELECT u FROM User u WHERE u.userName = :name",

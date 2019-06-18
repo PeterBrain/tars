@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import at.fh.swenga.model.Entry;
 import at.fh.swenga.model.User;
+import at.fh.swenga.model.UserRole;
 
 @Repository
 @Transactional
@@ -24,20 +25,28 @@ public class EntryDao {
 
 	@Autowired
 	UserDao userDao;
-	
+	@Autowired
+	UserRoleDao userRoleDao;
+
 	public List<Entry> getEntries() {
-		//TypedQuery<Entry> typedQuery = entityManager.createQuery("SELECT e FROM Entry e", Entry.class);
-		//List<Entry> typedResultList = typedQuery.getResultList();
-		//return typedResultList;
-		
 		String currentUserName = userDao.getCurrentUser();
 		User currentUser = userDao.getUserByUserName(currentUserName);
-		
-		Query query = entityManager.createNamedQuery("Entry.findByEditor");
-		query = query.setParameter("user", currentUser);
-		
-		List<Entry> resultList = query.getResultList();
-		return resultList;
+
+		UserRole adminRole = userRoleDao.getRole("ROLE_ADMIN");
+
+		// an admin should see all entries of all users
+		if (currentUser.getUserRoles().contains(adminRole)) {
+			TypedQuery<Entry> typedQuery = entityManager.createQuery("SELECT e FROM Entry e", Entry.class);
+			List<Entry> typedResultList = typedQuery.getResultList();
+			return typedResultList;
+		} else {
+
+			Query query = entityManager.createNamedQuery("Entry.findByEditor");
+			query = query.setParameter("user", currentUser);
+
+			List<Entry> resultList = query.getResultList();
+			return resultList;
+		}
 	}
 
 	public List<Entry> searchEntries(String searchString) {

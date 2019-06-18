@@ -21,7 +21,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "entry")
-@NamedQuery(name="Entry.findByEditor", query = "SELECT e FROM Entry e WHERE e.editor = :user")
+@NamedQuery(name = "Entry.findByEditor", query = "SELECT e FROM Entry e WHERE e.editor = :user")
 public class Entry implements java.io.Serializable {
 
 	@Id
@@ -34,39 +34,39 @@ public class Entry implements java.io.Serializable {
 
 	@Column(name = "activity", nullable = false, length = 30)
 	private String activity;
-	
-	//@Temporal(TemporalType.DATE)
+
+	// @Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
 	@NotNull(message = "create time cannot be null")
 	@Column(name = "start", nullable = false)
 	private Date timestampStart;
-	
-	//@Temporal(TemporalType.DATE)
+
+	// @Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
 	@Column(name = "end", nullable = true)
 	private Date timestampEnd;
-	
-	@Column(name ="minutes", nullable = true)
+
+	@Column(name = "minutes", nullable = true)
 	private float minutes;
 
-	//@Temporal(TemporalType.DATE)
+	// @Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
 	@NotNull(message = "create time cannot be null")
 	@Column(name = "created", nullable = false)
 	private Date timestampCreated;
 
-	//@Temporal(TemporalType.DATE)
+	// @Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
 	@NotNull(message = "modify time cannot be null")
 	@Column(name = "modified", nullable = false)
 	private Date timestampModified;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE) // maybe remove Cascade type
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	private User editor;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Category category;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Project project;
 
@@ -80,7 +80,6 @@ public class Entry implements java.io.Serializable {
 	public Entry() {
 	}
 
-	
 	public Entry(String note, String activity, @NotNull(message = "create time cannot be null") Date timestampStart,
 			@NotNull(message = "create time cannot be null") Date timestampEnd,
 			@NotNull(message = "create time cannot be null") Date timestampCreated,
@@ -103,7 +102,6 @@ public class Entry implements java.io.Serializable {
 	public void setEntryId(int entryId) {
 		this.entryId = entryId;
 	}
-
 
 	public String getNote() {
 		return note;
@@ -157,21 +155,17 @@ public class Entry implements java.io.Serializable {
 		return timestampStart;
 	}
 
-
 	public void setTimestampStart(Date timestampStart) {
 		this.timestampStart = timestampStart;
 	}
-
 
 	public Date getTimestampEnd() {
 		return timestampEnd;
 	}
 
-
 	public void setTimestampEnd(Date timestampEnd) {
 		this.timestampEnd = timestampEnd;
 	}
-
 
 	// equals & hashcode
 	@Override
@@ -200,11 +194,9 @@ public class Entry implements java.io.Serializable {
 		return minutes;
 	}
 
-
 	public void setMinutes(float minutes) {
 		this.minutes = minutes;
 	}
-
 
 	// toString
 	@Override
@@ -214,7 +206,5 @@ public class Entry implements java.io.Serializable {
 				+ ", timestampModified=" + timestampModified + ", editor=" + editor + ", category=" + category
 				+ ", project=" + project + ", enabled=" + enabled + ", version=" + version + "]";
 	}
-
-
 
 }
