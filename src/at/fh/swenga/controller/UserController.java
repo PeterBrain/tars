@@ -75,18 +75,31 @@ public class UserController {
 		admin.addUserRole(adminRole);
 		userDao.persist(admin);
 
+		User projectleader = new User("Projekt", "Leiter", now, "project@leader.com", "projectleader", "password",
+				true);
+		projectleader.encryptPassword();
+		projectleader.addUserRole(userRole);
+		projectleader.addUserRole(projectLeaderRole);
+		userDao.persist(projectleader);
+		
+		User user = new User("Be", "Nutzer", now, "user@example.com", "user", "password", true);
+		user.encryptPassword();
+		user.addUserRole(userRole);
+		userDao.persist(user);
+		
+
 		for (int i = 0; i <= 5; i++) {
 			String firstname = df.getFirstName();
-			User user = new User(firstname, df.getLastName(), df.getDateBetween(minDate, now),
+			User userGen = new User(firstname, df.getLastName(), df.getDateBetween(minDate, now),
 					firstname + "@example.com", firstname.toLowerCase(), "password", true);
-			user.encryptPassword();
+			userGen.encryptPassword();
 
 			if (i == 0) {
-				user.addUserRole(projectLeaderRole);
+				userGen.addUserRole(projectLeaderRole);
 			}
 
-			user.addUserRole(userRole);
-			userDao.persist(user);
+			userGen.addUserRole(userRole);
+			userDao.persist(userGen);
 		}
 
 		return "forward:login";
