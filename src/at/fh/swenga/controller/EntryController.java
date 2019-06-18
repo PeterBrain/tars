@@ -1,6 +1,7 @@
 package at.fh.swenga.controller;
 
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -92,8 +93,10 @@ public class EntryController {
 
 		String currentUsername = userDao.getCurrentUser();
 		User currentUser = userDao.getUserByUserName(currentUsername);
-		
+
 		Date now = new Date();
+		
+		long duration = 0;
 
 		// convert string to date
 		Date tsStart = new Date();
@@ -105,6 +108,7 @@ public class EntryController {
 			return "editEntry";
 		}
 		Date tsEnd = null;
+		//if Start AND End time are filled in:
 		if (!(timestampEnd.isEmpty())) {
 
 			// convert string to date
@@ -116,9 +120,17 @@ public class EntryController {
 				model.addAttribute("errorMessage", "End Date invalid");
 				return "editEntry";
 			}
+			
+			duration = java.time.Duration.between(tsStart.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
+					tsEnd.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
+			.toMinutes();
+
+			
 		}
 		Entry new_entry = new Entry(note, activity, tsStart, tsEnd, now, now, true);
-		
+
+		new_entry.setMinutes(duration);
+
 		new_entry.setEditor(currentUser);
 
 		entryDao.persist(new_entry);

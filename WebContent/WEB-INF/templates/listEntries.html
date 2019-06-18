@@ -65,6 +65,7 @@
 											<th>End</th>
 											<th>Note</th>
 											<th>Activity</th>
+											<th>Duration</th>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -76,6 +77,7 @@
 											<th>End</th>
 											<th>Note</th>
 											<th>Activity</th>
+											<th>Duration</th>
 											<th>Action</th>
 										</tr>
 									</tfoot>
@@ -87,6 +89,7 @@
 											<td th:text="${#dates.format(entry.timestampEnd,'dd.MM.yyyy HH:mm')}"></td>
 											<td th:text="${entry.note}"></td>
 											<td th:text="${entry.activity}"></td>
+											<td th:text="${entry.minutes}"></td>
 											<td>
 												<a th:href="@{/editEntry(id=${entry.entryId})}" class="btn btn-warning btn-circle btn-sm" sec:authorize="hasRole('ADMIN')">
 													<i class="fas fa-edit"></i>
