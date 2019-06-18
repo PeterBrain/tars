@@ -55,10 +55,10 @@ public class User implements java.io.Serializable {
 	@Column(name = "enabled", nullable = false)
 	private boolean enabled;
 
-	@ManyToMany(fetch = FetchType.LAZY) // cascade = CascadeType.MERGE would work for user insert
+	@ManyToMany(fetch = FetchType.EAGER) // cascade = CascadeType.MERGE would work for user insert
 	private Set<UserRole> userRoles;
 
-	@OneToMany(mappedBy = "editor", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "editor", fetch = FetchType.EAGER)
 	private Set<Entry> entries;
 
 	@OneToMany(mappedBy = "projectLeader", fetch = FetchType.LAZY)
