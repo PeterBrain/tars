@@ -68,7 +68,7 @@ public class UserController {
 		admin.addUserRole(adminRole);
 		userDao.persist(admin);
 
-		for (int i = 0; i <= 26; i++) {
+		for (int i = 0; i <= 5; i++) {
 			String firstname = df.getFirstName();
 			User user = new User(firstname, df.getLastName(), df.getDateBetween(minDate, now),
 					firstname + "@example.com", firstname.toLowerCase(), "password", true);

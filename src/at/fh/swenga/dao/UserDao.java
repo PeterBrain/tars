@@ -22,11 +22,12 @@ public class UserDao {
 	protected EntityManager entityManager;
 
 	public User getUserByUserName(String userName) {
-		TypedQuery<User> typedQuery = entityManager.createQuery("SELECT u FROM User u WHERE u.userName = :name LIMIT 1",
+		TypedQuery<User> typedQuery = entityManager.createQuery("SELECT u FROM User u WHERE u.userName = :name",
 				User.class);
 		typedQuery.setParameter("name", userName);
-		List<User> typedResultList = typedQuery.getResultList();
-		User user = typedResultList.get(0);
+		typedQuery.setMaxResults(1);
+		User user = typedQuery.getSingleResult();
+
 		return user;
 	}
 
@@ -36,7 +37,7 @@ public class UserDao {
 
 		return username;
 	}
-	
+
 	public User getUserById(int i) throws DataAccessException {
 		return entityManager.find(User.class, i);
 	}

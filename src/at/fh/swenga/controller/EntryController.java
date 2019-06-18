@@ -48,7 +48,7 @@ public class EntryController {
 		Date minDate = df.getDate(2020, 1, 1);
 		Date now = new Date();
 
-		for (int i = 0; i < 28; i++) {
+		for (int i = 0; i < 5; i++) {
 			Entry p1 = new Entry("My note: " + df.getRandomWord(), "My activity: " + df.getRandomWord(), now,
 					df.getDateBetween(minDate, now), now, now, true);
 			p1.setEditor(userDao.getUserById(i));
