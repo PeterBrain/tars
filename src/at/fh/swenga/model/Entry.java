@@ -67,7 +67,7 @@ public class Entry implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Category category;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
 	private Project project;
 
 	@Column(name = "enabled", nullable = false)
@@ -165,6 +165,22 @@ public class Entry implements java.io.Serializable {
 
 	public void setTimestampEnd(Date timestampEnd) {
 		this.timestampEnd = timestampEnd;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 	// equals & hashcode

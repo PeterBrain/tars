@@ -82,6 +82,13 @@
 										th:value="${entry} ? ${#dates.format(entry.timestampEnd, 'dd.MM.yyyy HH:mm')}"
 										readonly>
 								</div>
+								
+								<!---------------- project --------------------------------->
+								<div class="form-group">
+									<select id="project" class="form-control" name="project">
+										<option th:each="project : ${projects}" th:value="${project.projectId}" th:text="${project.name}">Project</option>
+									</select>
+								</div>
 
 								<!----------------  Timestamp Modified ------------------------>
 								<div class="form-group">

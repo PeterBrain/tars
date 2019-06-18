@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.dao.EntryDao;
+import at.fh.swenga.dao.ProjectDao;
 import at.fh.swenga.dao.UserDao;
 import at.fh.swenga.model.Entry;
+import at.fh.swenga.model.Project;
 import at.fh.swenga.model.User;
 
 @Controller
@@ -33,6 +35,9 @@ public class EntryController {
 
 	@Autowired
 	UserDao userDao;
+	
+	@Autowired
+	ProjectDao projectDao;
 
 	/**
 	 * fill database with test data
@@ -101,12 +106,15 @@ public class EntryController {
 
 	@RequestMapping(value = { "/addEntry" }, method = RequestMethod.GET)
 	public String addEntry(Model model) {
+		
+		List<Project> projects = projectDao.getProjects();
+		model.addAttribute("projects", projects);
 		return "editEntry";
 	}
 
 	@RequestMapping(value = { "/createEntry" }, method = RequestMethod.POST)
 	public String createEntry(Model model, @RequestParam String note, @RequestParam String activity,
-			@RequestParam String timestampStart, @RequestParam String timestampEnd) {
+			@RequestParam String timestampStart, @RequestParam String timestampEnd, @RequestParam int project) {
 		// User currentUser = userDao.get
 
 		String currentUsername = userDao.getCurrentUser();
@@ -151,7 +159,9 @@ public class EntryController {
 
 		}
 		Entry new_entry = new Entry(note, activity, tsStart, tsEnd, now, now, true);
-
+		
+		new_entry.setProject(projectDao.getProjectById(project));
+		
 		new_entry.setMinutes(duration);
 
 		new_entry.setEditor(currentUser);
@@ -164,6 +174,10 @@ public class EntryController {
 
 	@RequestMapping(value = { "/editEntry" }, method = RequestMethod.GET)
 	public String editEntry(Model model, int id) {
+		
+		List<Project> projects = projectDao.getProjects();
+		model.addAttribute("projects", projects);
+		
 		Entry entry = entryDao.getEntryById(id);
 
 		if (entry != null) {
@@ -176,7 +190,7 @@ public class EntryController {
 	}
 
 	@RequestMapping(value = { "/changeEntry" }, method = RequestMethod.POST)
-	public String changeEntry(@Valid Entry changedEntry, BindingResult bindingResult, Model model) {
+	public String changeEntry(@Valid Entry changedEntry, BindingResult bindingResult, Model model, @RequestParam int project) {
 
 		// any errors? create string of all errors and return to page
 		if (bindingResult.hasErrors()) {
@@ -188,7 +202,9 @@ public class EntryController {
 			return "listEntries";
 		}
 
+		
 		Entry entry = entryDao.getEntryById(changedEntry.getEntryId());
+		Project new_project = projectDao.getProjectById(project);
 
 		if (entry == null) {
 			model.addAttribute("errorMessage", "Entry does not exist! <br>");
@@ -202,6 +218,7 @@ public class EntryController {
 			entry.setTimestampModified(now);
 			entry.setTimestampStart(changedEntry.getTimestampStart());
 			entry.setTimestampEnd(changedEntry.getTimestampEnd());
+			entry.setProject(new_project);
 
 			model.addAttribute("message", "Changed entry " + changedEntry.getActivity());
 
