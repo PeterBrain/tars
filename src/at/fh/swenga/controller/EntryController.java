@@ -49,23 +49,21 @@ public class EntryController {
 		// produces a date between 1/1/2020 and the current date
 		Date minDate = df.getDate(2019, 1, 1);
 		Date now = new Date();
-		
+
 		long duration = 0;
 		Date tsStart = new Date();
 		Date tsEnd = now;
 
 		for (int i = 1; i < 5; i++) {
 			tsStart = df.getDateBetween(minDate, now);
-			
-			Entry p1 = new Entry("My note: " + df.getRandomWord(), "My activity: " + df.getRandomWord(),
-					tsStart, now, now, now, true);
+
+			Entry p1 = new Entry("My note: " + df.getRandomWord(), "My activity: " + df.getRandomWord(), tsStart, now,
+					now, now, true);
 			p1.setEditor(userDao.getUserById(i));
-			
-			duration = java.time.Duration
-					.between(tsStart.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
-							tsEnd.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
-					.toMinutes();
-			
+
+			duration = java.time.Duration.between(tsStart.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
+					tsEnd.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()).toMinutes();
+
 			p1.setMinutes(duration);
 			entryDao.persist(p1);
 		}
@@ -199,7 +197,7 @@ public class EntryController {
 			Date now = new Date();
 
 			entry.setActivity(changedEntry.getActivity());
-			entry.setNote(changedEntry.getActivity());
+			entry.setNote(changedEntry.getNote());
 			entry.setTimestampCreated(changedEntry.getTimestampCreated());
 			entry.setTimestampModified(now);
 			entry.setTimestampStart(changedEntry.getTimestampStart());
@@ -207,9 +205,12 @@ public class EntryController {
 
 			model.addAttribute("message", "Changed entry " + changedEntry.getActivity());
 
-			entryDao.persist(entry);
+			entryDao.merge(entry);
 		}
-		return "listEntries";
+		
+//		model.addAttribute("entry", entry);
+		
+		return "forward:/listEntries";
 	}
 
 	@RequestMapping(value = { "/deleteEntry" }, method = RequestMethod.GET)

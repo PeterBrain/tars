@@ -46,21 +46,27 @@
 								th:action="${entry} ? @{/changeEntry(id=${entry.entryId})} : @{/createEntry}"
 								method="post">
 
+								<!------------------  entryId ------------------>
+								<div class="form-group">
+									<input class="form-control" id="entryId" type="hidden"
+										name="entryId" th:value="${entry} ? ${entry.entryId}"
+										th:readonly="${entryId}">
+								</div>
 
 								<!----------------  note ------------------------>
 								<div class="form-group">
-									<input type="text" id="note" placeholder="Note"
-										name="note" th:value="${entry} ? ${entry.note}"
-										required autofocus class="form-control form-control-user">
+									<input type="text" id="note" placeholder="Note" name="note"
+										th:value="${entry} ? ${entry.note}" required autofocus
+										class="form-control form-control-user">
 								</div>
 
 								<!----------------  activity ------------------------>
 								<div class="form-group">
 									<input type="text" id="activity" placeholder="Activity"
-										name="activity" th:value="${entry} ? ${entry.activity}" required
-										class="form-control form-control-user">
+										name="activity" th:value="${entry} ? ${entry.activity}"
+										required class="form-control form-control-user">
 								</div>
-								
+
 								<!----------------  Timestamp Start ------------------------>
 								<div class="form-group">
 									<input type="text" id="timestampStart" placeholder="Start"
@@ -68,12 +74,30 @@
 										th:value="${entry} ? ${#dates.format(entry.timestampStart, 'dd.MM.yyyy HH:mm')}"
 										readonly>
 								</div>
-								
+
 								<!----------------  Timestamp End ------------------------>
 								<div class="form-group">
 									<input type="text" id="timestampEnd" placeholder="End"
 										name="timestampEnd" class="form_datetime"
 										th:value="${entry} ? ${#dates.format(entry.timestampEnd, 'dd.MM.yyyy HH:mm')}"
+										readonly>
+								</div>
+
+								<!----------------  Timestamp Modified ------------------------>
+								<div class="form-group">
+									<input type="hidden" id="timestampModified"
+										placeholder="timestampModified" name="timestampModified"
+										class="form_datetime"
+										th:value="${entry} ? ${#dates.format(entry.timestampModified, 'dd.MM.yyyy HH:mm')}"
+										readonly>
+								</div>
+
+								<!----------------  Timestamp Created ------------------------>
+								<div class="form-group">
+									<input type="hidden" id="timestampCreated"
+										placeholder="timestampCreated" name="timestampCreated"
+										class="form_datetime"
+										th:value="${entry} ? ${#dates.format(entry.timestampModified, 'dd.MM.yyyy HH:mm')}"
 										readonly>
 								</div>
 
