@@ -41,7 +41,13 @@
 							<form class="entry"
 								th:action="${category} ? @{/changeCategory(id=${category.categoryId})} : @{/createCategory}"
 								method="post">
-
+								
+								<!-- id -->
+								<div class="form-group">
+									<input class="form-control" id="categoryId" type="hidden"
+										name="categoryId" th:value="${category} ? ${category.categoryId}"
+										th:readonly="${categoryId}">
+								</div>
 
 								<!-- name -->
 								<div class="form-group">

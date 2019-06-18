@@ -41,6 +41,13 @@
 							<form class="entry"
 								th:action="${project} ? @{/changeProject(id=${project.projectId})} : @{/createProject}"
 								method="post">
+								
+								<!-- id -->
+								<div class="form-group">
+									<input class="form-control" id="projectId" type="hidden"
+										name="projectId" th:value="${project} ? ${project.projectId}"
+										th:readonly="${projectId}">
+								</div>
 
 								<!-- name -->
 								<div class="form-group">

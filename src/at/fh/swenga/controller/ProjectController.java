@@ -2,11 +2,15 @@ package at.fh.swenga.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,15 +30,7 @@ public class ProjectController {
 
 	@Autowired
 	UserDao userDao;
-
-	@RequestMapping(value = { "listProjects" })
-	public String listProjects(Model model) {
-		List<Project> projects = projectDao.getProjects();
-		model.addAttribute("projects", projects);
-
-		return "listProjects";
-	}
-
+	
 	@Transactional
 	@RequestMapping(value = { "fillProjects" })
 	public String fillProjects(Model model) {
@@ -43,6 +39,14 @@ public class ProjectController {
 		projectDao.persist(project1);
 
 		return "forward:listProjects";
+	}
+
+	@RequestMapping(value = { "listProjects" })
+	public String listProjects(Model model) {
+		List<Project> projects = projectDao.getProjects();
+		model.addAttribute("projects", projects);
+
+		return "listProjects";
 	}
 	
 	@RequestMapping(value = { "/deleteProject" }, method = RequestMethod.GET)
@@ -65,6 +69,52 @@ public class ProjectController {
 		projectDao.persist(new_project);
 
 		model.addAttribute("message", "Created new Project");
+		return "forward:listProjects";
+	}
+	
+	//@Secured("PROJECT_LEADER")
+	@RequestMapping(value = { "/editProject" }, method = RequestMethod.GET)
+	public String editProject(Model model, int id) {
+
+		Project project = projectDao.getProjectById(id);
+
+		if (project != null) {
+			model.addAttribute("project", project);
+			return "editProject";
+		} else {
+			model.addAttribute("errorMessage", "Couldn't find project with id: " + id);
+			return "forward:/listProjects";
+		}
+	}
+	
+	/*@Secured("PROJECT_LEADER")*/
+	@RequestMapping(value = { "/changeProject" }, method = RequestMethod.POST)
+	public String changeProject(@Valid Project changedProject, BindingResult bindingResult, Model model) {
+		
+		if (bindingResult.hasErrors()) {
+			String errorMessage = "";
+			for (FieldError fieldError : bindingResult.getFieldErrors()) {
+				errorMessage += fieldError.getField() + " is invalid: " + fieldError.getCode() + "<br>";
+			}
+			model.addAttribute("errorMessage", errorMessage);
+
+			return "editProject";
+		}
+
+		Project project = projectDao.getProjectById(changedProject.getProjectId());
+
+		if (project == null) {
+			model.addAttribute("errorMessage", "Project does not exist!<br>");
+		} else {
+			project.setName(changedProject.getName());
+			project.setDescription(changedProject.getDescription());
+			//project.setProjectLeader();
+
+			projectDao.merge(project);
+
+			model.addAttribute("message", "Changed project " + changedProject.getProjectId());
+		}
+
 		return "forward:listProjects";
 	}
 	

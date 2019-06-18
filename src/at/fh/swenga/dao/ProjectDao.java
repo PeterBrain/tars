@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import at.fh.swenga.model.Category;
 import at.fh.swenga.model.Entry;
 import at.fh.swenga.model.Project;
+import at.fh.swenga.model.User;
 
 @Repository
 @Transactional
@@ -33,6 +34,10 @@ public class ProjectDao {
 	
 	public void persist(Project project) {
 		entityManager.persist(project);
+	}
+	
+	public Project merge(Project project) {
+		return entityManager.merge(project);
 	}
 	
 	public void delete(Project project) {

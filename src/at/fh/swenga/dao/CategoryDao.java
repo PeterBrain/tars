@@ -34,6 +34,10 @@ public class CategoryDao {
 		entityManager.persist(category);
 	}
 	
+	public Category merge(Category category) {
+		return entityManager.merge(category);
+	}
+	
 	public void delete(Category category) {
 		entityManager.remove(category);
 	}

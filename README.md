@@ -12,10 +12,8 @@ db.password=xxx
 * Methods:
     * Archive
         * editEntry
-    * Category
-        * editCategory
     * Project
-        * editProject
+        * editProject (set project leader)
     * Password
         * Password reset (user)
         * Password policy
