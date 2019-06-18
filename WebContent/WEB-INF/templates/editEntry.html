@@ -94,7 +94,7 @@
 										project</label> <select id="new_project" class="form-control"
 										name="new_project">
 										<optgroup label="List of projects">
-											<option disabled selected="selected">Select ...</option>
+											<option disabled>Select ...</option>
 											<option th:each="project : ${projects}"
 												th:value="${project.projectId}" th:text="${project.name}">Project</option>
 										</optgroup>

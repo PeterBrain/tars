@@ -18,7 +18,6 @@ db.password=xxx
 * Methods:
     * Archive
         * edit entry
-        * add project to entry
         * add category to entry
     * Password
         * password policy
