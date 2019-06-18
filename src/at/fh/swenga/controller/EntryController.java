@@ -100,17 +100,19 @@ public class EntryController {
 			model.addAttribute("errorMessage", "Start date invalid");
 			return "editEntry";
 		}
+		Date tsEnd = null;
+		if (timestampEnd == null) {
 
-		// convert string to date
-		Date tsEnd = new Date();
-		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-			tsEnd = sdf.parse(timestampEnd);
-		} catch (Exception e) {
-			model.addAttribute("errorMessage", "End Date invalid");
-			return "editEntry";
+			// convert string to date
+			tsEnd = new Date();
+			try {
+				SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+				tsEnd = sdf.parse(timestampEnd);
+			} catch (Exception e) {
+				model.addAttribute("errorMessage", "End Date invalid");
+				return "editEntry";
+			}
 		}
-
 		Entry new_entry = new Entry(note, activity, tsStart, tsEnd, now, now, true);
 
 		entryDao.persist(new_entry);

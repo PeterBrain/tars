@@ -41,8 +41,7 @@ public class Entry implements java.io.Serializable {
 	
 	//@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
-	@NotNull(message = "create time cannot be null")
-	@Column(name = "end", nullable = false)
+	@Column(name = "end", nullable = true)
 	private Date timestampEnd;
 
 	//@Temporal(TemporalType.DATE)
