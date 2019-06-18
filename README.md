@@ -17,10 +17,8 @@ db.password=xxx
 ## ToDo
 * Methods:
     * Archive
-        * edit entry
+        * edit entry (if project leader is admin -> entry update doesn't work)
         * add category to entry
-    * Password
-        * password policy
     * Export
         * excel
         * email
