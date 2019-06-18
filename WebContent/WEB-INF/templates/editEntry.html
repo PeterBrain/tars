@@ -90,7 +90,7 @@
 
 								<!---------------- project --------------------------------->
 								<div class="form-group">
-									<<<<<<< HEAD <label for="project" class="control-label">Select
+									<label for="project" class="control-label">Select
 										project</label> <select id="new_project" class="form-control"
 										name="new_project">
 										<optgroup label="List of projects">
@@ -98,6 +98,7 @@
 											<option th:each="project : ${projects}"
 												th:value="${project.projectId}" th:text="${project.name}">Project</option>
 										</optgroup>
+									</select>
 								</div>
 
 								<!----------------  Timestamp Modified ------------------------>
