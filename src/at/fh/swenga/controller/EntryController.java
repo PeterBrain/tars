@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import at.fh.swenga.dao.EntryDao;
 import at.fh.swenga.dao.UserDao;
 import at.fh.swenga.model.Entry;
+import at.fh.swenga.model.User;
 
 @Controller
 public class EntryController {
@@ -89,6 +90,9 @@ public class EntryController {
 			@RequestParam String timestampStart, @RequestParam String timestampEnd) {
 		// User currentUser = userDao.get
 
+		String currentUsername = userDao.getCurrentUser();
+		User currentUser = userDao.getUserByUserName(currentUsername);
+		
 		Date now = new Date();
 
 		// convert string to date
@@ -101,7 +105,7 @@ public class EntryController {
 			return "editEntry";
 		}
 		Date tsEnd = null;
-		if (timestampEnd == null) {
+		if (!(timestampEnd.isEmpty())) {
 
 			// convert string to date
 			tsEnd = new Date();
@@ -114,6 +118,8 @@ public class EntryController {
 			}
 		}
 		Entry new_entry = new Entry(note, activity, tsStart, tsEnd, now, now, true);
+		
+		new_entry.setEditor(currentUser);
 
 		entryDao.persist(new_entry);
 

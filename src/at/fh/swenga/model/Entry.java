@@ -56,7 +56,7 @@ public class Entry implements java.io.Serializable {
 	@Column(name = "modified", nullable = false)
 	private Date timestampModified;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST) // maybe remove Cascade type
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE) // maybe remove Cascade type
 	private User editor;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
