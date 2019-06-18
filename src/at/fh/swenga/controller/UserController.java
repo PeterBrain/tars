@@ -275,7 +275,6 @@ public class UserController {
 	}
 
 	/**
-	 * 
 	 * open editPassword page
 	 * 
 	 * @param model
@@ -285,7 +284,7 @@ public class UserController {
 	public String editPassword(Model model) {
 		String username = userDao.getCurrentUser();
 		User user = userDao.getUserByUserName(username);
-		
+
 		model.addAttribute("user", user);
 
 		return "editPassword";
@@ -304,17 +303,43 @@ public class UserController {
 	 */
 	@RequestMapping(value = { "/changePassword" })
 	@Transactional
-	public String changePassword(Model model, @RequestParam int id, @RequestParam String pass_old,
-			@RequestParam String pass_new, @RequestParam String pass_repeat) {
-		User user = userDao.getUserById(id);
+	public String changePassword(Model model, @RequestParam int userId, @RequestParam String password_old,
+			@RequestParam String password_new, @RequestParam String password_repeat) {
+		User user = userDao.getUserById(userId);
 
-		if (pass_new.equals(pass_repeat)) { // old password need to be checked too
-			user.encryptPassword();
-			userDao.persist(user);
-			model.addAttribute("message", "Password successfully changed");
+		if (user == null) {
+			System.out.println("User does not exist");
+			model.addAttribute("errorMessage", "User does not exist!<br>");
 		} else {
-			model.addAttribute("errorMessage", "Something went wrong");
+			if (!password_old.isEmpty()) {
+				if (user.checkIfValidOldPassword(user, password_old)) {
+					System.out.println("Current password is correct!");
+
+					if (password_new.equals(password_repeat)) {
+						System.out.println("Old password equals new password");
+						
+						user.setPassword(password_repeat);
+						user.encryptPassword();
+						
+						userDao.persist(user);
+//						userDao.merge(user);
+
+						model.addAttribute("message", "New password was set!");
+					} else {
+						System.out.println("Passwords do not match");
+						model.addAttribute("errorMessage", "Passwords do not match!");
+					}
+				} else {
+					System.out.println("Current password is not correct");
+					model.addAttribute("errorMessage", "Current password is not correct!");
+				}
+			} else {
+				System.out.println("Current password is empty");
+				model.addAttribute("errorMessage", "Current password is empty!");
+			}
 		}
+
+		model.addAttribute("user", user);
 		return "editPassword";
 	}
 

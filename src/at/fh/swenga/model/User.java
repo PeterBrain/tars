@@ -189,6 +189,11 @@ public class User implements java.io.Serializable {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		password = passwordEncoder.encode(password);
 	}
+	
+	public boolean checkIfValidOldPassword(final User user, final String oldPassword) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.matches(oldPassword, user.getPassword());
+    }
 
 	/**
 	 * equals and hashcode
