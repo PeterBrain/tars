@@ -65,6 +65,7 @@ public class EntryController {
 			Entry p1 = new Entry("My note: " + df.getRandomWord(), "My activity: " + df.getRandomWord(), tsStart, now,
 					now, now, true);
 			p1.setEditor(userDao.getUserById(i));
+			p1.setProject(projectDao.getProjectById(1));
 
 			duration = java.time.Duration.between(tsStart.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
 					tsEnd.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()).toMinutes();

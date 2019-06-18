@@ -96,7 +96,8 @@
 										<optgroup label="List of projects">
 											<option disabled>Select ...</option>
 											<option th:each="project : ${projects}"
-												th:value="${project.projectId}" th:text="${project.name}">Project</option>
+												th:value="${project.projectId}" th:text="${project.name}"
+												th:selected="${project.name == entry.project.name}">Project</option>
 										</optgroup>
 									</select>
 								</div>
@@ -121,7 +122,7 @@
 
 
 								<button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
-								<a href="listEntries" class="btn btn-default"> Cancel </a>
+								<a href="listEntries" class="btn btn-default">Cancel</a>
 							</form>
 
 							<hr>
