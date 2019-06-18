@@ -59,8 +59,8 @@
 
 								<!-- description -->
 								<div class="form-group">
-									<label for="description" class="control-label">Description</label> <input
-										type="text" id="description" placeholder="Description"
+									<label for="description" class="control-label">Description</label>
+									<input type="text" id="description" placeholder="Description"
 										name="description"
 										th:value="${project} ? ${project.description}" required
 										autofocus class="form-control form-control-user">
@@ -68,19 +68,14 @@
 
 								<!-- project leader -->
 								<div class="form-group">
-<<<<<<< HEAD
-									<label for="new_projectLeader" class="control-label">Project Leader</label> <select
-										id="new_projectLeader" class="form-control"
+									<label for="new_projectLeader" class="control-label">Project
+										Leader</label> <select id="new_projectLeader" class="form-control"
 										name="new_projectLeader">
-										<option th:each="user : ${users}" th:value="${user.userName}"
-											th:text="${user.userName}">Project leader</option>
-=======
-									<select id="new_projectLeader" class="form-control" name="new_projectLeader">
 										<optgroup label="List of usernames">
 											<option disabled selected="selected">Select ...</option>
-											<option th:each="user : ${users}" th:value="${user.userName}" th:text="${user.userName}">Project leader</option>
+											<option th:each="user : ${users}" th:value="${user.userName}"
+												th:text="${user.userName}">Project leader</option>
 										</optgroup>
->>>>>>> a32587602079efed8b59a97cac2dc1ab7e1f6849
 									</select>
 								</div>
 
