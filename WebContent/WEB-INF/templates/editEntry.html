@@ -97,7 +97,7 @@
 											<option disabled>Select ...</option>
 											<option th:each="project : ${projects}"
 												th:value="${project.projectId}" th:text="${project.name}"
-												th:selected="${project.name == entry.project.name}">Project</option>
+												th:selected="${entry} ? ${project.name == entry.project.name} : 'false'">Project</option>
 										</optgroup>
 									</select>
 								</div>
