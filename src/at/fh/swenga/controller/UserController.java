@@ -56,6 +56,12 @@ public class UserController {
 			userRoleDao.persist(userRole);
 		}
 
+		UserRole projectLeaderRole = userRoleDao.getRole("ROLE_PROJECT_LEADER");
+		if (projectLeaderRole == null) {
+			projectLeaderRole = new UserRole("ROLE_PROJECT_LEADER");
+			userRoleDao.persist(projectLeaderRole);
+		}
+
 		DataFactory df = new DataFactory();
 
 		// produces a date between 1/1/2000 and the current date
@@ -65,6 +71,7 @@ public class UserController {
 		User admin = new User("Hans", "Maier", now, "admin@example.com", "admin", "password", true);
 		admin.encryptPassword();
 		admin.addUserRole(userRole);
+		admin.addUserRole(projectLeaderRole);
 		admin.addUserRole(adminRole);
 		userDao.persist(admin);
 
@@ -73,6 +80,11 @@ public class UserController {
 			User user = new User(firstname, df.getLastName(), df.getDateBetween(minDate, now),
 					firstname + "@example.com", firstname.toLowerCase(), "password", true);
 			user.encryptPassword();
+
+			if (i == 0) {
+				user.addUserRole(projectLeaderRole);
+			}
+
 			user.addUserRole(userRole);
 			userDao.persist(user);
 		}
@@ -317,10 +329,10 @@ public class UserController {
 
 					if (password_new.equals(password_repeat)) {
 						System.out.println("Old password equals new password");
-						
+
 						user.setPassword(password_repeat);
 						user.encryptPassword();
-						
+
 						userDao.persist(user);
 //						userDao.merge(user);
 
