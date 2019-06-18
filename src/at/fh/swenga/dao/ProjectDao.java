@@ -10,10 +10,7 @@ import javax.transaction.Transactional;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
-import at.fh.swenga.model.Category;
-import at.fh.swenga.model.Entry;
 import at.fh.swenga.model.Project;
-import at.fh.swenga.model.User;
 
 @Repository
 @Transactional
@@ -27,23 +24,23 @@ public class ProjectDao {
 		List<Project> typedResultList = typedQuery.getResultList();
 		return typedResultList;
 	}
-	
+
 	public Project getProjectById(int i) throws DataAccessException {
 		return entityManager.find(Project.class, i);
 	}
-	
+
 	public void persist(Project project) {
 		entityManager.persist(project);
 	}
-	
+
 	public Project merge(Project project) {
 		return entityManager.merge(project);
 	}
-	
+
 	public void delete(Project project) {
 		entityManager.remove(project);
 	}
-	
+
 	public void delete(int id) {
 		Project project = getProjectById(id);
 		if (project != null) {

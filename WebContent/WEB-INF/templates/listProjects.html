@@ -80,12 +80,12 @@
 											<td th:text="${project.projectId}"></td>
 											<td th:text="${project.name}"></td>
 											<td th:text="${project.description}"></td>
-											<td></td>
+											<td th:text="${project.projectLeader.userName}"></td>
 											<td>
-												<a th:href="@{/editProject(id=${project.projectId})}" class="btn btn-warning btn-circle btn-sm" sec:authorize="hasRole('ADMIN')">
+												<a th:href="@{/editProject(id=${project.projectId})}" class="btn btn-warning btn-circle btn-sm" sec:authorize="hasRole('PROJECT_LEADER')">
 													<i class="fas fa-edit"></i>
 												</a>
-												<a th:href="@{/deleteProject(id=${project.projectId})}" class="btn btn-danger btn-circle btn-sm" sec:authorize="hasRole('ADMIN')">
+												<a th:href="@{/deleteProject(id=${project.projectId})}" class="btn btn-danger btn-circle btn-sm" sec:authorize="hasRole('PROJECT_LEADER')">
 													<i class="fas fa-trash"></i>
 												</a>
 											</td>

@@ -17,32 +17,30 @@ import javax.persistence.Version;
 @Entity
 @Table(name = "project")
 public class Project implements java.io.Serializable {
-	
+
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int projectId;
-	
+
 	@Column(name = "name", length = 45)
 	private String name;
-	
+
 	@Column(name = "description", length = 45)
 	private String description;
-	
+
 	@OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
 	private Set<Entry> entries;
-	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	private User projectLeader;
-	
+
 	@Version
 	private long version;
-	
-	
+
 	public Project() {
 		// TODO Auto-generated constructor stub
 	}
-
 
 	public Project(String name, String description, User projectLeader) {
 		super();
@@ -51,66 +49,53 @@ public class Project implements java.io.Serializable {
 		this.projectLeader = projectLeader;
 	}
 
-
 	public int getProjectId() {
 		return projectId;
 	}
-
 
 	public void setProjectId(int projectId) {
 		this.projectId = projectId;
 	}
 
-
 	public String getName() {
 		return name;
 	}
 
-	
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	
 	public String getDescription() {
 		return description;
 	}
 
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
 
 	public Set<Entry> getEntries() {
 		return entries;
 	}
 
-
 	public void setEntries(Set<Entry> entries) {
 		this.entries = entries;
 	}
-
 
 	public User getProjectLeader() {
 		return projectLeader;
 	}
 
-
 	public void setProjectLeader(User projectLeader) {
 		this.projectLeader = projectLeader;
 	}
-
 
 	public long getVersion() {
 		return version;
 	}
 
-
 	public void setVersion(long version) {
 		this.version = version;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -119,7 +104,6 @@ public class Project implements java.io.Serializable {
 		result = prime * result + projectId;
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -135,12 +119,10 @@ public class Project implements java.io.Serializable {
 		return true;
 	}
 
-
 	@Override
 	public String toString() {
-		return "Project [projectId=" + projectId + ", name=" + name + ", description=" + description + ", entries=" + entries + ", projectLeader="
-				+ projectLeader + "]";
+		return "Project [projectId=" + projectId + ", name=" + name + ", description=" + description + ", entries="
+				+ entries + ", projectLeader=" + projectLeader + "]";
 	}
-	
-	
+
 }

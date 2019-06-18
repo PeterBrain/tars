@@ -17,14 +17,16 @@ db.password=xxx
 ## ToDo
 * Methods:
     * Archive
-        * editEntry
+        * edit entry
+        * add project to entry
+        * add category to entry
     * Password
-        * Password policy
+        * password policy
     * Export
         * excel
         * email
     * Modification History
-        * addHistoryEntry
+        * add history entry
 
 ---
 This project was set up for the "Software engineering advanced" lecture at [FH JOANNEUM](https://www.fh-joanneum.at/) Graz.

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -19,7 +20,6 @@ import at.fh.swenga.dao.ProjectDao;
 import at.fh.swenga.dao.UserDao;
 import at.fh.swenga.model.Project;
 import at.fh.swenga.model.User;
-import at.fh.swenga.model.UserRole;
 
 @Controller
 public class ProjectController {
@@ -34,7 +34,7 @@ public class ProjectController {
 	@RequestMapping(value = { "fillProjects" })
 	public String fillProjects(Model model) {
 
-		Project project1 = new Project("Project ", "Default description", userDao.getUserById(0));
+		Project project1 = new Project("Project ", "Default description", userDao.getUserById(1));
 		projectDao.persist(project1);
 
 		return "forward:listProjects";
@@ -76,7 +76,7 @@ public class ProjectController {
 		return "forward:listProjects";
 	}
 
-	// @Secured("PROJECT_LEADER")
+	@Secured("ROLE_PROJECT_LEADER")
 	@RequestMapping(value = { "/editProject" }, method = RequestMethod.GET)
 	public String editProject(Model model, int id) {
 
@@ -94,9 +94,10 @@ public class ProjectController {
 		}
 	}
 
-	/* @Secured("PROJECT_LEADER") */
+	@Secured("ROLE_PROJECT_LEADER")
 	@RequestMapping(value = { "/changeProject" }, method = RequestMethod.POST)
-	public String changeProject(@Valid Project changedProject, BindingResult bindingResult, Model model, @RequestParam String new_projectLeader) {
+	public String changeProject(@Valid Project changedProject, BindingResult bindingResult, Model model,
+			@RequestParam String new_projectLeader) {
 
 		if (bindingResult.hasErrors()) {
 			String errorMessage = "";
