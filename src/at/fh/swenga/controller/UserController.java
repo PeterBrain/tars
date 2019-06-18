@@ -35,12 +35,12 @@ public class UserController {
 
 	/**
 	 * 
-	 * fills database with two default users
+	 * fill database with default users
 	 * 
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/fillUsers")
+	@RequestMapping(value = { "/fillUsers" })
 	@Transactional
 	public String fillData(Model model) {
 
@@ -131,9 +131,9 @@ public class UserController {
 	public String createUser(Model model, @RequestParam String firstName, @RequestParam String lastName,
 			@RequestParam String email, @RequestParam String userName, @RequestParam String dateOfBirth,
 			@RequestParam String password, @RequestParam String password_repeat) {
-		
+
 		System.out.println(firstName);
-		
+
 		String currentUsername = userDao.getCurrentUser();
 		model.addAttribute("user", currentUsername);
 
@@ -179,6 +179,7 @@ public class UserController {
 	 * open editUser page
 	 * 
 	 * @param model
+	 * @param id
 	 * @return
 	 */
 	@Secured("ROLE_ADMIN")
@@ -197,12 +198,19 @@ public class UserController {
 	}
 
 	/**
+	 * 
 	 * edit specific user details
+	 * 
+	 * @param changedUser
+	 * @param bindingResult
+	 * @param model
+	 * @param password_repeat
+	 * @return
 	 */
-
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/changeUser" }, method = RequestMethod.POST)
-	public String changeUser(@Valid User changedUser, BindingResult bindingResult, Model model, @RequestParam String password_repeat) {
+	public String changeUser(@Valid User changedUser, BindingResult bindingResult, Model model,
+			@RequestParam String password_repeat) {
 		// Any errors? -> Create a String out of all errors and return to the page
 		if (bindingResult.hasErrors()) {
 			String errorMessage = "";
@@ -235,11 +243,11 @@ public class UserController {
 			}
 
 			userDao.merge(user);
-			
+
 			// Save a message for the web page
 			model.addAttribute("message",
 					"Changed user " + changedUser.getFirstName() + " " + changedUser.getLastName());
-			
+
 		}
 
 		List<User> users = userDao.getUsers();
@@ -296,7 +304,7 @@ public class UserController {
 	 * @param pass_repeat
 	 * @return
 	 */
-	@RequestMapping("/changePassword")
+	@RequestMapping(value = { "/changePassword" })
 	@Transactional
 	public String changePassword(Model model, @RequestParam int id, @RequestParam String pass_old,
 			@RequestParam String pass_new, @RequestParam String pass_repeat) {

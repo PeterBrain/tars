@@ -32,26 +32,15 @@ public class EntryController {
 	@Autowired
 	UserDao userDao;
 
-	@RequestMapping(value = { "listEntries" })
-	public String listEntries(Model model) {
-		List<Entry> entries = entryDao.getEntries();
-		model.addAttribute("entries", entries);
-
-		String username = userDao.getCurrentUser();
-		model.addAttribute("user", username);
-
-		return "listEntries";
-	}
-
 	/**
-	 * generates test data
+	 * fill database with test data
 	 * 
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/fillData")
+	@RequestMapping(value = { "/fillEntries" })
 	@Transactional
-	public String fillData(Model model) {
+	public String fillEntries(Model model) {
 
 		DataFactory df = new DataFactory();
 
@@ -69,29 +58,25 @@ public class EntryController {
 		return "forward:listEntries";
 	}
 
-	@RequestMapping("/searchEntries")
+	@RequestMapping(value = { "listEntries" })
+	public String listEntries(Model model) {
+		List<Entry> entries = entryDao.getEntries();
+		model.addAttribute("entries", entries);
+
+		return "listEntries";
+	}
+
+	@RequestMapping(value = { "/searchEntries" })
 	public String search(Model model, @RequestParam String searchString) {
 		model.addAttribute("entries", entryDao.searchEntries(searchString));
 		return "index";
 	}
 
 	@Secured("ROLE_ADMIN")
-	@RequestMapping("/delete")
+	@RequestMapping(value = { "/delete" })
 	public String deleteData(Model model, @RequestParam int id) {
 		entryDao.delete(id);
 		return "forward:list";
-	}
-
-	/**
-	 * 
-	 * handle errors
-	 * 
-	 * @param ex
-	 * @return
-	 */
-	@ExceptionHandler(Exception.class)
-	public String handleAllException(Exception ex) {
-		return "error";
 	}
 
 	@RequestMapping(value = { "/addEntry" }, method = RequestMethod.GET)
@@ -100,11 +85,12 @@ public class EntryController {
 	}
 
 	@RequestMapping(value = { "/createEntry" }, method = RequestMethod.POST)
-	public String createEntry(Model model, @RequestParam String note, @RequestParam String activity, @RequestParam String timestampStart, @RequestParam String timestampEnd) {
+	public String createEntry(Model model, @RequestParam String note, @RequestParam String activity,
+			@RequestParam String timestampStart, @RequestParam String timestampEnd) {
 		// User currentUser = userDao.get
 
 		Date now = new Date();
-		
+
 		// convert string to date
 		Date tsStart = new Date();
 		try {
@@ -124,7 +110,7 @@ public class EntryController {
 			model.addAttribute("errorMessage", "End Date invalid");
 			return "editEntry";
 		}
-		
+
 		Entry new_entry = new Entry(note, activity, tsStart, tsEnd, now, now, true);
 
 		entryDao.persist(new_entry);
@@ -175,7 +161,7 @@ public class EntryController {
 			entry.setTimestampEnd(changedEntry.getTimestampEnd());
 
 			model.addAttribute("message", "Changed entry " + changedEntry.getActivity());
-			
+
 			entryDao.persist(entry);
 		}
 		return "listEntries";
@@ -186,6 +172,18 @@ public class EntryController {
 		entryDao.delete(id);
 
 		return "forward:listEntries";
+	}
+
+	/**
+	 * 
+	 * handle errors
+	 * 
+	 * @param ex
+	 * @return
+	 */
+	@ExceptionHandler(Exception.class)
+	public String handleAllException(Exception ex) {
+		return "error";
 	}
 
 }
