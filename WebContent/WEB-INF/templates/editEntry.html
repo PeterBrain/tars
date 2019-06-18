@@ -85,8 +85,11 @@
 								
 								<!---------------- project --------------------------------->
 								<div class="form-group">
-									<select id="project" class="form-control" name="project">
-										<option th:each="project : ${projects}" th:value="${project.projectId}" th:text="${project.name}">Project</option>
+									<select id="new_project" class="form-control" name="new_project">
+										<optgroup label="List of projects">
+											<option disabled selected="selected">Select ...</option>
+											<option th:each="project : ${projects}" th:value="${project.projectId}" th:text="${project.name}">Project</option>
+										</optgroup>
 									</select>
 								</div>
 

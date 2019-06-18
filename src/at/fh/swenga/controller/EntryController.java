@@ -190,7 +190,7 @@ public class EntryController {
 	}
 
 	@RequestMapping(value = { "/changeEntry" }, method = RequestMethod.POST)
-	public String changeEntry(@Valid Entry changedEntry, BindingResult bindingResult, Model model, @RequestParam int project) {
+	public String changeEntry(@Valid Entry changedEntry, BindingResult bindingResult, Model model, @RequestParam int new_project) {
 
 		// any errors? create string of all errors and return to page
 		if (bindingResult.hasErrors()) {
@@ -204,7 +204,7 @@ public class EntryController {
 
 		
 		Entry entry = entryDao.getEntryById(changedEntry.getEntryId());
-		Project new_project = projectDao.getProjectById(project);
+		Project project = projectDao.getProjectById(new_project);
 
 		if (entry == null) {
 			model.addAttribute("errorMessage", "Entry does not exist! <br>");
@@ -218,7 +218,7 @@ public class EntryController {
 			entry.setTimestampModified(now);
 			entry.setTimestampStart(changedEntry.getTimestampStart());
 			entry.setTimestampEnd(changedEntry.getTimestampEnd());
-			entry.setProject(new_project);
+			entry.setProject(project);
 
 			model.addAttribute("message", "Changed entry " + changedEntry.getActivity());
 
