@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.dao.UserDao;
 import at.fh.swenga.dao.UserRoleDao;
+import at.fh.swenga.model.PasswordValidator;
 import at.fh.swenga.model.User;
 import at.fh.swenga.model.UserRole;
 
@@ -81,12 +82,11 @@ public class UserController {
 		projectleader.addUserRole(userRole);
 		projectleader.addUserRole(projectLeaderRole);
 		userDao.persist(projectleader);
-		
+
 		User user = new User("Be", "Nutzer", now, "user@example.com", "user", "password", true);
 		user.encryptPassword();
 		user.addUserRole(userRole);
 		userDao.persist(user);
-		
 
 		for (int i = 0; i <= 5; i++) {
 			String firstname = df.getFirstName();
@@ -343,13 +343,22 @@ public class UserController {
 					if (password_new.equals(password_repeat)) {
 						System.out.println("Old password equals new password");
 
-						user.setPassword(password_repeat);
-						user.encryptPassword();
+						PasswordValidator passwordValidator = new PasswordValidator();
 
-						userDao.persist(user);
-//						userDao.merge(user);
+						if (passwordValidator.validate(password_repeat)) {
+							user.setPassword(password_repeat);
+							user.encryptPassword();
 
-						model.addAttribute("message", "New password was set!");
+							userDao.persist(user);
+//							userDao.merge(user);
+
+							model.addAttribute("message", "New password was set!");
+						} else {
+							model.addAttribute("warningMessage", "Password does not match the password policies!<br>"
+									+ "Password must contain: digits (0-9), lowercase character, "
+									+ "uppercase character, special symbols (@#$%), "
+									+ "min. 6 characters and max. 20");
+						}
 					} else {
 						System.out.println("Passwords do not match");
 						model.addAttribute("errorMessage", "Passwords do not match!");
