@@ -284,8 +284,7 @@ public class UserController {
 	@RequestMapping(value = { "/editPassword" }, method = RequestMethod.GET)
 	public String editPassword(Model model) {
 		String username = userDao.getCurrentUser();
-		List<User> users = userDao.findByUsername(username);
-		User user = users.get(0);
+		User user = userDao.getUserByUserName(username);
 		
 		model.addAttribute("user", user);
 

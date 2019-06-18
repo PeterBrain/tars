@@ -21,12 +21,13 @@ public class UserDao {
 	@PersistenceContext
 	protected EntityManager entityManager;
 
-	public List<User> findByUsername(String userName) {
-		TypedQuery<User> typedQuery = entityManager.createQuery("SELECT u FROM User u WHERE u.userName = :name",
+	public User getUserByUserName(String userName) {
+		TypedQuery<User> typedQuery = entityManager.createQuery("SELECT u FROM User u WHERE u.userName = :name LIMIT 1",
 				User.class);
 		typedQuery.setParameter("name", userName);
 		List<User> typedResultList = typedQuery.getResultList();
-		return typedResultList;
+		User user = typedResultList.get(0);
+		return user;
 	}
 
 	public String getCurrentUser() {
@@ -36,14 +37,6 @@ public class UserDao {
 		return username;
 	}
 	
-	/*
-	 * public Object getCurrentUserObj() { Authentication authentication =
-	 * SecurityContextHolder.getContext().getAuthentication(); Object user =
-	 * authentication.getPrincipal();
-	 * 
-	 * return user; }
-	 */
-
 	public User getUserById(int i) throws DataAccessException {
 		return entityManager.find(User.class, i);
 	}
