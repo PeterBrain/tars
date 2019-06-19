@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-  <head>
-    <div th:replace="~{./includes/meta :: META}" />
-    <title>Archive &#124; TARS - Time &amp; Activity Recording Software</title>
-    <div th:replace="~{./includes/css :: CSS}" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/css/dataTables.bootstrap4.min.css" />
-  </head>
-  <body id="page-top">
-    <!-- Page Wrapper -->
-    <div id="wrapper">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<div th:replace="~{./includes/meta :: META}" />
+<title>Archive &#124; TARS - Time &amp; Activity Recording
+	Software</title>
+<div th:replace="~{./includes/css :: CSS}" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/css/dataTables.bootstrap4.min.css" />
+</head>
+<body id="page-top">
+	<!-- Page Wrapper -->
+	<div id="wrapper">
 
 		<div th:replace="~{./includes/sidebar :: sidebar}" />
 
@@ -24,39 +28,49 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<div class="d-sm-flex align-items-center justify-content-between mb-4">
+					<div
+						class="d-sm-flex align-items-center justify-content-between mb-4">
 						<h1 class="h3 mb-0 text-gray-800">Archive</h1>
-						<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-							<i class="fas fa-download fa-sm text-white-50"></i>
-							Generate Report
+						<a href="#"
+							class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+							<i class="fas fa-download fa-sm text-white-50"></i> Generate
+							Report
 						</a>
 					</div>
-					
+
 					<!-- error message -->
-					<div th:unless="${errorMessage} == null" th:utext="${errorMessage}" class="alert alert-danger" role="alert"></div>
+					<div th:unless="${errorMessage} == null" th:utext="${errorMessage}"
+						class="alert alert-danger" role="alert"></div>
 					<!-- error message -->
-			
+
 					<!-- warning message -->
-					<div th:unless="${warningMessage} == null" th:utext="${warningMessage}" class="alert alert-warning" role="warning"></div>
+					<div th:unless="${warningMessage} == null"
+						th:utext="${warningMessage}" class="alert alert-warning"
+						role="warning"></div>
 					<!-- warning message -->
-			
+
 					<!-- success message -->
-					<div th:unless="${message} == null" th:utext="${message}" class="alert alert-success" role="warning"></div>
+					<div th:unless="${message} == null" th:utext="${message}"
+						class="alert alert-success" role="warning"></div>
 					<!-- success message -->
 
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
 							<div class="row">
-								<h6 class="m-0 font-weight-bold text-primary col align-self-center">User entries</h6>
-								<a th:href="@{/addEntry}" class="btn btn-success btn-circle float-right">
-									<i class="fas fa-plus"></i>
+								<h6
+									class="m-0 font-weight-bold text-primary col align-self-center">User
+									entries</h6>
+								<a th:href="@{/addEntry}"
+									class="btn btn-success btn-circle float-right"> <i
+									class="fas fa-plus"></i>
 								</a>
 							</div>
 						</div>
 						<div class="card-body">
 							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+								<table class="table table-bordered" id="dataTable" width="100%"
+									cellspacing="0">
 									<thead>
 										<tr>
 											<th>ID</th>
@@ -66,6 +80,8 @@
 											<th>End</th>
 											<th>Note</th>
 											<th>Activity</th>
+											<th>Project</th>
+											<th>Category</th>
 											<th>Duration (Hours)</th>
 											<th>Action</th>
 										</tr>
@@ -79,6 +95,8 @@
 											<th>End</th>
 											<th>Note</th>
 											<th>Activity</th>
+											<th>Project</th>
+											<th>Category</th>
 											<th>Duration (Hours)</th>
 											<th>Action</th>
 										</tr>
@@ -87,20 +105,25 @@
 										<tr th:each="entry : ${entries}">
 											<td th:text="${entry.entryId}"></td>
 											<td th:text="${entry.editor.userName}"></td>
-											<td th:text="${#dates.format(entry.timestampCreated,'dd.MM.yyyy HH:mm')}"></td>
-											<td th:text="${#dates.format(entry.timestampStart,'dd.MM.yyyy HH:mm')}"></td>
-											<td th:text="${#dates.format(entry.timestampEnd,'dd.MM.yyyy HH:mm')}"></td>
+											<td
+												th:text="${#dates.format(entry.timestampCreated,'dd.MM.yyyy HH:mm')}"></td>
+											<td
+												th:text="${#dates.format(entry.timestampStart,'dd.MM.yyyy HH:mm')}"></td>
+											<td
+												th:text="${#dates.format(entry.timestampEnd,'dd.MM.yyyy HH:mm')}"></td>
 											<td th:text="${entry.note}"></td>
 											<td th:text="${entry.activity}"></td>
+											<td th:text="${entry.project.name}"></td>
+											<td th:text="${entry.category.name}"></td>											
 											<td th:text="${entry.minutes}"></td>
-											<td>
-												<a th:href="@{/editEntry(id=${entry.entryId})}" class="btn btn-warning btn-circle btn-sm" sec:authorize="hasRole('USER')">
-													<i class="fas fa-edit"></i>
-												</a>
-												<a th:href="@{/deleteEntry(id=${entry.entryId})}" class="btn btn-danger btn-circle btn-sm" sec:authorize="hasRole('ADMIN')">
-													<i class="fas fa-trash"></i>
-												</a>
-											</td>
+											<td><a th:href="@{/editEntry(id=${entry.entryId})}"
+												class="btn btn-warning btn-circle btn-sm"
+												sec:authorize="hasRole('USER')"> <i class="fas fa-edit"></i>
+											</a> <a th:href="@{/deleteEntry(id=${entry.entryId})}"
+												class="btn btn-danger btn-circle btn-sm"
+												sec:authorize="hasRole('ADMIN')"> <i
+													class="fas fa-trash"></i>
+											</a></td>
 										</tr>
 									</tbody>
 								</table>
@@ -129,17 +152,19 @@
 
 	<div th:replace="~{./includes/logout_modal :: logout_modal}" />
 	<div th:replace="~{./includes/js :: JS}" />
-	
+
 	<!-- Page level plugins -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
 	<!-- Page level custom scripts -->
 	<script>
-	// Call the dataTables jQuery plugin
-	$(document).ready(function() {
-	  $('#dataTable').DataTable();
-	});
+		// Call the dataTables jQuery plugin
+		$(document).ready(function() {
+			$('#dataTable').DataTable();
+		});
 	</script>
 </body>
 
