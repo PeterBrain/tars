@@ -1,6 +1,7 @@
 package at.fh.swenga.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,13 +16,17 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import at.fh.swenga.dao.UserDao;
 import at.fh.swenga.dao.UserRoleDao;
+import at.fh.swenga.model.AjaxResponseBody;
 import at.fh.swenga.model.PasswordValidator;
+import at.fh.swenga.model.SearchCriteria;
 import at.fh.swenga.model.User;
 import at.fh.swenga.model.UserRole;
 
@@ -354,10 +359,11 @@ public class UserController {
 
 							model.addAttribute("message", "New password was set!");
 						} else {
-							model.addAttribute("warningMessage", "Password does not match the password policies!<br>"
-									+ "Password must contain: digits (0-9), lowercase character, "
-									+ "uppercase character, special symbols (@#$%), "
-									+ "min. 6 characters and max. 20");
+							model.addAttribute("warningMessage",
+									"Password does not match the password policies!<br>"
+											+ "Password must contain: digits (0-9), lowercase character, "
+											+ "uppercase character, special symbols (@#$%), "
+											+ "min. 6 characters and max. 20");
 						}
 					} else {
 						System.out.println("Passwords do not match");
@@ -375,6 +381,41 @@ public class UserController {
 
 		model.addAttribute("user", user);
 		return "editPassword";
+	}
+
+//	@RequestMapping("/fillChart")
+//	public String fillChart(@RequestParam String memberId, @RequestParam String memberPw) {
+//		return memberId;
+//	}
+
+//	@RequestMapping(value = { "/fillChart" }, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+//	public @ResponseBody String Submit(@RequestParam("name") String name, @RequestParam("location") String location) {
+//		AjaxResponseBody result = new AjaxResponseBody();
+//		return result;
+//	}
+
+	@ResponseBody
+	@RequestMapping(value = "fillChart")
+	public AjaxResponseBody getSearchResultViaAjax(@RequestBody SearchCriteria search) {
+		AjaxResponseBody result = new AjaxResponseBody();
+
+		List<String> workingHours = new ArrayList<String>();
+		
+		// fill with actual working hours below
+		
+		workingHours.add("1");
+		workingHours.add("2");
+		workingHours.add("4");
+		workingHours.add("6");
+		workingHours.add("8");
+		workingHours.add("6");
+		workingHours.add("3");
+		
+		result.setCode("200");
+		result.setMsg("Success");
+		result.setResult(workingHours);
+
+		return result;
 	}
 
 	/*
