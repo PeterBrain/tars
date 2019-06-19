@@ -74,7 +74,8 @@
 										<optgroup label="List of usernames">
 											<option disabled>Select ...</option>
 											<option th:each="user : ${users}" th:value="${user.userName}"
-												th:text="${user.userName}">Project leader</option>
+												th:text="${user.userName}"
+												th:selected="${project} ? ${user.userName == project.projectLeader.userName} : 'false'">Project</option>
 										</optgroup>
 									</select>
 								</div>

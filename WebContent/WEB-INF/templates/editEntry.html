@@ -90,7 +90,7 @@
 
 								<!---------------- project --------------------------------->
 								<div class="form-group">
-									<label for="project" class="control-label">Select
+									<label for="new_project" class="control-label">Select
 										project</label> <select id="new_project" class="form-control"
 										name="new_project">
 										<optgroup label="List of projects">
@@ -98,6 +98,20 @@
 											<option th:each="project : ${projects}"
 												th:value="${project.projectId}" th:text="${project.name}"
 												th:selected="${entry} ? ${project.name == entry.project.name} : 'false'">Project</option>
+										</optgroup>
+									</select>
+								</div>
+								
+								<!---------------- category --------------------------------->
+								<div class="form-group">
+									<label for="new_category" class="control-label">Select
+										category</label> <select id="new_category" class="form-control"
+										name="new_category">
+										<optgroup label="List of categories">
+											<option disabled>Select ...</option>
+											<option th:each="category : ${categories}"
+												th:value="${category.categoryId}" th:text="${category.name}"
+												th:selected="${entry} ? ${category.name == entry.category.name} : 'false'">Project</option>
 										</optgroup>
 									</select>
 								</div>
