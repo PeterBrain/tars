@@ -1,5 +1,6 @@
 package at.fh.swenga.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -12,7 +13,7 @@ public class AjaxResponseBody {
 	String code;
 
 	@JsonView(Views.Public.class)
-	List<String> result;
+	ArrayList<ArrayList<String>> result;
 
 	public String getMsg() {
 		return msg;
@@ -30,11 +31,11 @@ public class AjaxResponseBody {
 		this.code = code;
 	}
 
-	public List<String> getResult() {
+	public ArrayList<ArrayList<String>> getResult() {
 		return result;
 	}
 
-	public void setResult(List<String> result) {
+	public void setResult(ArrayList<ArrayList<String>> result) {
 		this.result = result;
 	}
 }

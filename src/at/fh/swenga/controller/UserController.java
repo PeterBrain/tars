@@ -402,16 +402,46 @@ public class UserController {
 	public AjaxResponseBody getSearchResultViaAjax() {
 		AjaxResponseBody result = new AjaxResponseBody();
 
+//		List<List<String>> workingHoursAndWeekday = new ArrayList<List<String>>();
+
 		List<String> workingHours = new ArrayList<String>();
+		List<Entry> entries = entryDao.getEntriesLastWeek();
 
-		String username = userDao.getCurrentUser();
-		User user = userDao.getUserByUserName(username);
-		List<Entry> entries = entryDao.getAllEntriesOfUser(user.getUserId());
+//		System.out.println(entries.get(0).getTimestampStart());
+//		System.out.println(entries.get(0).getTimestampEnd());
+//		System.out.println(entries.get(0).getTimestampEnd().getDay());
 
-		System.out.println(entries.get(0).getTimestampStart());
+		int dayCount = 7;
+		ArrayList<ArrayList<String>> workingHoursAndWeekdays = new ArrayList<>(dayCount);
+
+		for (int i = 0; i < dayCount; i++) {
+			workingHoursAndWeekdays.add(new ArrayList());
+		}
+
+		workingHoursAndWeekdays.get(0).add("Mon");
+		workingHoursAndWeekdays.get(0).add("Tue");
+		workingHoursAndWeekdays.get(0).add("Wed");
+		workingHoursAndWeekdays.get(0).add("Thu");
+		workingHoursAndWeekdays.get(0).add("Fri");
+		workingHoursAndWeekdays.get(0).add("Sat");
+		workingHoursAndWeekdays.get(0).add("Sun");
+
+		workingHoursAndWeekdays.get(1).add("1");
+		workingHoursAndWeekdays.get(1).add("2");
+		workingHoursAndWeekdays.get(1).add("3");
+		workingHoursAndWeekdays.get(1).add("4");
+		workingHoursAndWeekdays.get(1).add("5");
+		workingHoursAndWeekdays.get(1).add("6");
+		workingHoursAndWeekdays.get(1).add("7");
+
+//		print data
+//		dayCount = workingHoursAndWeekdays.size();
+//		for (int i = 0; i < dayCount; i++) {
+//			String tmp1 = workingHoursAndWeekdays.get(1).get(i);
+//			System.out.println(tmp1);
+//		}
 
 		// fill with actual working hours below
-
 		workingHours.add("1");
 		workingHours.add("2");
 		workingHours.add("4");
@@ -422,7 +452,7 @@ public class UserController {
 
 		result.setCode("200");
 		result.setMsg("Success");
-		result.setResult(workingHours);
+		result.setResult(workingHoursAndWeekdays);
 
 		return result;
 	}

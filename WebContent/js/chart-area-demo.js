@@ -48,7 +48,7 @@ var myLineChart = new Chart(
 					pointHoverBorderColor : "rgba(78, 115, 223, 1)",
 					pointHitRadius : 10,
 					pointBorderWidth : 2,
-					 data : [],
+					data : [],
 				} ],
 			},
 			options : {
@@ -125,11 +125,16 @@ var myLineChart = new Chart(
 var emptyData = {}
 
 function updateLineChart(data) {
+	var dayCount = data.result.length;
 
-	for (var i = 0; i < data.result.length; i++) {
-//		console.log(data.result[i]);
-//		console.log("--");
-		myLineChart.data.datasets[0].data[i] = data.result[i];
+	for (var i = 0; i < dayCount; i++) {
+		var weekday = data.result[0][i];
+		myLineChart.data.labels[i] = weekday;
+//		console.log(weekday);
+
+		var hours = data.result[1][i];
+		myLineChart.data.datasets[0].data[i] = hours;
+//		console.log(hours);
 	}
 
 	myLineChart.update();
