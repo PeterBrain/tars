@@ -64,7 +64,7 @@ public class Entry implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	private User editor;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	private Category category;
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)

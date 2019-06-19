@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import at.fh.swenga.dao.CategoryDao;
 import at.fh.swenga.dao.EntryDao;
 import at.fh.swenga.dao.ProjectDao;
 import at.fh.swenga.dao.UserDao;
+import at.fh.swenga.model.Category;
 import at.fh.swenga.model.Entry;
 import at.fh.swenga.model.Project;
 import at.fh.swenga.model.User;
@@ -38,6 +40,9 @@ public class EntryController {
 
 	@Autowired
 	ProjectDao projectDao;
+	
+	@Autowired
+	CategoryDao categoryDao;
 
 	/**
 	 * fill database with test data
@@ -110,12 +115,16 @@ public class EntryController {
 
 		List<Project> projects = projectDao.getProjects();
 		model.addAttribute("projects", projects);
+		
+		List<Category> categories = categoryDao.getCategories();
+		model.addAttribute("categories",categories);
+		
 		return "editEntry";
 	}
 
 	@RequestMapping(value = { "/createEntry" }, method = RequestMethod.POST)
 	public String createEntry(Model model, @RequestParam String note, @RequestParam String activity,
-			@RequestParam String timestampStart, @RequestParam String timestampEnd, @RequestParam int new_project) {
+			@RequestParam String timestampStart, @RequestParam String timestampEnd, @RequestParam int new_project, @RequestParam int new_category) {
 		// User currentUser = userDao.get
 
 		String currentUsername = userDao.getCurrentUser();
@@ -162,6 +171,7 @@ public class EntryController {
 		Entry new_entry = new Entry(note, activity, tsStart, tsEnd, now, now, true);
 
 		new_entry.setProject(projectDao.getProjectById(new_project));
+		new_entry.setCategory(categoryDao.getCategoryById(new_category));
 
 		new_entry.setMinutes(duration);
 
@@ -178,6 +188,9 @@ public class EntryController {
 
 		List<Project> projects = projectDao.getProjects();
 		model.addAttribute("projects", projects);
+		
+		List<Category> categories = categoryDao.getCategories();
+		model.addAttribute("categories",categories);
 
 		Entry entry = entryDao.getEntryById(id);
 
@@ -192,7 +205,7 @@ public class EntryController {
 
 	@RequestMapping(value = { "/changeEntry" }, method = RequestMethod.POST)
 	public String changeEntry(@Valid Entry changedEntry, BindingResult bindingResult, Model model,
-			@RequestParam int new_project) {
+			@RequestParam int new_project, @RequestParam int new_category) {
 
 		// any errors? create string of all errors and return to page
 		if (bindingResult.hasErrors()) {
@@ -206,6 +219,7 @@ public class EntryController {
 
 		Entry entry = entryDao.getEntryById(changedEntry.getEntryId());
 		Project project = projectDao.getProjectById(new_project);
+		Category category = categoryDao.getCategoryById(new_category);
 
 		if (entry == null) {
 			model.addAttribute("errorMessage", "Entry does not exist! <br>");
@@ -224,6 +238,7 @@ public class EntryController {
 			entry.setTimestampStart(changedEntry.getTimestampStart());
 			entry.setTimestampEnd(changedEntry.getTimestampEnd());
 			entry.setProject(project);
+			entry.setCategory(category);
 
 			if (!(tsEnd == null)) {
 
@@ -232,6 +247,8 @@ public class EntryController {
 					model.addAttribute("entry", entry);
 					List<Project> projects = projectDao.getProjects();
 					model.addAttribute("projects", projects);
+					List<Category> categories = categoryDao.getCategories();
+					model.addAttribute("categories",categories);
 					return "editEntry";
 				} else {
 					duration = java.time.Duration
