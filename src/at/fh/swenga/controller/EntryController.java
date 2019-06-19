@@ -35,7 +35,7 @@ public class EntryController {
 
 	@Autowired
 	UserDao userDao;
-	
+
 	@Autowired
 	ProjectDao projectDao;
 
@@ -107,7 +107,7 @@ public class EntryController {
 
 	@RequestMapping(value = { "/addEntry" }, method = RequestMethod.GET)
 	public String addEntry(Model model) {
-		
+
 		List<Project> projects = projectDao.getProjects();
 		model.addAttribute("projects", projects);
 		return "editEntry";
@@ -160,9 +160,9 @@ public class EntryController {
 
 		}
 		Entry new_entry = new Entry(note, activity, tsStart, tsEnd, now, now, true);
-		
+
 		new_entry.setProject(projectDao.getProjectById(new_project));
-		
+
 		new_entry.setMinutes(duration);
 
 		new_entry.setEditor(currentUser);
@@ -175,10 +175,10 @@ public class EntryController {
 
 	@RequestMapping(value = { "/editEntry" }, method = RequestMethod.GET)
 	public String editEntry(Model model, int id) {
-		
+
 		List<Project> projects = projectDao.getProjects();
 		model.addAttribute("projects", projects);
-		
+
 		Entry entry = entryDao.getEntryById(id);
 
 		if (entry != null) {
@@ -191,7 +191,8 @@ public class EntryController {
 	}
 
 	@RequestMapping(value = { "/changeEntry" }, method = RequestMethod.POST)
-	public String changeEntry(@Valid Entry changedEntry, BindingResult bindingResult, Model model, @RequestParam int new_project) {
+	public String changeEntry(@Valid Entry changedEntry, BindingResult bindingResult, Model model,
+			@RequestParam int new_project) {
 
 		// any errors? create string of all errors and return to page
 		if (bindingResult.hasErrors()) {
@@ -203,7 +204,6 @@ public class EntryController {
 			return "listEntries";
 		}
 
-		
 		Entry entry = entryDao.getEntryById(changedEntry.getEntryId());
 		Project project = projectDao.getProjectById(new_project);
 
@@ -211,7 +211,11 @@ public class EntryController {
 			model.addAttribute("errorMessage", "Entry does not exist! <br>");
 		} else {
 
+			long duration = 0;
+
 			Date now = new Date();
+			Date tsStart = changedEntry.getTimestampStart();
+			Date tsEnd = changedEntry.getTimestampEnd();
 
 			entry.setActivity(changedEntry.getActivity());
 			entry.setNote(changedEntry.getNote());
@@ -221,13 +225,31 @@ public class EntryController {
 			entry.setTimestampEnd(changedEntry.getTimestampEnd());
 			entry.setProject(project);
 
+			if (!(tsEnd == null)) {
+
+				if (tsEnd.before(tsStart)) {
+					model.addAttribute("errorMessage", "End Date must be after Start Date");
+					model.addAttribute("entry", entry);
+					List<Project> projects = projectDao.getProjects();
+					model.addAttribute("projects", projects);
+					return "editEntry";
+				} else {
+					duration = java.time.Duration
+							.between(tsStart.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
+									tsEnd.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
+							.toMinutes();
+				}
+
+				entry.setMinutes(duration);
+			}
+
 			model.addAttribute("message", "Changed entry " + changedEntry.getActivity());
 
 			entryDao.merge(entry);
 		}
-		
+
 //		model.addAttribute("entry", entry);
-		
+
 		return "forward:/listEntries";
 	}
 
