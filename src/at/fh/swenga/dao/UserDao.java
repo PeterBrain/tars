@@ -8,7 +8,6 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
@@ -24,24 +23,13 @@ public class UserDao {
 	@PersistenceContext
 	protected EntityManager entityManager;
 
-	@Autowired
-	UserRoleDao userRoleDao;
-
-	/*
-	 * public List<User> getUsersWithRoles() { TypedQuery<User> typedQuery =
-	 * entityManager.
-	 * createQuery("SELECT u.username, ur.role FROM user u JOIN u.id ur WHERE ur.id= :id"
-	 * , User.class); List<User> typedResultList = typedQuery.getResultList();
-	 * return typedResultList; }
-	 */
-
 	public List<User> getUsersWithRole(int id) {
 		Query query = entityManager.createNamedQuery("User.getAllWithRole");
 		query = query.setParameter("id", id);
 		List<User> users = query.getResultList();
 		return users;
 	}
-	
+
 	public User getUserByUserName(String userName) {
 		TypedQuery<User> typedQuery = entityManager.createQuery("SELECT u FROM User u WHERE u.userName = :name",
 				User.class);
@@ -76,6 +64,7 @@ public class UserDao {
 			delete(user);
 		}
 	}
+
 	@Secured("ROLE_ADMIN")
 	public void delete(User user) {
 		entityManager.remove(user);
@@ -85,6 +74,7 @@ public class UserDao {
 		entityManager.persist(user);
 	}
 
+	@Secured("ROLE_ADMIN")
 	public User merge(User user) {
 		return entityManager.merge(user);
 	}

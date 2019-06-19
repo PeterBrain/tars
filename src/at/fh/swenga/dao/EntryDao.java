@@ -26,6 +26,7 @@ public class EntryDao {
 
 	@Autowired
 	UserDao userDao;
+	
 	@Autowired
 	UserRoleDao userRoleDao;
 

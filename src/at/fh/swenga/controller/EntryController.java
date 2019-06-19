@@ -172,9 +172,7 @@ public class EntryController {
 
 		new_entry.setProject(projectDao.getProjectById(new_project));
 		new_entry.setCategory(categoryDao.getCategoryById(new_category));
-
 		new_entry.setMinutes(duration);
-
 		new_entry.setEditor(currentUser);
 
 		entryDao.persist(new_entry);
@@ -270,6 +268,7 @@ public class EntryController {
 		return "forward:/listEntries";
 	}
 
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/deleteEntry" }, method = RequestMethod.GET)
 	public String deleteEntry(Model model, @RequestParam int id) {
 		entryDao.delete(id);

@@ -30,10 +30,12 @@ public class ProjectDao {
 		return entityManager.find(Project.class, i);
 	}
 
+	@Secured("ROLE_PROJECT_LEADER")
 	public void persist(Project project) {
 		entityManager.persist(project);
 	}
 
+	@Secured("ROLE_PROJECT_LEADER")
 	public Project merge(Project project) {
 		return entityManager.merge(project);
 	}
@@ -42,6 +44,7 @@ public class ProjectDao {
 	public void delete(Project project) {
 		entityManager.remove(project);
 	}
+
 	@Secured("ROLE_PROJECT_LEADER")
 	public void delete(int id) {
 		Project project = getProjectById(id);

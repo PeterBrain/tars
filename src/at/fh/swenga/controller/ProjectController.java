@@ -54,6 +54,7 @@ public class ProjectController {
 		return "listProjects";
 	}
 
+	@Secured("ROLE_PROJECT_LEADER")
 	@RequestMapping(value = { "/deleteProject" }, method = RequestMethod.GET)
 	public String deleteProject(Model model, @RequestParam int id) {
 		projectDao.delete(id);
@@ -63,15 +64,18 @@ public class ProjectController {
 		return "forward:listProjects";
 	}
 
+	@Secured("ROLE_PROJECT_LEADER")
 	@RequestMapping(value = { "/addProject" }, method = RequestMethod.GET)
 	public String addProject(Model model) {
 
-		List<User> users = userDao.getUsers();
+		List<User> users = userDao.getUsersWithRole(3);
+		users.remove(0);
 		model.addAttribute("users", users);
 
 		return "editProject";
 	}
 
+	@Secured("ROLE_PROJECT_LEADER")
 	@RequestMapping(value = { "/createProject" }, method = RequestMethod.POST)
 	public String createProject(Model model, @RequestParam String name, @RequestParam String description,
 			@RequestParam String new_projectLeader) {

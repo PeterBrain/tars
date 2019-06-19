@@ -31,10 +31,12 @@ public class CategoryDao {
 		return entityManager.find(Category.class, i);
 	}
 
+	@Secured("ROLE_ADMIN")
 	public void persist(Category category) {
 		entityManager.persist(category);
 	}
 
+	@Secured("ROLE_ADMIN")
 	public Category merge(Category category) {
 		return entityManager.merge(category);
 	}

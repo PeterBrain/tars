@@ -71,7 +71,7 @@ public class User implements java.io.Serializable {
 
 	// constructor
 	public User() {
-	} // default
+	}
 
 	public User(String firstName, String lastName, @NotNull(message = "Date of birth cannot be null") Date dateOfBirth,
 			String email, String userName, String password, boolean enabled) {

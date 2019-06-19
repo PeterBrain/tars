@@ -31,7 +31,6 @@ public class Category implements java.io.Serializable {
 	private long version;
 
 	public Category() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Category(String name) {
