@@ -110,19 +110,12 @@ public class EntryController {
 		return "index";
 	}
 
-	/**
-	 * delete entry
-	 * 
-	 * @param model
-	 * @param id
-	 * @return
-	 */
-	@Secured("ROLE_ADMIN")
+	/*@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/delete" })
 	public String deleteData(Model model, @RequestParam int id) {
 		entryDao.delete(id);
 		return "forward:list";
-	}
+	}*/
 
 	/**
 	 * delete entry
