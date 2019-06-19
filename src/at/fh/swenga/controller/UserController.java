@@ -402,7 +402,7 @@ public class UserController {
 		User user = userDao.getUserByUserName(username);
 		List<Entry> entries = entryDao.getAllEntriesOfUser(user.getUserId());
 		
-		System.out.println(entries);
+		System.out.println(entries.get(0).getTimestampStart());
 
 		// fill with actual working hours below
 
