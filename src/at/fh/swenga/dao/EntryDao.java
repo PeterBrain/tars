@@ -1,5 +1,6 @@
 package at.fh.swenga.dao;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -83,9 +84,9 @@ public class EntryDao {
 			List<Entry> resultList = new ArrayList<>();
 			
 			for (Entry entry : resultListAll) {
-				if (entry.getTimestampStart().after(now)) {
+				if (entry.getTimestampStart().after(java.sql.Date.valueOf(LocalDate.now().minusDays(7)))) {
 					resultList.add(entry);
-				}
+				}	
 			}
 			
 			return resultList;
