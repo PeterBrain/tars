@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
@@ -40,7 +41,7 @@ public class UserDao {
 		List<User> users = query.getResultList();
 		return users;
 	}
-
+	
 	public User getUserByUserName(String userName) {
 		TypedQuery<User> typedQuery = entityManager.createQuery("SELECT u FROM User u WHERE u.userName = :name",
 				User.class);
@@ -68,13 +69,14 @@ public class UserDao {
 		return typedResultList;
 	}
 
+	@Secured("ROLE_ADMIN")
 	public void delete(int id) {
 		User user = getUserById(id);
 		if (user != null) {
 			delete(user);
 		}
 	}
-
+	@Secured("ROLE_ADMIN")
 	public void delete(User user) {
 		entityManager.remove(user);
 	}

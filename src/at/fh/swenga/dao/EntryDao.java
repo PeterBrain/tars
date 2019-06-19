@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,15 +75,18 @@ public class EntryDao {
 		return entityManager.merge(entry);
 	}
 
+	@Secured("ROLE_ADMIN")
 	public void delete(Entry entry) {
 		entityManager.remove(entry);
 	}
-
+	
+	@Secured("ROLE_ADMIN")
 	public int deleteAllEntries() {
 		int count = entityManager.createQuery("DELETE FROM Entry").executeUpdate();
 		return count;
 	}
-
+	
+	@Secured("ROLE_ADMIN")
 	public void delete(int id) {
 		Entry entry = getEntryById(id);
 		if (entry != null) {

@@ -8,6 +8,7 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Repository;
 
 import at.fh.swenga.model.Project;
@@ -37,10 +38,11 @@ public class ProjectDao {
 		return entityManager.merge(project);
 	}
 
+	@Secured("ROLE_PROJECT_LEADER")
 	public void delete(Project project) {
 		entityManager.remove(project);
 	}
-
+	@Secured("ROLE_PROJECT_LEADER")
 	public void delete(int id) {
 		Project project = getProjectById(id);
 		if (project != null) {

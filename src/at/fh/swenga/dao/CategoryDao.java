@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,10 +39,12 @@ public class CategoryDao {
 		return entityManager.merge(category);
 	}
 
+	@Secured("ROLE_ADMIN")
 	public void delete(Category category) {
 		entityManager.remove(category);
 	}
 
+	@Secured("ROLE_ADMIN")
 	public void delete(int id) {
 		Category category = getCategoryById(id);
 		if (category != null) {
