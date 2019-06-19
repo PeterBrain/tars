@@ -57,7 +57,7 @@ public class EntryController {
 		DataFactory df = new DataFactory();
 
 		// produces a date between 1/1/2020 and the current date
-		Date minDate = df.getDate(2019, 6, 19);
+		Date minDate = df.getDate(2019, 6, 12);
 		//Date maxDate = new Date();
 		Date now = new Date();
 
