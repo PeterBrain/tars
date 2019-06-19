@@ -22,7 +22,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "entry")
 @NamedQuery(name = "Entry.findByEditor", query = "SELECT e FROM Entry e WHERE e.editor = :user")
-@NamedQuery(name = "Entry.getAllEntriesFromUser", query = "SELECT e FROM Entry e, IN (e.editor) AS ed WHERE ed.id = :id")
+@NamedQuery(name = "Entry.getAllEntriesFromUser", query = "SELECT e.timestampStart, e.timestampEnd FROM Entry e, IN (e.editor) AS ed WHERE ed.id = :id")
 public class Entry implements java.io.Serializable {
 
 	@Id
