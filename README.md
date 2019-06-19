@@ -14,8 +14,6 @@ db.password=xxx
 
 ## ToDo
 * Methods:
-    * Entry
-        * two deleteEntry methods? WHY?
     * Export
         * excel
         * email
@@ -24,7 +22,7 @@ db.password=xxx
     * Charts
         * Dashboard
     * User
-        * edit user roles
+        * edit user roles (rework)
     * Settings
         * admin should change some settings
 

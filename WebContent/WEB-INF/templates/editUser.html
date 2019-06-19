@@ -63,51 +63,63 @@
 
 								<!----------------  lastname ------------------------>
 								<div class="form-group">
-									<label for="lastName" class="control-label">Lastname</label>
-									<input type="text" id="lastName" placeholder="Lastname"
+									<label for="lastName" class="control-label">Lastname</label> <input
+										type="text" id="lastName" placeholder="Lastname"
 										name="lastName" th:value="${user} ? ${user.lastName}" required
 										class="form-control form-control-user">
 								</div>
 
 								<!----------------  dateOfBirth ------------------------>
 								<div class="form-group">
-									<label for="dateOfBirth" class="control-label">Date of Birth</label>
-									<br>
-									<input type="text" id="dateOfBirth" placeholder="Date"
-										name="dateOfBirth" class="form_datetime"
+									<label for="dateOfBirth" class="control-label">Date of
+										Birth</label> <br> <input type="text" id="dateOfBirth"
+										placeholder="Date" name="dateOfBirth" class="form_datetime"
 										th:value="${user} ? ${#dates.format(user.dateOfBirth, 'dd.MM.yyyy')}"
 										readonly>
 								</div>
 
 								<!----------------  email ------------------------>
 								<div class="form-group">
-									<label for="email" class="control-label">Email</label>
-									<input type="email" id="email" placeholder="E-Mail address"
+									<label for="email" class="control-label">Email</label> <input
+										type="email" id="email" placeholder="E-Mail address"
 										name="email" th:value="${user} ? ${user.email}" required
 										class="form-control form-control-user">
 								</div>
 
 								<!----------------  username ------------------------>
 								<div class="form-group">
-									<label for="userName" class="control-label">Username</label>
-									<input type="text" id="userName" placeholder="Username"
+									<label for="userName" class="control-label">Username</label> <input
+										type="text" id="userName" placeholder="Username"
 										name="userName" th:value="${user} ? ${user.userName}" required
 										class="form-control form-control-user">
 								</div>
 
 								<!----------------  password ------------------------>
 								<div class="form-group">
-									<label for="password" class="control-label">Password</label>
-									<input type="password" id="password" placeholder="New Password"
+									<label for="password" class="control-label">Password</label> <input
+										type="password" id="password" placeholder="New Password"
 										name="password" class="form-control form-control-user">
 								</div>
 
 								<!----------------  password repeated ------------------------>
 								<div class="form-group">
-									<label for="password_repeat" class="control-label">Repeat Password</label>
-									<input type="password" id="password_repeat"
+									<label for="password_repeat" class="control-label">Repeat
+										Password</label> <input type="password" id="password_repeat"
 										placeholder="Repeat Password" name="password_repeat"
 										class="form-control form-control-user">
+								</div>
+
+								<!----------------  user role ------------------------>
+								<div class="form-group">
+									<label for="new_userRoles" class="control-label">User
+										Role</label> <select id="new_userRoles" class="form-control"
+										name="new_userRoles" multiple>
+										<optgroup label="Possible user roles">
+											<option th:each="userRole : ${userRoles}"
+												th:value="${userRole.roleId}"
+												th:text="${userRole.roleName}">UserRole</option>
+										</optgroup>
+									</select>
 								</div>
 
 								<button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
