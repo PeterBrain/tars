@@ -226,7 +226,7 @@ public class UserController {
 			return "editUser";
 		} else {
 			model.addAttribute("errorMessage", "Couldn't find user with id:  " + id);
-			return "forward:/listUsers";
+			return "forward:listUsers";
 		}
 	}
 
