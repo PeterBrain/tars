@@ -172,10 +172,13 @@ public class User implements java.io.Serializable {
 		userRoles.add(userRole);
 	}
 	
-	public void removeAllUserRoles() {
-		/*if (userRoles != null) {
+	public void removeUserRole(UserRole userRole) {
+		if (userRoles != null) {
 			userRoles.remove(userRole);
-		}*/
+		}
+	}
+	
+	public void removeAllUserRoles() {
 		userRoles = new HashSet<UserRole>();
 	}
 

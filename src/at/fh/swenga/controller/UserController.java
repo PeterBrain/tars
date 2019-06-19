@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import at.fh.swenga.dao.EntryDao;
-import at.fh.swenga.dao.ProjectDao;
 import at.fh.swenga.dao.UserDao;
 import at.fh.swenga.dao.UserRoleDao;
 import at.fh.swenga.model.AjaxResponseBody;
@@ -155,7 +154,7 @@ public class UserController {
 	public String addUser(Model model) {
 		List<UserRole> userRoles = userRoleDao.getRoles();
 		model.addAttribute("userRoles", userRoles);
-		
+
 		return "editUser";
 	}
 
@@ -176,22 +175,28 @@ public class UserController {
 	@RequestMapping(value = { "/createUser" }, method = RequestMethod.POST)
 	public String createUser(Model model, @RequestParam String firstName, @RequestParam String lastName,
 			@RequestParam String email, @RequestParam String userName, @RequestParam String dateOfBirth,
-			@RequestParam String password, @RequestParam String password_repeat) {
+			@RequestParam String password, @RequestParam String password_repeat,
+			@RequestParam List<Integer> new_userRoles) {
 
 		System.out.println(firstName);
 
 		String currentUsername = userDao.getCurrentUser();
 		model.addAttribute("user", currentUsername);
 
-		UserRole adminRole = userRoleDao.getRole("ROLE_ADMIN");
-		if (adminRole == null) {
-			adminRole = new UserRole("ROLE_ADMIN");
+		List<UserRole> newUserRoles = new ArrayList<>();
+
+		for (int i = 0; i < new_userRoles.size(); i++) {
+			UserRole userRole = userRoleDao.getRoleById(new_userRoles.get(i));
+			newUserRoles.add(userRole);
 		}
 
-		UserRole userRole = userRoleDao.getRole("ROLE_USER");
-		if (userRole == null) {
-			userRole = new UserRole("ROLE_USER");
-		}
+		/*
+		 * UserRole adminRole = userRoleDao.getRole("ROLE_ADMIN"); if (adminRole ==
+		 * null) { adminRole = new UserRole("ROLE_ADMIN"); }
+		 * 
+		 * UserRole userRole = userRoleDao.getRole("ROLE_USER"); if (userRole == null) {
+		 * userRole = new UserRole("ROLE_USER"); }
+		 */
 
 		// convert string to date
 		Date dob = new Date();
@@ -206,7 +211,13 @@ public class UserController {
 		if (password.equals(password_repeat)) {
 			User new_user = new User(firstName, lastName, dob, email, userName, password, true);
 			new_user.encryptPassword();
-			new_user.addUserRole(userRole);
+			// new_user.addUserRole(userRole);
+			new_user.addUserRole(userRoleDao.getRole("ROLE_USER"));
+
+			for (int i = 0; i < newUserRoles.size(); i++) {
+				new_user.addUserRole(newUserRoles.get(i));
+			}
+
 			userDao.persist(new_user);
 
 			List<User> users = userDao.getUsers();
@@ -230,7 +241,7 @@ public class UserController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/editUser" }, method = RequestMethod.GET)
 	public String editUser(Model model, int id) {
-		
+
 		List<UserRole> userRoles = userRoleDao.getRoles();
 		model.addAttribute("userRoles", userRoles);
 
@@ -271,9 +282,9 @@ public class UserController {
 
 		// Get the user we want to change
 		User user = userDao.getUserById(changedUser.getUserId());
-		
+
 		List<UserRole> newUserRoles = new ArrayList<>();
-		
+
 		for (int i = 0; i < new_userRoles.size(); i++) {
 			UserRole userRole = userRoleDao.getRoleById(new_userRoles.get(i));
 			newUserRoles.add(userRole);
@@ -287,14 +298,15 @@ public class UserController {
 			user.setDateOfBirth(changedUser.getDateOfBirth());
 			user.setEmail(changedUser.getEmail());
 			user.setUserName(changedUser.getUserName());
-			
-			/*List<UserRole> userRoles = userRoleDao.getRoles();
-			System.out.println(user.getUserRoles().toString());*/
-			
-			//for (int i = 0; i < userRoles.size(); i++) {
-			user.removeAllUserRoles();//userRoles.get(0)
-			//}
-			
+
+			user.removeAllUserRoles();
+			/*
+			 * List<UserRole> userRoles = userRoleDao.getRoles(); for (int i = 0; i <
+			 * userRoles.size(); i++) { user.removeAllUserRoles(userRoles.get(i)); }
+			 */
+
+			user.addUserRole(userRoleDao.getRole("ROLE_USER"));
+
 			for (int i = 0; i < newUserRoles.size(); i++) {
 				user.addUserRole(newUserRoles.get(i));
 			}
@@ -388,7 +400,7 @@ public class UserController {
 							user.encryptPassword();
 
 							userDao.persist(user);
-//							userDao.merge(user);
+							// userDao.merge(user);
 
 							model.addAttribute("message", "New password was set!");
 						} else {
