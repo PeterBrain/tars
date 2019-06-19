@@ -56,6 +56,15 @@ public class UserDao {
 		List<User> typedResultList = typedQuery.getResultList();
 		return typedResultList;
 	}
+	
+	public void persist(User user) {
+		entityManager.persist(user);
+	}
+
+	@Secured("ROLE_ADMIN")
+	public User merge(User user) {
+		return entityManager.merge(user);
+	}
 
 	@Secured("ROLE_ADMIN")
 	public void delete(int id) {
@@ -68,14 +77,5 @@ public class UserDao {
 	@Secured("ROLE_ADMIN")
 	public void delete(User user) {
 		entityManager.remove(user);
-	}
-
-	public void persist(User user) {
-		entityManager.persist(user);
-	}
-
-	@Secured("ROLE_ADMIN")
-	public User merge(User user) {
-		return entityManager.merge(user);
 	}
 }

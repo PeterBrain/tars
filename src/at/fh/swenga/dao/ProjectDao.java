@@ -30,7 +30,6 @@ public class ProjectDao {
 		return entityManager.find(Project.class, i);
 	}
 
-	@Secured("ROLE_PROJECT_LEADER")
 	public void persist(Project project) {
 		entityManager.persist(project);
 	}

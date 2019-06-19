@@ -80,7 +80,7 @@ public class EntryController {
 			entryDao.persist(p1);
 		}
 
-		return "forward:listEntries";
+		return "forward:login";
 	}
 
 	@RequestMapping(value = { "/listEntries" })

@@ -24,14 +24,6 @@ public class CategoryController {
 	@Autowired
 	CategoryDao categoryDao;
 
-	@RequestMapping(value = { "/listCategories" })
-	public String listCategory(Model model) {
-		List<Category> categories = categoryDao.getCategories();
-		model.addAttribute("categories", categories);
-
-		return "listCategories";
-	}
-
 	@Transactional
 	@RequestMapping(value = { "/fillCategories" })
 	public String fillCategories(Model model) {
@@ -45,7 +37,15 @@ public class CategoryController {
 		Category category3 = new Category("Test");
 		categoryDao.persist(category3);
 
-		return "forward:listCategories";
+		return "forward:login";
+	}
+	
+	@RequestMapping(value = { "/listCategories" })
+	public String listCategory(Model model) {
+		List<Category> categories = categoryDao.getCategories();
+		model.addAttribute("categories", categories);
+
+		return "listCategories";
 	}
 
 	@RequestMapping(value = { "/deleteCategory" }, method = RequestMethod.GET)

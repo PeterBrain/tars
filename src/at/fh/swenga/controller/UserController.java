@@ -42,6 +42,15 @@ public class UserController {
 	@Autowired
 	EntryDao entryDao;
 
+	@Autowired
+	CategoryController categoryController;
+
+	@Autowired
+	ProjectController projectController;
+
+	@Autowired
+	EntryController entryController;
+
 	/**
 	 * 
 	 * fill database with default users
@@ -109,6 +118,10 @@ public class UserController {
 			userGen.addUserRole(userRole);
 			userDao.persist(userGen);
 		}
+
+		categoryController.fillCategories(model);
+		projectController.fillProjects(model);
+		entryController.fillEntries(model);
 
 		return "forward:login";
 	}

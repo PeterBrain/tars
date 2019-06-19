@@ -43,7 +43,7 @@ public class ProjectController {
 		Project project3 = new Project("Project 3", "Default description 3", userDao.getUserById(2));
 		projectDao.persist(project3);
 
-		return "forward:listProjects";
+		return "forward:login";
 	}
 
 	@RequestMapping(value = { "/listProjects" })

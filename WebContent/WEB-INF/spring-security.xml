@@ -10,11 +10,10 @@
 	<http>
 		<csrf disabled="true" />
 		<intercept-url pattern="/fillUsers" access="permitAll" />
-		<intercept-url pattern="/fillEntries" access="permitAll" />
 		<intercept-url pattern="/fillCategories" access="permitAll" />
 		<intercept-url pattern="/fillProjects" access="permitAll" />
+		<intercept-url pattern="/fillEntries" access="permitAll" />
 		<intercept-url pattern="/login" access="permitAll" />
-		<intercept-url pattern="/img/**" access="permitAll" />
 		<intercept-url pattern="/css/**" access="permitAll" />
 		<intercept-url pattern="/js/**" access="permitAll" />
 

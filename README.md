@@ -9,16 +9,11 @@ db.password=xxx
 ```
 
 ## Inital setup steps
-0. create and fill db.properties file at the root of src folder
+0. create and fill db.properties file
 1. call http://[ip-address]/Tars/fillUsers
-2. call http://[ip-address]/Tars/fillCategories
-3. call http://[ip-address]/Tars/fillProjects
-4. call http://[ip-address]/Tars/fillEntries
 
 ## ToDo
 * Methods:
-    * Archive
-        * edit entry (if project leader is admin -> entry update doesn't work)
     * Export
         * excel
         * email
@@ -26,6 +21,8 @@ db.password=xxx
         * add history entry
     * Charts
         * Dashboard
+    * User
+        * edit user roles
     * Settings
         * admin should change some settings
 
