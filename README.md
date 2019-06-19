@@ -19,7 +19,6 @@ db.password=xxx
 * Methods:
     * Archive
         * edit entry (if project leader is admin -> entry update doesn't work)
-        * add category to entry
     * Export
         * excel
         * email

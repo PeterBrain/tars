@@ -34,13 +34,13 @@ public class ProjectController {
 	@RequestMapping(value = { "fillProjects" })
 	public String fillProjects(Model model) {
 
-		Project project1 = new Project("Project 1", "Default description 1", userDao.getUserById(1));
+		Project project1 = new Project("Project 1", "Default description 1", userDao.getUserById(2));
 		projectDao.persist(project1);
-		
-		Project project2 = new Project("Project 2", "Default description 2", userDao.getUserById(1));
+
+		Project project2 = new Project("Project 2", "Default description 2", userDao.getUserById(2));
 		projectDao.persist(project2);
-		
-		Project project3 = new Project("Project 3", "Default description 3", userDao.getUserById(1));
+
+		Project project3 = new Project("Project 3", "Default description 3", userDao.getUserById(2));
 		projectDao.persist(project3);
 
 		return "forward:listProjects";
@@ -86,7 +86,8 @@ public class ProjectController {
 	@RequestMapping(value = { "/editProject" }, method = RequestMethod.GET)
 	public String editProject(Model model, int id) {
 
-		List<User> users = userDao.getUsers();
+		List<User> users = userDao.getUsersWithRole(3);
+		users.remove(0);
 		model.addAttribute("users", users);
 
 		Project project = projectDao.getProjectById(id);
