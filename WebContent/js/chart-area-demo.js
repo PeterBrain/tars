@@ -142,7 +142,7 @@ $.ajax({
 	type : "POST",
 	contentType : "application/json",
 	url : "fillChart",
-	data : JSON.stringify(testData),
+	data : JSON.stringify(emptyData),
 	dataType : 'json',
 	timeout : 100000,
 	success : function(dataHours) {
