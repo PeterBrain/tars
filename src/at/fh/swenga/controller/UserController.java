@@ -169,6 +169,7 @@ public class UserController {
 	 * @param dateOfBirth
 	 * @param password
 	 * @param password_repeat
+	 * @param new_userRoles
 	 * @return
 	 */
 	@Secured("ROLE_ADMIN")
@@ -190,14 +191,6 @@ public class UserController {
 			newUserRoles.add(userRole);
 		}
 
-		/*
-		 * UserRole adminRole = userRoleDao.getRole("ROLE_ADMIN"); if (adminRole ==
-		 * null) { adminRole = new UserRole("ROLE_ADMIN"); }
-		 * 
-		 * UserRole userRole = userRoleDao.getRole("ROLE_USER"); if (userRole == null) {
-		 * userRole = new UserRole("ROLE_USER"); }
-		 */
-
 		// convert string to date
 		Date dob = new Date();
 		try {
@@ -211,7 +204,6 @@ public class UserController {
 		if (password.equals(password_repeat)) {
 			User new_user = new User(firstName, lastName, dob, email, userName, password, true);
 			new_user.encryptPassword();
-			// new_user.addUserRole(userRole);
 			new_user.addUserRole(userRoleDao.getRole("ROLE_USER"));
 
 			for (int i = 0; i < newUserRoles.size(); i++) {
@@ -263,6 +255,7 @@ public class UserController {
 	 * @param bindingResult
 	 * @param model
 	 * @param password_repeat
+	 * @param new_userRoles
 	 * @return
 	 */
 	@Secured("ROLE_ADMIN")
