@@ -1,5 +1,7 @@
 package at.fh.swenga.dao;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -54,6 +56,38 @@ public class EntryDao {
 			query = query.setParameter("user", currentUser);
 
 			List<Entry> resultList = query.getResultList();
+			return resultList;
+		}
+	}
+	
+	public List<Entry> getEntriesLastWeek() {
+		String currentUserName = userDao.getCurrentUser();
+		User currentUser = userDao.getUserByUserName(currentUserName);
+
+		UserRole adminRole = userRoleDao.getRole("ROLE_ADMIN");
+
+		// an admin should see all entries of all users
+		if (currentUser.getUserRoles().contains(adminRole)) {
+			TypedQuery<Entry> typedQuery = entityManager.createQuery("SELECT e FROM Entry e", Entry.class);
+			List<Entry> typedResultList = typedQuery.getResultList();
+			return typedResultList;
+		} else {
+
+			Query query = entityManager.createNamedQuery("Entry.findByEditor");
+			query = query.setParameter("user", currentUser);
+
+			List<Entry> resultListAll = query.getResultList();
+			
+			Date now = new Date();
+			
+			List<Entry> resultList = new ArrayList<>();
+			
+			for (Entry entry : resultListAll) {
+				if (entry.getTimestampStart().after(now)) {
+					resultList.add(entry);
+				}
+			}
+			
 			return resultList;
 		}
 	}
