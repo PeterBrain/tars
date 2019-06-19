@@ -22,7 +22,7 @@ public class UserDao {
 
 	@PersistenceContext
 	protected EntityManager entityManager;
-
+	
 	public List<User> getUsersWithRole(int id) {
 		Query query = entityManager.createNamedQuery("User.getAllWithRole");
 		query = query.setParameter("id", id);

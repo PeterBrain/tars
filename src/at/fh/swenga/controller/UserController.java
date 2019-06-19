@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import at.fh.swenga.dao.EntryDao;
 import at.fh.swenga.dao.UserDao;
 import at.fh.swenga.dao.UserRoleDao;
 import at.fh.swenga.model.AjaxResponseBody;
+import at.fh.swenga.model.Entry;
 import at.fh.swenga.model.PasswordValidator;
 import at.fh.swenga.model.User;
 import at.fh.swenga.model.UserRole;
@@ -36,6 +38,9 @@ public class UserController {
 
 	@Autowired
 	UserRoleDao userRoleDao;
+
+	@Autowired
+	EntryDao entryDao;
 
 	/**
 	 * 
@@ -381,12 +386,23 @@ public class UserController {
 		return "editPassword";
 	}
 
+	/**
+	 * method awaiting ajax call to return drawChart data
+	 * 
+	 * @return
+	 */
 	@ResponseBody
-	@RequestMapping(value = "fillChart")
+	@RequestMapping(value = "fillChartArea")
 	public AjaxResponseBody getSearchResultViaAjax() {
 		AjaxResponseBody result = new AjaxResponseBody();
 
 		List<String> workingHours = new ArrayList<String>();
+
+		String username = userDao.getCurrentUser();
+		User user = userDao.getUserByUserName(username);
+		List<Entry> entries = entryDao.getAllEntriesOfUser(user.getUserId());
+		
+		System.out.println(entries);
 
 		// fill with actual working hours below
 

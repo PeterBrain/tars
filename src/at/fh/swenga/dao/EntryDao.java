@@ -26,9 +26,16 @@ public class EntryDao {
 
 	@Autowired
 	UserDao userDao;
-	
+
 	@Autowired
 	UserRoleDao userRoleDao;
+
+	public List<Entry> getAllEntriesOfUser(int id) {
+		Query query = entityManager.createNamedQuery("Entry.getAllEntriesFromUser");
+		query = query.setParameter("id", id);
+		List<Entry> entries = query.getResultList();
+		return entries;
+	}
 
 	public List<Entry> getEntries() {
 		String currentUserName = userDao.getCurrentUser();
@@ -80,13 +87,13 @@ public class EntryDao {
 	public void delete(Entry entry) {
 		entityManager.remove(entry);
 	}
-	
+
 	@Secured("ROLE_ADMIN")
 	public int deleteAllEntries() {
 		int count = entityManager.createQuery("DELETE FROM Entry").executeUpdate();
 		return count;
 	}
-	
+
 	@Secured("ROLE_ADMIN")
 	public void delete(int id) {
 		Entry entry = getEntryById(id);

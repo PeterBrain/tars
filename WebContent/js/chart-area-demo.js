@@ -29,8 +29,6 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 // Area Chart Example
 var ctx = document.getElementById("myAreaChart");
 
-var chartData = [ 6, 10, 4, 8, 8.5, 4, 0 ];
-
 var myLineChart = new Chart(
 		ctx,
 		{
@@ -50,8 +48,7 @@ var myLineChart = new Chart(
 					pointHoverBorderColor : "rgba(78, 115, 223, 1)",
 					pointHitRadius : 10,
 					pointBorderWidth : 2,
-					// data : [ 6, 10, 4, 8, 8.5, 4, 0 ],
-					data : chartData,
+					 data : [],
 				} ],
 			},
 			options : {
@@ -141,7 +138,7 @@ function updateLineChart(data) {
 $.ajax({
 	type : "POST",
 	contentType : "application/json",
-	url : "fillChart",
+	url : "fillChartArea",
 	data : JSON.stringify(emptyData),
 	dataType : 'json',
 	timeout : 100000,
