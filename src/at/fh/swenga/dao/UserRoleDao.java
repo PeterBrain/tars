@@ -8,8 +8,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
+import at.fh.swenga.model.Entry;
 import at.fh.swenga.model.UserRole;
 
 @Repository
@@ -34,6 +36,10 @@ public class UserRoleDao {
 		} catch (NoResultException e) {
 			return null;
 		}
+	}
+	
+	public UserRole getRoleById(int i) throws DataAccessException {
+		return entityManager.find(UserRole.class, i);
 	}
 
 	public void persist(UserRole userRole) {

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import at.fh.swenga.dao.EntryDao;
+import at.fh.swenga.dao.ProjectDao;
 import at.fh.swenga.dao.UserDao;
 import at.fh.swenga.dao.UserRoleDao;
 import at.fh.swenga.model.AjaxResponseBody;
@@ -152,6 +153,9 @@ public class UserController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/addUser" }, method = RequestMethod.GET)
 	public String addUser(Model model) {
+		List<UserRole> userRoles = userRoleDao.getRoles();
+		model.addAttribute("userRoles", userRoles);
+		
 		return "editUser";
 	}
 
@@ -226,6 +230,9 @@ public class UserController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/editUser" }, method = RequestMethod.GET)
 	public String editUser(Model model, int id) {
+		
+		List<UserRole> userRoles = userRoleDao.getRoles();
+		model.addAttribute("userRoles", userRoles);
 
 		User user = userDao.getUserById(id);
 
@@ -233,7 +240,7 @@ public class UserController {
 			model.addAttribute("user", user);
 			return "editUser";
 		} else {
-			model.addAttribute("errorMessage", "Couldn't find user with id:  " + id);
+			model.addAttribute("errorMessage", "Couldn't find user with id: " + id);
 			return "forward:listUsers";
 		}
 	}
@@ -250,7 +257,7 @@ public class UserController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/changeUser" }, method = RequestMethod.POST)
 	public String changeUser(@Valid User changedUser, BindingResult bindingResult, Model model,
-			@RequestParam String password_repeat) {
+			@RequestParam String password_repeat, @RequestParam List<Integer> new_userRoles) {
 		// Any errors? -> Create a String out of all errors and return to the page
 		if (bindingResult.hasErrors()) {
 			String errorMessage = "";
@@ -264,16 +271,33 @@ public class UserController {
 
 		// Get the user we want to change
 		User user = userDao.getUserById(changedUser.getUserId());
+		
+		List<UserRole> newUserRoles = new ArrayList<>();
+		
+		for (int i = 0; i < new_userRoles.size(); i++) {
+			UserRole userRole = userRoleDao.getRoleById(new_userRoles.get(i));
+			newUserRoles.add(userRole);
+		}
 
 		if (user == null) {
 			model.addAttribute("errorMessage", "User does not exist!<br>");
 		} else {
-			// Change the attributes
 			user.setFirstName(changedUser.getFirstName());
 			user.setLastName(changedUser.getLastName());
 			user.setDateOfBirth(changedUser.getDateOfBirth());
 			user.setEmail(changedUser.getEmail());
 			user.setUserName(changedUser.getUserName());
+			
+			/*List<UserRole> userRoles = userRoleDao.getRoles();
+			System.out.println(user.getUserRoles().toString());*/
+			
+			//for (int i = 0; i < userRoles.size(); i++) {
+			user.removeAllUserRoles();//userRoles.get(0)
+			//}
+			
+			for (int i = 0; i < newUserRoles.size(); i++) {
+				user.addUserRole(newUserRoles.get(i));
+			}
 
 			if (!changedUser.getPassword().isEmpty()) {
 				if (changedUser.getPassword().equals(password_repeat)) {
