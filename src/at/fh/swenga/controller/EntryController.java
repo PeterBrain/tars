@@ -58,27 +58,125 @@ public class EntryController {
 
 		// produces a date between 1/1/2020 and the current date
 		Date minDate = df.getDate(2019, 1, 1);
+		//Date maxDate = new Date();
 		Date now = new Date();
 
-		long duration = 0;
-		Date tsStart = new Date();
-		Date tsEnd = now;
+		//long duration = 0;
+		//Date tsStart = new Date();
+		//Date tsEnd = now;
 
-		for (int i = 1; i < 5; i++) {
-			tsStart = df.getDateBetween(minDate, now);
+		Entry p1 = new Entry(df.getRandomWord(), df.getRandomWord(), df.getDateBetween(minDate, now), null, now, now,
+				true);
+		Entry p2 = new Entry(df.getRandomWord(), df.getRandomWord(), df.getDateBetween(minDate, now), null, now, now,
+				true);
+		Entry p3 = new Entry(df.getRandomWord(), df.getRandomWord(), df.getDateBetween(minDate, now), null, now, now,
+				true);
+		Entry p4 = new Entry(df.getRandomWord(), df.getRandomWord(), df.getDateBetween(minDate, now), null, now, now,
+				true);
+		Entry p5 = new Entry(df.getRandomWord(), df.getRandomWord(), df.getDateBetween(minDate, now), null, now, now,
+				true);
+		Entry p6 = new Entry(df.getRandomWord(), df.getRandomWord(), df.getDateBetween(minDate, now), null, now, now,
+				true);
+		Entry p7 = new Entry(df.getRandomWord(), df.getRandomWord(), df.getDateBetween(minDate, now), null, now, now,
+				true);
 
-			Entry p1 = new Entry("My note: " + df.getRandomWord(), "My activity: " + df.getRandomWord(), tsStart, now,
-					now, now, true);
-			p1.setEditor(userDao.getUserById(i));
-			p1.setProject(projectDao.getProjectById(1));
-			p1.setCategory(categoryDao.getCategoryById(1));
+		p1.setTimestampEnd(java.sql.Timestamp.valueOf(
+				p1.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusHours(1)));
+		p2.setTimestampEnd(java.sql.Timestamp.valueOf(
+				p2.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusHours(5)));
+		p3.setTimestampEnd(java.sql.Timestamp.valueOf(
+				p3.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusHours(1)));
+		p4.setTimestampEnd(java.sql.Timestamp.valueOf(
+				p4.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusHours(8)));
+		p5.setTimestampEnd(java.sql.Timestamp.valueOf(
+				p5.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusHours(4)));
+		p6.setTimestampEnd(java.sql.Timestamp.valueOf(
+				p6.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusHours(6)));
+		p7.setTimestampEnd(java.sql.Timestamp.valueOf(
+				p7.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusHours(1)));
 
-			duration = java.time.Duration.between(tsStart.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
-					tsEnd.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()).toMinutes();
+//		for (int i = 1; i < 5; i++) {
+//			tsStart = df.getDateBetween(minDate, now);
+//
+//			Entry p1 = new Entry("My note: " + df.getRandomWord(), "My activity: " + df.getRandomWord(), tsStart, now,
+//					now, now, true);
+//			p1.setEditor(userDao.getUserById(i));
+//			p1.setProject(projectDao.getProjectById(1));
+//			p1.setCategory(categoryDao.getCategoryById(1));
+//
+//			duration = java.time.Duration.between(tsStart.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
+//					tsEnd.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()).toMinutes();
+//
+//			p1.setMinutes(duration);
+//			entryDao.persist(p1);
+//		}
+		p1.setMinutes(
+				java.time.Duration
+						.between(p1.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
+								p1.getTimestampEnd().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
+						.toMinutes());
+		p2.setMinutes(
+				java.time.Duration
+						.between(p2.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
+								p2.getTimestampEnd().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
+						.toMinutes());
+		p3.setMinutes(
+				java.time.Duration
+						.between(p3.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
+								p3.getTimestampEnd().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
+						.toMinutes());
+		p4.setMinutes(
+				java.time.Duration
+						.between(p4.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
+								p4.getTimestampEnd().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
+						.toMinutes());
+		p5.setMinutes(
+				java.time.Duration
+						.between(p5.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
+								p5.getTimestampEnd().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
+						.toMinutes());
+		p6.setMinutes(
+				java.time.Duration
+						.between(p6.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
+								p6.getTimestampEnd().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
+						.toMinutes());
+		p7.setMinutes(
+				java.time.Duration
+						.between(p7.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
+								p7.getTimestampEnd().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
+						.toMinutes());
 
-			p1.setMinutes(duration);
-			entryDao.persist(p1);
-		}
+		p1.setEditor(userDao.getUserById(2));
+		p2.setEditor(userDao.getUserById(1));
+		p3.setEditor(userDao.getUserById(2));
+		p4.setEditor(userDao.getUserById(3));
+		p5.setEditor(userDao.getUserById(4));
+		p6.setEditor(userDao.getUserById(1));
+		p7.setEditor(userDao.getUserById(2));
+
+		p1.setProject(projectDao.getProjectById(3));
+		p2.setProject(projectDao.getProjectById(1));
+		p3.setProject(projectDao.getProjectById(2));
+		p4.setProject(projectDao.getProjectById(3));
+		p5.setProject(projectDao.getProjectById(1));
+		p6.setProject(projectDao.getProjectById(2));
+		p7.setProject(projectDao.getProjectById(3));
+
+		p1.setCategory(categoryDao.getCategoryById(3));
+		p2.setCategory(categoryDao.getCategoryById(1));
+		p3.setCategory(categoryDao.getCategoryById(2));
+		p4.setCategory(categoryDao.getCategoryById(3));
+		p5.setCategory(categoryDao.getCategoryById(1));
+		p6.setCategory(categoryDao.getCategoryById(2));
+		p7.setCategory(categoryDao.getCategoryById(3));
+
+		entryDao.persist(p1);
+		entryDao.persist(p2);
+		entryDao.persist(p3);
+		entryDao.persist(p4);
+		entryDao.persist(p5);
+		entryDao.persist(p6);
+		entryDao.persist(p7);
 
 		return "forward:login";
 	}
@@ -110,12 +208,12 @@ public class EntryController {
 		return "index";
 	}
 
-	/*@Secured("ROLE_ADMIN")
-	@RequestMapping(value = { "/delete" })
-	public String deleteData(Model model, @RequestParam int id) {
-		entryDao.delete(id);
-		return "forward:list";
-	}*/
+	/*
+	 * @Secured("ROLE_ADMIN")
+	 * 
+	 * @RequestMapping(value = { "/delete" }) public String deleteData(Model
+	 * model, @RequestParam int id) { entryDao.delete(id); return "forward:list"; }
+	 */
 
 	/**
 	 * delete entry
