@@ -1,6 +1,9 @@
 package at.fh.swenga.controller;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import at.fh.swenga.dao.EntryDao;
-import at.fh.swenga.dao.ProjectDao;
 import at.fh.swenga.dao.UserDao;
 import at.fh.swenga.dao.UserRoleDao;
 import at.fh.swenga.model.AjaxResponseBody;
@@ -155,7 +157,7 @@ public class UserController {
 	public String addUser(Model model) {
 		List<UserRole> userRoles = userRoleDao.getRoles();
 		model.addAttribute("userRoles", userRoles);
-		
+
 		return "editUser";
 	}
 
@@ -230,7 +232,7 @@ public class UserController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/editUser" }, method = RequestMethod.GET)
 	public String editUser(Model model, int id) {
-		
+
 		List<UserRole> userRoles = userRoleDao.getRoles();
 		model.addAttribute("userRoles", userRoles);
 
@@ -271,9 +273,9 @@ public class UserController {
 
 		// Get the user we want to change
 		User user = userDao.getUserById(changedUser.getUserId());
-		
+
 		List<UserRole> newUserRoles = new ArrayList<>();
-		
+
 		for (int i = 0; i < new_userRoles.size(); i++) {
 			UserRole userRole = userRoleDao.getRoleById(new_userRoles.get(i));
 			newUserRoles.add(userRole);
@@ -287,14 +289,16 @@ public class UserController {
 			user.setDateOfBirth(changedUser.getDateOfBirth());
 			user.setEmail(changedUser.getEmail());
 			user.setUserName(changedUser.getUserName());
-			
-			/*List<UserRole> userRoles = userRoleDao.getRoles();
-			System.out.println(user.getUserRoles().toString());*/
-			
-			//for (int i = 0; i < userRoles.size(); i++) {
-			user.removeAllUserRoles();//userRoles.get(0)
-			//}
-			
+
+			/*
+			 * List<UserRole> userRoles = userRoleDao.getRoles();
+			 * System.out.println(user.getUserRoles().toString());
+			 */
+
+			// for (int i = 0; i < userRoles.size(); i++) {
+			user.removeAllUserRoles();// userRoles.get(0)
+			// }
+
 			for (int i = 0; i < newUserRoles.size(); i++) {
 				user.addUserRole(newUserRoles.get(i));
 			}
@@ -426,14 +430,36 @@ public class UserController {
 	public AjaxResponseBody getSearchResultViaAjax() {
 		AjaxResponseBody result = new AjaxResponseBody();
 
-//		List<List<String>> workingHoursAndWeekday = new ArrayList<List<String>>();
-
-		List<String> workingHours = new ArrayList<String>();
 		List<Entry> entries = entryDao.getEntriesLastWeek();
 
-//		System.out.println(entries.get(0).getTimestampStart());
-//		System.out.println(entries.get(0).getTimestampEnd());
-//		System.out.println(entries.get(0).getTimestampEnd().getDay());
+		Date now = new Date();
+		List<Integer> durations = new ArrayList<Integer>();
+		List<Integer> weekdays = new ArrayList<Integer>();
+
+		for (int i = 7; i > 0; i--) {
+			Date currentDate = java.sql.Date
+					.valueOf(now.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().minusDays(i));
+			int durationCount = 0;
+
+			int currentWeekday = currentDate.getDay();
+			weekdays.add(currentWeekday);
+
+			for (Entry entry : entries) {
+				Date entryDate = java.sql.Date
+						.valueOf(entry.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+
+				if (entryDate.equals(currentDate)) {
+					System.out.println("in if entryDate == currentDate");
+
+					durationCount += entry.getMinutes();
+				}
+			}
+			durations.add(durationCount / 60);
+		}
+
+//		for (Integer weekday : weekdays) {
+//			System.out.println(weekday);
+//		}
 
 		int dayCount = 7;
 		ArrayList<ArrayList<String>> workingHoursAndWeekdays = new ArrayList<>(dayCount);
@@ -442,21 +468,39 @@ public class UserController {
 			workingHoursAndWeekdays.add(new ArrayList());
 		}
 
-		workingHoursAndWeekdays.get(0).add("Mon");
-		workingHoursAndWeekdays.get(0).add("Tue");
-		workingHoursAndWeekdays.get(0).add("Wed");
-		workingHoursAndWeekdays.get(0).add("Thu");
-		workingHoursAndWeekdays.get(0).add("Fri");
-		workingHoursAndWeekdays.get(0).add("Sat");
-		workingHoursAndWeekdays.get(0).add("Sun");
+		List<String> weekdaysList = new ArrayList<String>();
+		weekdaysList.add("Sun");
+		weekdaysList.add("Mon");
+		weekdaysList.add("Tue");
+		weekdaysList.add("Wed");
+		weekdaysList.add("Thu");
+		weekdaysList.add("Fri");
+		weekdaysList.add("Sat");
 
-		workingHoursAndWeekdays.get(1).add("1");
-		workingHoursAndWeekdays.get(1).add("2");
-		workingHoursAndWeekdays.get(1).add("3");
-		workingHoursAndWeekdays.get(1).add("4");
-		workingHoursAndWeekdays.get(1).add("5");
-		workingHoursAndWeekdays.get(1).add("6");
-		workingHoursAndWeekdays.get(1).add("7");
+		for (int i = 0; i < weekdays.size(); i++) {
+			workingHoursAndWeekdays.get(0).add(weekdaysList.get(weekdays.get(i)));
+		}
+
+		for (Integer duration : durations) {
+			System.out.println(duration);
+			workingHoursAndWeekdays.get(1).add(duration.toString());
+		}
+
+//		workingHoursAndWeekdays.get(0).add("Mon");
+//		workingHoursAndWeekdays.get(0).add("Tue");
+//		workingHoursAndWeekdays.get(0).add("Wed");
+//		workingHoursAndWeekdays.get(0).add("Thu");
+//		workingHoursAndWeekdays.get(0).add("Fri");
+//		workingHoursAndWeekdays.get(0).add("Sat");
+//		workingHoursAndWeekdays.get(0).add("Sun");
+
+//		workingHoursAndWeekdays.get(1).add("1");
+//		workingHoursAndWeekdays.get(1).add("2");
+//		workingHoursAndWeekdays.get(1).add("3");
+//		workingHoursAndWeekdays.get(1).add("4");
+//		workingHoursAndWeekdays.get(1).add("5");
+//		workingHoursAndWeekdays.get(1).add("6");
+//		workingHoursAndWeekdays.get(1).add("7");
 
 //		print data
 //		dayCount = workingHoursAndWeekdays.size();
@@ -464,15 +508,6 @@ public class UserController {
 //			String tmp1 = workingHoursAndWeekdays.get(1).get(i);
 //			System.out.println(tmp1);
 //		}
-
-		// fill with actual working hours below
-		workingHours.add("1");
-		workingHours.add("2");
-		workingHours.add("4");
-		workingHours.add("6");
-		workingHours.add("8");
-		workingHours.add("6");
-		workingHours.add("3");
 
 		result.setCode("200");
 		result.setMsg("Success");
