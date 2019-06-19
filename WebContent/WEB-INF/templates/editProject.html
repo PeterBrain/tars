@@ -71,7 +71,7 @@
 									<label for="new_projectLeader" class="control-label">Project
 										Leader</label> <select id="new_projectLeader" class="form-control"
 										name="new_projectLeader">
-										<optgroup label="List of possible project leader">
+										<optgroup label="Possible project leader">
 											<option disabled>Select ...</option>
 											<option th:each="user : ${users}" th:value="${user.userName}"
 												th:text="${user.userName}"

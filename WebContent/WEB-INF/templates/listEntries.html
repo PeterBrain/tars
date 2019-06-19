@@ -74,7 +74,7 @@
 									<thead>
 										<tr>
 											<th>ID</th>
-											<th>Username</th>
+											<th sec:authorize="hasRole('ADMIN')">Username</th>
 											<th>Timestamp Created</th>
 											<th>Start</th>
 											<th>End</th>
@@ -89,7 +89,7 @@
 									<tfoot>
 										<tr>
 											<th>ID</th>
-											<th>Username</th>
+											<th sec:authorize="hasRole('ADMIN')">Username</th>
 											<th>Timestamp Created</th>
 											<th>Start</th>
 											<th>End</th>
@@ -104,13 +104,10 @@
 									<tbody>
 										<tr th:each="entry : ${entries}">
 											<td th:text="${entry.entryId}"></td>
-											<td th:text="${entry.editor.userName}"></td>
-											<td
-												th:text="${#dates.format(entry.timestampCreated,'dd.MM.yyyy HH:mm')}"></td>
-											<td
-												th:text="${#dates.format(entry.timestampStart,'dd.MM.yyyy HH:mm')}"></td>
-											<td
-												th:text="${#dates.format(entry.timestampEnd,'dd.MM.yyyy HH:mm')}"></td>
+											<td th:text="${entry.editor.userName}" sec:authorize="hasRole('ADMIN')"></td>
+											<td th:text="${#dates.format(entry.timestampCreated,'dd.MM.yyyy HH:mm')}"></td>
+											<td th:text="${#dates.format(entry.timestampStart,'dd.MM.yyyy HH:mm')}"></td>
+											<td th:text="${#dates.format(entry.timestampEnd,'dd.MM.yyyy HH:mm')}"></td>
 											<td th:text="${entry.note}"></td>
 											<td th:text="${entry.activity}"></td>
 											<td th:text="${entry.project.name}"></td>

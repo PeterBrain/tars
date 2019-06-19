@@ -40,7 +40,7 @@ public class EntryController {
 
 	@Autowired
 	ProjectDao projectDao;
-	
+
 	@Autowired
 	CategoryDao categoryDao;
 
@@ -71,6 +71,7 @@ public class EntryController {
 					now, now, true);
 			p1.setEditor(userDao.getUserById(i));
 			p1.setProject(projectDao.getProjectById(1));
+			p1.setCategory(categoryDao.getCategoryById(1));
 
 			duration = java.time.Duration.between(tsStart.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
 					tsEnd.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()).toMinutes();
@@ -82,7 +83,7 @@ public class EntryController {
 		return "forward:listEntries";
 	}
 
-	@RequestMapping(value = { "listEntries" })
+	@RequestMapping(value = { "/listEntries" })
 	public String listEntries(Model model) {
 		List<Entry> entries = entryDao.getEntries();
 
@@ -115,16 +116,17 @@ public class EntryController {
 
 		List<Project> projects = projectDao.getProjects();
 		model.addAttribute("projects", projects);
-		
+
 		List<Category> categories = categoryDao.getCategories();
-		model.addAttribute("categories",categories);
-		
+		model.addAttribute("categories", categories);
+
 		return "editEntry";
 	}
 
 	@RequestMapping(value = { "/createEntry" }, method = RequestMethod.POST)
 	public String createEntry(Model model, @RequestParam String note, @RequestParam String activity,
-			@RequestParam String timestampStart, @RequestParam String timestampEnd, @RequestParam int new_project, @RequestParam int new_category) {
+			@RequestParam String timestampStart, @RequestParam String timestampEnd, @RequestParam int new_project,
+			@RequestParam int new_category) {
 		// User currentUser = userDao.get
 
 		String currentUsername = userDao.getCurrentUser();
@@ -186,9 +188,9 @@ public class EntryController {
 
 		List<Project> projects = projectDao.getProjects();
 		model.addAttribute("projects", projects);
-		
+
 		List<Category> categories = categoryDao.getCategories();
-		model.addAttribute("categories",categories);
+		model.addAttribute("categories", categories);
 
 		Entry entry = entryDao.getEntryById(id);
 
@@ -197,7 +199,7 @@ public class EntryController {
 			return "editEntry";
 		} else {
 			model.addAttribute("errorMessage", "Couldn't find entry with id: " + id);
-			return "forward:/listEntries";
+			return "forward:listEntries";
 		}
 	}
 
@@ -246,7 +248,7 @@ public class EntryController {
 					List<Project> projects = projectDao.getProjects();
 					model.addAttribute("projects", projects);
 					List<Category> categories = categoryDao.getCategories();
-					model.addAttribute("categories",categories);
+					model.addAttribute("categories", categories);
 					return "editEntry";
 				} else {
 					duration = java.time.Duration
@@ -265,7 +267,7 @@ public class EntryController {
 
 //		model.addAttribute("entry", entry);
 
-		return "forward:/listEntries";
+		return "forward:listEntries";
 	}
 
 	@Secured("ROLE_ADMIN")

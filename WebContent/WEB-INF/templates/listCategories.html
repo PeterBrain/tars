@@ -49,7 +49,7 @@
 						<div class="card-header py-3">
 							<div class="row">
 								<h6 class="m-0 font-weight-bold text-primary col align-self-center">Category entries</h6>
-								<a th:href="@{/addCategory}" class="btn btn-success btn-circle float-right">
+								<a sec:authorize="hasRole('ADMIN')" th:href="@{/addCategory}" class="btn btn-success btn-circle float-right">
 									<i class="fas fa-plus"></i>
 								</a>
 							</div>
@@ -61,21 +61,21 @@
 										<tr>
 											<th>ID</th>
 											<th>Name</th>
-											<th>Action</th>
+											<th sec:authorize="hasRole('ADMIN')">Action</th>
 										</tr>
 									</thead>
 									<tfoot>
 										<tr>
 											<th>ID</th>
 											<th>Name</th>
-											<th>Action</th>
+											<th sec:authorize="hasRole('ADMIN')">Action</th>
 										</tr>
 									</tfoot>
 									<tbody>
 										<tr th:each="category : ${categories}">
 											<td th:text="${category.categoryId}"></td>
 											<td th:text="${category.name}"></td>
-											<td>
+											<td sec:authorize="hasRole('ADMIN')">
 												<a th:href="@{/editCategory(id=${category.categoryId})}" class="btn btn-warning btn-circle btn-sm" sec:authorize="hasRole('ADMIN')">
 													<i class="fas fa-edit"></i>
 												</a>

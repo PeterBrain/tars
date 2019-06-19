@@ -31,7 +31,7 @@ public class ProjectController {
 	UserDao userDao;
 
 	@Transactional
-	@RequestMapping(value = { "fillProjects" })
+	@RequestMapping(value = { "/fillProjects" })
 	public String fillProjects(Model model) {
 
 		Project project1 = new Project("Project 1", "Default description 1", userDao.getUserById(2));
@@ -46,7 +46,7 @@ public class ProjectController {
 		return "forward:listProjects";
 	}
 
-	@RequestMapping(value = { "listProjects" })
+	@RequestMapping(value = { "/listProjects" })
 	public String listProjects(Model model) {
 		List<Project> projects = projectDao.getProjects();
 		model.addAttribute("projects", projects);
@@ -101,7 +101,7 @@ public class ProjectController {
 			return "editProject";
 		} else {
 			model.addAttribute("errorMessage", "Couldn't find project with id: " + id);
-			return "forward:/listProjects";
+			return "forward:listProjects";
 		}
 	}
 

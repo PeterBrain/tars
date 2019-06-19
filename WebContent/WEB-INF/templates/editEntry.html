@@ -93,7 +93,7 @@
 									<label for="new_project" class="control-label">Select
 										project</label> <select id="new_project" class="form-control"
 										name="new_project">
-										<optgroup label="List of projects">
+										<optgroup label="Available projects">
 											<option disabled>Select ...</option>
 											<option th:each="project : ${projects}"
 												th:value="${project.projectId}" th:text="${project.name}"
@@ -107,7 +107,7 @@
 									<label for="new_category" class="control-label">Select
 										category</label> <select id="new_category" class="form-control"
 										name="new_category">
-										<optgroup label="List of categories">
+										<optgroup label="Available categories">
 											<option disabled>Select ...</option>
 											<option th:each="category : ${categories}"
 												th:value="${category.categoryId}" th:text="${category.name}"

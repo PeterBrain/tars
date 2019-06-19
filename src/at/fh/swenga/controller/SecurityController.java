@@ -22,7 +22,7 @@ public class SecurityController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "/", "dashboard" })
+	@RequestMapping(value = { "/", "/dashboard" })
 	public String index(Model model) {
 		String username = userDao.getCurrentUser();
 		model.addAttribute("user", username);
