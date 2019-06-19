@@ -6,10 +6,10 @@ import java.util.regex.Pattern;
 /**
  * 
  * 
- * @author mkyong
- * Source: https://www.mkyong.com/regular-expressions/how-to-validate-password-with-regular-expression/
- * November 6, 2009 | Updated : October 11, 2012
- * Last accessed: 2019-06-18 21:20 
+ * @author mkyong Source:
+ *         https://www.mkyong.com/regular-expressions/how-to-validate-password-with-regular-expression/
+ *         November 6, 2009 | Updated : October 11, 2012 Last accessed:
+ *         2019-06-18 21:20
  *
  */
 public class PasswordValidator {

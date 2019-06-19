@@ -39,7 +39,7 @@ public class UserRole implements java.io.Serializable {
 		super();
 		this.roleName = roleName;
 	}
-	
+
 	public int getRoleId() {
 		return roleId;
 	}

@@ -30,6 +30,12 @@ public class ProjectController {
 	@Autowired
 	UserDao userDao;
 
+	/**
+	 * fill database with default projects
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@Transactional
 	@RequestMapping(value = { "/fillProjects" })
 	public String fillProjects(Model model) {
@@ -46,6 +52,12 @@ public class ProjectController {
 		return "forward:login";
 	}
 
+	/**
+	 * open project list
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/listProjects" })
 	public String listProjects(Model model) {
 		List<Project> projects = projectDao.getProjects();
@@ -54,6 +66,13 @@ public class ProjectController {
 		return "listProjects";
 	}
 
+	/**
+	 * delete a project
+	 * 
+	 * @param model
+	 * @param id
+	 * @return
+	 */
 	@Secured("ROLE_PROJECT_LEADER")
 	@RequestMapping(value = { "/deleteProject" }, method = RequestMethod.GET)
 	public String deleteProject(Model model, @RequestParam int id) {
@@ -64,6 +83,12 @@ public class ProjectController {
 		return "forward:listProjects";
 	}
 
+	/**
+	 * open add project form
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@Secured("ROLE_PROJECT_LEADER")
 	@RequestMapping(value = { "/addProject" }, method = RequestMethod.GET)
 	public String addProject(Model model) {
@@ -75,6 +100,15 @@ public class ProjectController {
 		return "editProject";
 	}
 
+	/**
+	 * create new project
+	 * 
+	 * @param model
+	 * @param name
+	 * @param description
+	 * @param new_projectLeader
+	 * @return
+	 */
 	@Secured("ROLE_PROJECT_LEADER")
 	@RequestMapping(value = { "/createProject" }, method = RequestMethod.POST)
 	public String createProject(Model model, @RequestParam String name, @RequestParam String description,
@@ -86,6 +120,13 @@ public class ProjectController {
 		return "forward:listProjects";
 	}
 
+	/**
+	 * open edit project form
+	 * 
+	 * @param model
+	 * @param id
+	 * @return
+	 */
 	@Secured("ROLE_PROJECT_LEADER")
 	@RequestMapping(value = { "/editProject" }, method = RequestMethod.GET)
 	public String editProject(Model model, int id) {
@@ -105,6 +146,15 @@ public class ProjectController {
 		}
 	}
 
+	/**
+	 * edit project
+	 * 
+	 * @param changedProject
+	 * @param bindingResult
+	 * @param model
+	 * @param new_projectLeader
+	 * @return
+	 */
 	@Secured("ROLE_PROJECT_LEADER")
 	@RequestMapping(value = { "/changeProject" }, method = RequestMethod.POST)
 	public String changeProject(@Valid Project changedProject, BindingResult bindingResult, Model model,
@@ -139,7 +189,6 @@ public class ProjectController {
 	}
 
 	/**
-	 * 
 	 * handle errors
 	 * 
 	 * @param ex

@@ -14,6 +14,8 @@ db.password=xxx
 
 ## ToDo
 * Methods:
+    * Entry
+        * two deleteEntry methods? WHY?
     * Export
         * excel
         * email

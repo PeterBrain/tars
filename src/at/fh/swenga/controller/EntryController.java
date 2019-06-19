@@ -45,7 +45,7 @@ public class EntryController {
 	CategoryDao categoryDao;
 
 	/**
-	 * fill database with test data
+	 * fill database with default entries
 	 * 
 	 * @param model
 	 * @return
@@ -83,6 +83,12 @@ public class EntryController {
 		return "forward:login";
 	}
 
+	/**
+	 * open entry list
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/listEntries" })
 	public String listEntries(Model model) {
 		List<Entry> entries = entryDao.getEntries();
@@ -104,6 +110,13 @@ public class EntryController {
 		return "index";
 	}
 
+	/**
+	 * delete entry
+	 * 
+	 * @param model
+	 * @param id
+	 * @return
+	 */
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/delete" })
 	public String deleteData(Model model, @RequestParam int id) {
@@ -111,6 +124,27 @@ public class EntryController {
 		return "forward:list";
 	}
 
+	/**
+	 * delete entry
+	 * 
+	 * @param model
+	 * @param id
+	 * @return
+	 */
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(value = { "/deleteEntry" }, method = RequestMethod.GET)
+	public String deleteEntry(Model model, @RequestParam int id) {
+		entryDao.delete(id);
+
+		return "forward:listEntries";
+	}
+
+	/**
+	 * open add entry form
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/addEntry" }, method = RequestMethod.GET)
 	public String addEntry(Model model) {
 
@@ -123,6 +157,18 @@ public class EntryController {
 		return "editEntry";
 	}
 
+	/**
+	 * create new entry
+	 * 
+	 * @param model
+	 * @param note
+	 * @param activity
+	 * @param timestampStart
+	 * @param timestampEnd
+	 * @param new_project
+	 * @param new_category
+	 * @return
+	 */
 	@RequestMapping(value = { "/createEntry" }, method = RequestMethod.POST)
 	public String createEntry(Model model, @RequestParam String note, @RequestParam String activity,
 			@RequestParam String timestampStart, @RequestParam String timestampEnd, @RequestParam int new_project,
@@ -183,6 +229,13 @@ public class EntryController {
 		return "forward:listEntries";
 	}
 
+	/**
+	 * open edit entry form
+	 * 
+	 * @param model
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value = { "/editEntry" }, method = RequestMethod.GET)
 	public String editEntry(Model model, int id) {
 
@@ -203,6 +256,16 @@ public class EntryController {
 		}
 	}
 
+	/**
+	 * change entry
+	 * 
+	 * @param changedEntry
+	 * @param bindingResult
+	 * @param model
+	 * @param new_project
+	 * @param new_category
+	 * @return
+	 */
 	@RequestMapping(value = { "/changeEntry" }, method = RequestMethod.POST)
 	public String changeEntry(@Valid Entry changedEntry, BindingResult bindingResult, Model model,
 			@RequestParam int new_project, @RequestParam int new_category) {
@@ -265,21 +328,12 @@ public class EntryController {
 			entryDao.merge(entry);
 		}
 
-//		model.addAttribute("entry", entry);
-
-		return "forward:listEntries";
-	}
-
-	@Secured("ROLE_ADMIN")
-	@RequestMapping(value = { "/deleteEntry" }, method = RequestMethod.GET)
-	public String deleteEntry(Model model, @RequestParam int id) {
-		entryDao.delete(id);
+		// model.addAttribute("entry", entry);
 
 		return "forward:listEntries";
 	}
 
 	/**
-	 * 
 	 * handle errors
 	 * 
 	 * @param ex

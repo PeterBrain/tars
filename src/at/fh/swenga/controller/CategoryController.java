@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -24,6 +25,12 @@ public class CategoryController {
 	@Autowired
 	CategoryDao categoryDao;
 
+	/**
+	 * fill database with default categories
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@Transactional
 	@RequestMapping(value = { "/fillCategories" })
 	public String fillCategories(Model model) {
@@ -39,7 +46,13 @@ public class CategoryController {
 
 		return "forward:login";
 	}
-	
+
+	/**
+	 * open category list
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/listCategories" })
 	public String listCategory(Model model) {
 		List<Category> categories = categoryDao.getCategories();
@@ -48,6 +61,13 @@ public class CategoryController {
 		return "listCategories";
 	}
 
+	/**
+	 * delete category
+	 * 
+	 * @param model
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value = { "/deleteCategory" }, method = RequestMethod.GET)
 	public String deleteCategory(Model model, @RequestParam int id) {
 		categoryDao.delete(id);
@@ -57,11 +77,24 @@ public class CategoryController {
 		return "forward:listCategories";
 	}
 
+	/**
+	 * open add category form
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/addCategory" }, method = RequestMethod.GET)
 	public String addCategory(Model model) {
 		return "editCategory";
 	}
 
+	/**
+	 * create new category
+	 * 
+	 * @param model
+	 * @param name
+	 * @return
+	 */
 	@RequestMapping(value = { "/createCategory" }, method = RequestMethod.POST)
 	public String createCategory(Model model, @RequestParam String name) {
 		Category new_category = new Category(name);
@@ -71,7 +104,14 @@ public class CategoryController {
 		return "forward:listCategories";
 	}
 
-	// @Secured("PROJECT_LEADER")
+	/**
+	 * open edit category form
+	 * 
+	 * @param model
+	 * @param id
+	 * @return
+	 */
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/editCategory" }, method = RequestMethod.GET)
 	public String editCategory(Model model, int id) {
 
@@ -86,7 +126,15 @@ public class CategoryController {
 		}
 	}
 
-	/* @Secured("PROJECT_LEADER") */
+	/**
+	 * change category
+	 * 
+	 * @param changedCategory
+	 * @param bindingResult
+	 * @param model
+	 * @return
+	 */
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/changeCategory" }, method = RequestMethod.POST)
 	public String changeCategory(@Valid Category changedCategory, BindingResult bindingResult, Model model) {
 
@@ -116,7 +164,6 @@ public class CategoryController {
 	}
 
 	/**
-	 * 
 	 * handle errors
 	 * 
 	 * @param ex

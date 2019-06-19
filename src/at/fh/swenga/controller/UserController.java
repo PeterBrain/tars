@@ -52,8 +52,7 @@ public class UserController {
 	EntryController entryController;
 
 	/**
-	 * 
-	 * fill database with default users
+	 * fill database with default users & all other data
 	 * 
 	 * @param model
 	 * @return
@@ -127,8 +126,7 @@ public class UserController {
 	}
 
 	/**
-	 * 
-	 * open and fill user management page
+	 * open user list
 	 * 
 	 * @param model
 	 * @return
@@ -142,12 +140,11 @@ public class UserController {
 		List<User> users = userDao.getUsers();
 		model.addAttribute("users", users);
 
-		return "userManagement";
+		return "listUsers";
 	}
 
 	/**
-	 * 
-	 * open addUser page
+	 * open add user form
 	 * 
 	 * @param model
 	 * @return
@@ -159,14 +156,13 @@ public class UserController {
 	}
 
 	/**
-	 * 
 	 * create a new user
 	 * 
 	 * @param model
-	 * @param firstname
-	 * @param lastname
+	 * @param firstName
+	 * @param lastName
 	 * @param email
-	 * @param username
+	 * @param userName
 	 * @param dateOfBirth
 	 * @param password
 	 * @param password_repeat
@@ -213,7 +209,7 @@ public class UserController {
 			model.addAttribute("users", users);
 
 			model.addAttribute("message", "Created new user");
-			return "userManagement";
+			return "listUsers";
 		} else {
 			model.addAttribute("errorMessage", "Passwords do not match");
 			return "editUser";
@@ -221,8 +217,7 @@ public class UserController {
 	}
 
 	/**
-	 * 
-	 * open editUser page
+	 * open edit user form
 	 * 
 	 * @param model
 	 * @param id
@@ -264,7 +259,7 @@ public class UserController {
 			}
 			model.addAttribute("errorMessage", errorMessage);
 
-			return "userManagement";
+			return "listUsers";
 		}
 
 		// Get the user we want to change
@@ -298,11 +293,10 @@ public class UserController {
 		List<User> users = userDao.getUsers();
 		model.addAttribute("users", users);
 
-		return "userManagement";
+		return "listUsers";
 	}
 
 	/**
-	 * 
 	 * open deleteUser page
 	 * 
 	 * @param model
@@ -317,11 +311,11 @@ public class UserController {
 		model.addAttribute("users", users);
 		model.addAttribute("message", "User deleted");
 
-		return "userManagement";
+		return "listUsers";
 	}
 
 	/**
-	 * open editPassword page
+	 * open edit password form
 	 * 
 	 * @param model
 	 * @return
@@ -337,7 +331,6 @@ public class UserController {
 	}
 
 	/**
-	 * 
 	 * change users password
 	 * 
 	 * @param model
@@ -414,7 +407,7 @@ public class UserController {
 		String username = userDao.getCurrentUser();
 		User user = userDao.getUserByUserName(username);
 		List<Entry> entries = entryDao.getAllEntriesOfUser(user.getUserId());
-		
+
 		System.out.println(entries.get(0).getTimestampStart());
 
 		// fill with actual working hours below
@@ -442,7 +435,6 @@ public class UserController {
 	 */
 
 	/**
-	 * 
 	 * handle errors
 	 * 
 	 * @param ex

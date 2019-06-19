@@ -16,7 +16,6 @@ public class SecurityController {
 	UserDao userDao;
 
 	/**
-	 * 
 	 * open dashboard or startpage
 	 * 
 	 * @param model
@@ -31,7 +30,6 @@ public class SecurityController {
 	}
 
 	/**
-	 * 
 	 * open login page
 	 * 
 	 * @param model
@@ -41,20 +39,12 @@ public class SecurityController {
 	public String handleLogin(Model model) {
 		if (userDao.getCurrentUser().toUpperCase().equals("ANONYMOUSUSER")) {
 			return "login";
-		}
-		else {
+		} else {
 			return "index";
 		}
 	}
-	
-	/*
-	@RequestMapping(value = { "/changePassword"}, method = RequestMethod.POST)
-	public String changePassword(Model model) {
-		
-	}
-/*
+
 	/**
-	 * 
 	 * handle errors
 	 * 
 	 * @param ex

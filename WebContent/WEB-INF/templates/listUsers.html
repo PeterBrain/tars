@@ -4,8 +4,8 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 <div th:replace="~{./includes/meta :: META}" />
-<title>Archive &#124; TARS - Time &amp; Activity Recording
-	Software</title>
+<title>User Management &#124; TARS - Time &amp; Activity
+	Recording Software</title>
 <div th:replace="~{./includes/css :: CSS}" />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/css/dataTables.bootstrap4.min.css" />
@@ -30,12 +30,11 @@
 					<!-- Page Heading -->
 					<div
 						class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">Archive</h1>
-						<a href="#"
-							class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-							<i class="fas fa-download fa-sm text-white-50"></i> Generate
-							Report
-						</a>
+						<h1 class="h3 mb-0 text-gray-800">User Management</h1>
+						<!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+						<i class="fas fa-download fa-sm text-white-50"></i>
+						Generate Report
+					</a> -->
 					</div>
 
 					<!-- error message -->
@@ -59,9 +58,8 @@
 						<div class="card-header py-3">
 							<div class="row">
 								<h6
-									class="m-0 font-weight-bold text-primary col align-self-center">Time
-									entries</h6>
-								<a th:href="@{/addEntry}"
+									class="m-0 font-weight-bold text-primary col align-self-center">Users</h6>
+								<a th:href="@{/addUser}"
 									class="btn btn-success btn-circle float-right"> <i
 									class="fas fa-plus"></i>
 								</a>
@@ -74,51 +72,42 @@
 									<thead>
 										<tr>
 											<th>ID</th>
-											<th sec:authorize="hasRole('ADMIN')">Username</th>
-											<th>Timestamp Created</th>
-											<th>Start</th>
-											<th>End</th>
-											<th>Note</th>
-											<th>Activity</th>
-											<th>Project</th>
-											<th>Category</th>
-											<th>Duration (Hours)</th>
+											<th>Firstname</th>
+											<th>Lastname</th>
+											<th>Date of birth</th>
+											<th>Username</th>
+											<th>E-Mail</th>
+											<th>Role</th>
 											<th>Action</th>
 										</tr>
 									</thead>
 									<tfoot>
 										<tr>
 											<th>ID</th>
-											<th sec:authorize="hasRole('ADMIN')">Username</th>
-											<th>Timestamp Created</th>
-											<th>Start</th>
-											<th>End</th>
-											<th>Note</th>
-											<th>Activity</th>
-											<th>Project</th>
-											<th>Category</th>
-											<th>Duration (Hours)</th>
+											<th>Firstname</th>
+											<th>Lastname</th>
+											<th>Date of birth</th>
+											<th>Username</th>
+											<th>E-Mail</th>
+											<th>Role</th>
 											<th>Action</th>
 										</tr>
 									</tfoot>
 									<tbody>
-										<tr th:each="entry : ${entries}">
-											<td th:text="${entry.entryId}"></td>
-											<td th:text="${entry.editor.userName}" sec:authorize="hasRole('ADMIN')"></td>
-											<td th:text="${#dates.format(entry.timestampCreated,'dd.MM.yyyy HH:mm')}"></td>
-											<td th:text="${#dates.format(entry.timestampStart,'dd.MM.yyyy HH:mm')}"></td>
-											<td th:text="${#dates.format(entry.timestampEnd,'dd.MM.yyyy HH:mm')}"></td>
-											<td th:text="${entry.note}"></td>
-											<td th:text="${entry.activity}"></td>
-											<td th:text="${entry.project.name}"></td>
-											<td th:text="${entry.category.name}"></td>											
-											<td th:text="${entry.minutes}"></td>
-											<td><a th:href="@{/editEntry(id=${entry.entryId})}"
-												class="btn btn-warning btn-circle btn-sm"
-												sec:authorize="hasRole('USER')"> <i class="fas fa-edit"></i>
-											</a> <a th:href="@{/deleteEntry(id=${entry.entryId})}"
-												class="btn btn-danger btn-circle btn-sm"
-												sec:authorize="hasRole('ADMIN')"> <i
+										<tr th:each="user : ${users}">
+											<td th:text="${user.userId}"></td>
+											<td th:text="${user.firstName}"></td>
+											<td th:text="${user.lastName}"></td>
+											<td th:text="${#dates.format(user.dateOfBirth,'dd.MM.yyyy')}"></td>
+											<td th:text="${user.userName}"></td>
+											<td th:text="${user.email}"></td>
+											<td><span th:each="role : ${user.userRoles}"
+												th:text="${role.roleName} + ' '"></span></td>
+											<td><a th:href="@{/editUser(id=${user.userId})}"
+												class="btn btn-warning btn-circle btn-sm"> <i
+													class="fas fa-edit"></i>
+											</a> <a th:href="@{/deleteUser(id=${user.userId})}"
+												class="btn btn-danger btn-circle btn-sm"> <i
 													class="fas fa-trash"></i>
 											</a></td>
 										</tr>
@@ -163,6 +152,6 @@
 			$('#dataTable').DataTable();
 		});
 	</script>
-</body>
 
+</body>
 </html>
