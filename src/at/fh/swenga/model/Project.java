@@ -19,7 +19,7 @@ import javax.persistence.Version;
 public class Project implements java.io.Serializable {
 
 	@Id
-	@Column(name = "id")
+	@Column(name = "projectid")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int projectId;
 
@@ -32,7 +32,8 @@ public class Project implements java.io.Serializable {
 	@OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
 	private Set<Entry> entries;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	//https://howtodoinjava.com/hibernate/hibernate-one-to-many-mapping-using-annotations/
+	@ManyToOne
 	private User projectLeader;
 
 	@Version
