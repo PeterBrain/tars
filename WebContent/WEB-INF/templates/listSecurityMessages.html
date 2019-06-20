@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+  <head>
+    <div th:replace="~{./includes/meta :: META}" />
+    <title>Category &#124; TARS - Time &amp; Activity Recording Software</title>
+    <div th:replace="~{./includes/css :: CSS}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/css/dataTables.bootstrap4.min.css" />
+  </head>
+  <body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+		<div th:replace="~{./includes/sidebar :: sidebar}" />
+
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<!-- Main Content -->
+			<div id="content">
+
+				<div th:replace="~{./includes/navbar :: navbar}" />
+
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
+
+					<!-- Page Heading -->
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-0 text-gray-800">Security Messages</h1>
+						<!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+							<i class="fas fa-download fa-sm text-white-50"></i>
+							Generate Report
+						</a> -->
+					</div>
+					
+					<!-- error message -->
+					<div th:unless="${errorMessage} == null" th:utext="${errorMessage}" class="alert alert-danger" role="alert"></div>
+					<!-- error message -->
+			
+					<!-- warning message -->
+					<div th:unless="${warningMessage} == null" th:utext="${warningMessage}" class="alert alert-warning" role="warning"></div>
+					<!-- warning message -->
+			
+					<!-- success message -->
+					<div th:unless="${message} == null" th:utext="${message}" class="alert alert-success" role="warning"></div>
+					<!-- success message -->
+
+					<!-- DataTales Example -->
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<div class="row">
+								<h6 class="m-0 font-weight-bold text-primary col align-self-center">Security Messages</h6>
+								<a sec:authorize="hasRole('ADMIN')" th:href="@{/addSecurityMessage}" class="btn btn-success btn-circle float-right">
+									<i class="fas fa-plus"></i>
+								</a>
+							</div>
+						</div>
+						<div class="card-body">
+							<div class="table-responsive">
+								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>Title</th>
+											<th>Message</th>
+											<th sec:authorize="hasRole('ADMIN')">Action</th>
+										</tr>
+									</thead>
+									<tfoot>
+										<tr>
+											<th>ID</th>
+											<th>Title</th>
+											<th>Message</th>
+											<th sec:authorize="hasRole('ADMIN')">Action</th>
+										</tr>
+									</tfoot>
+									<tbody>
+										<tr th:each="securityMessage : ${securityMessages}">
+											<td th:text="${securityMessage.securityMessageId}"></td>
+											<td th:text="${securityMessage.heading}"></td>
+											<td th:text="${securityMessage.message}"></td>
+											<td sec:authorize="hasRole('ADMIN')">
+												<a th:href="@{/editSecurityMessage(id=${securityMessage.securityMessageId})}" class="btn btn-warning btn-circle btn-sm" sec:authorize="hasRole('ADMIN')">
+													<i class="fas fa-edit"></i>
+												</a>
+												<a th:href="@{/deleteSecurityMessage(id=${securityMessage.securityMessageId})}" class="btn btn-danger btn-circle btn-sm" sec:authorize="hasRole('ADMIN')">
+													<i class="fas fa-trash"></i>
+												</a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<!-- /.container-fluid -->
+
+			</div>
+			<!-- End of Main Content -->
+
+			<div th:replace="~{./includes/footer :: footer}" />
+
+		</div>
+		<!-- End of Content Wrapper -->
+
+	</div>
+	<!-- End of Page Wrapper -->
+
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
+
+	<div th:replace="~{./includes/logout_modal :: logout_modal}" />
+	<div th:replace="~{./includes/js :: JS}" />
+	
+	<!-- Page level plugins -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+	<!-- Page level custom scripts -->
+	<script>
+	// Call the dataTables jQuery plugin
+	$(document).ready(function() {
+	  $('#dataTable').DataTable();
+	});
+	</script>
+</body>
+
+</html>
