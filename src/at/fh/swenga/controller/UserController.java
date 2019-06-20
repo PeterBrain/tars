@@ -101,7 +101,7 @@ public class UserController {
 		projectleader.addUserRole(projectLeaderRole);
 		userDao.persist(projectleader);
 
-		User user = new User("Be", "Nutzer", now, "user@example.com", "user", "password", 40, 0, true);
+		User user = new User("Be", "Nutzer", now, "user@example.com", "user", "password", 40, 120, true);
 		user.encryptPassword();
 		user.addUserRole(userRole);
 		userDao.persist(user);
