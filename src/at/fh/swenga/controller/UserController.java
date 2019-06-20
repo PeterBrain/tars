@@ -1,8 +1,6 @@
 package at.fh.swenga.controller;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -88,7 +86,7 @@ public class UserController {
 		Date minDate = df.getDate(2020, 1, 1);
 		Date now = new Date();
 
-		User admin = new User("Hans", "Maier", now, "admin@example.com", "admin", "password", 40, 0, true);
+		User admin = new User("Hans", "Maier", now, "admin@example.com", "admin", "password", 40, 30, true);
 		admin.encryptPassword();
 		admin.addUserRole(userRole);
 		admin.addUserRole(projectLeaderRole);
@@ -183,7 +181,7 @@ public class UserController {
 
 		String currentUsername = userDao.getCurrentUser();
 		model.addAttribute("user", currentUsername);
-		//User currentUser = userDao.getUserByUserName(currentUsername);
+		// User currentUser = userDao.getUserByUserName(currentUsername);
 
 		List<UserRole> newUserRoles = new ArrayList<>();
 
@@ -467,8 +465,6 @@ public class UserController {
 						.valueOf(entry.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 
 				if (entryDate.equals(currentDate)) {
-					System.out.println("in if entryDate == currentDate");
-
 					durationCount += entry.getMinutes();
 				}
 			}
@@ -540,18 +536,25 @@ public class UserController {
 		return result;
 	}
 
-	@RequestMapping(value = { "/dashboard" }, method = RequestMethod.POST)
+	/**
+	 * show consumed holiday in percent on dashboard
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = { "/", "dashboard" }, method = RequestMethod.GET)
 	public String fillProgressBarHoliday(Model model) {
 		String username = userDao.getCurrentUser();
 		User user = userDao.getUserByUserName(username);
-//		int holidayTotal = 
-//		int holidayConsumed = 
-		
-//		model.addAttribute("user", )
-		
-		model.addAttribute("user", user);
 
-		return "/dashboard";
+		float holidayTotal = (float) user.getHolidayTotal();
+		float holidayConsumed = (float) user.getHolidayConsumed();
+
+		float holidayConsumedPercent = Math.round((holidayConsumed / holidayTotal * 100f) * 10f) / 10f;
+
+		model.addAttribute("holidayConsumedPercent", holidayConsumedPercent);
+
+		return "index";
 	}
 
 	/*

@@ -130,31 +130,33 @@ function updateLineChart(data) {
 	for (var i = 0; i < dayCount; i++) {
 		var weekday = data.result[0][i];
 		myLineChart.data.labels[i] = weekday;
-//		console.log(weekday);
+		// console.log(weekday);
 
 		var hours = data.result[1][i];
 		myLineChart.data.datasets[0].data[i] = hours;
-//		console.log(hours);
+		// console.log(hours);
 	}
 
 	myLineChart.update();
 }
 
-$.ajax({
-	type : "POST",
-	contentType : "application/json",
-	url : "fillChartArea",
-	data : JSON.stringify(emptyData),
-	dataType : 'json',
-	timeout : 100000,
-	success : function(dataHours) {
-		console.log("SUCCESS: ", dataHours);
-		updateLineChart(dataHours);
-	},
-	error : function(e) {
-		console.log("ERROR: ", e);
-	},
-	done : function(e) {
-		console.log("DONE");
-	}
+$(document).ready(function() {
+	$.ajax({
+		type : "POST",
+		contentType : "application/json",
+		url : "fillChartArea",
+		data : JSON.stringify(emptyData),
+		dataType : 'json',
+		timeout : 100000,
+		success : function(dataHours) {
+			console.log("SUCCESS: ", dataHours);
+			updateLineChart(dataHours);
+		},
+		error : function(e) {
+			console.log("ERROR: ", e);
+		},
+		done : function(e) {
+			console.log("DONE");
+		}
+	});
 });

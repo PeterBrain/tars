@@ -102,13 +102,17 @@
 												used (Annualy)</div>
 											<div class="row no-gutters align-items-center">
 												<div class="col-auto">
-													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">70%</div>
+													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"
+														th:text="${holidayConsumedPercent} + '%'">70%</div>
 												</div>
 												<div class="col">
 													<div class="progress progress-sm mr-2">
 														<div class="progress-bar bg-info" role="progressbar"
-															style="width: 70%" aria-valuenow="70" aria-valuemin="0"
-															aria-valuemax="100"></div>
+															style="width: 70%"
+															th:style="'width:'+ ${holidayConsumedPercent}+'%;'"
+															aria-valuenow="70"
+															th:attr="aria-valuenow=${holidayConsumedPercent}"
+															aria-valuemin="0" aria-valuemax="100"></div>
 													</div>
 												</div>
 											</div>
@@ -131,7 +135,8 @@
 						<div class="col-xl-12 col-lg-6">
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">Work progress of the last 7 days</h6>
+									<h6 class="m-0 font-weight-bold text-primary">Work
+										progress of the last 7 days</h6>
 								</div>
 								<div class="card-body">
 									<div class="chart-area">
