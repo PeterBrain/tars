@@ -290,7 +290,6 @@ public class UserController {
 			user.setEmail(changedUser.getEmail());
 			user.setUserName(changedUser.getUserName());
 
-<<<<<<< HEAD
 			/*
 			 * List<UserRole> userRoles = userRoleDao.getRoles();
 			 * System.out.println(user.getUserRoles().toString());
@@ -299,7 +298,6 @@ public class UserController {
 			// for (int i = 0; i < userRoles.size(); i++) {
 			user.removeAllUserRoles();// userRoles.get(0)
 			// }
-=======
 			user.removeAllUserRoles();
 			/*
 			 * List<UserRole> userRoles = userRoleDao.getRoles(); for (int i = 0; i <
@@ -307,7 +305,6 @@ public class UserController {
 			 */
 
 			user.addUserRole(userRoleDao.getRole("ROLE_USER"));
->>>>>>> eb0570295c51ccb6ee2894e4f647086b74cbb35c
 
 			for (int i = 0; i < newUserRoles.size(); i++) {
 				user.addUserRole(newUserRoles.get(i));
