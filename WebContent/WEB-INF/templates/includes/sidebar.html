@@ -56,21 +56,28 @@
 			</a>
 		</li>
 		
-		<!-- Nav Item - User Collapse Menu -->
 		<li class="nav-item" sec:authorize="hasRole('ADMIN')">
-			<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-				<i class="fas fa-fw fa-cogs"></i>
-				<span>Settings</span>
+			<a class="nav-link" href="listSecurityMessages">
+				<i class="fas fa-fw fa-user-shield"></i>
+				<span>Security Messages</span>
 			</a>
-			<div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-				<div class="bg-white py-2 collapse-inner rounded">
-					<h6 class="collapse-header">Software</h6>
-					<a class="collapse-item" href="setting1">Setting 1</a>
-					<!--<div class="collapse-divider"></div>-->
-					<a class="collapse-item" href="setting2">Setting 2</a>
-				</div>
-			</div>
 		</li>
+		
+		<!-- Nav Item - User Collapse Menu -->
+<!-- 		<li class="nav-item" sec:authorize="hasRole('ADMIN')"> -->
+<!-- 			<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages"> -->
+<!-- 				<i class="fas fa-fw fa-cogs"></i> -->
+<!-- 				<span>Tools</span> -->
+<!-- 			</a> -->
+<!-- 			<div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar"> -->
+<!-- 				<div class="bg-white py-2 collapse-inner rounded"> -->
+<!-- 					<h6 class="collapse-header">Software</h6> -->
+<!-- 					<a class="collapse-item" href="editSecurityMessage">Security Message</a> -->
+<!-- 					<div class="collapse-divider"></div> -->
+<!-- 					<a class="collapse-item" href="setting2">Setting 2</a> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</li> -->
 		
 
 		<!-- Divider -->
