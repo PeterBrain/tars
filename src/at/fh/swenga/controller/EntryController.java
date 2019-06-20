@@ -196,7 +196,7 @@ public class EntryController {
 	public String listEntries(Model model) {
 		List<Entry> entries = entryDao.getEntries();
 
-		if (entries == null) {
+		if (entries != null) {
 			for (Entry entry : entries) {
 				float hours = (float) entry.getMinutes() / 60F;
 				float hoursRounded = (float) Math.round(hours * 100) / 100;
