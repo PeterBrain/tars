@@ -52,7 +52,7 @@ public class SecurityController {
 		}
 	}
 
-	@RequestMapping(value = { "/listSecurityMessages" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/listSecurityMessages" })
 	public String listSecurityMessages(Model model) {
 		List<SecurityMessage> securityMessages = securityMessageDao.getSecurityMessages();
 		model.addAttribute("securityMessages", securityMessages);

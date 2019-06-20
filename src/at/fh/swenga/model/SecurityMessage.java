@@ -11,29 +11,22 @@ import javax.persistence.Version;
 @Entity
 @Table(name = "security_message")
 public class SecurityMessage implements java.io.Serializable {
-	
+
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int securityMessageId;
-	
+
 	@Column(name = "heading")
 	private String heading;
-	
+
 	@Column(name = "message")
 	private String message;
-	
+
 	@Version
 	private long version;
-	
-	public SecurityMessage() {
-		// TODO Auto-generated constructor stub
-	}
 
-	public SecurityMessage(String heading, String message) {
-		super();
-		this.heading = heading;
-		this.message = message;
+	public SecurityMessage() {
 	}
 
 	public int getSecurityMessageId() {
@@ -57,6 +50,12 @@ public class SecurityMessage implements java.io.Serializable {
 	}
 
 	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public SecurityMessage(String heading, String message) {
+		super();
+		this.heading = heading;
 		this.message = message;
 	}
 
@@ -88,7 +87,4 @@ public class SecurityMessage implements java.io.Serializable {
 				+ message + "]";
 	}
 
-
-	
-	
 }
