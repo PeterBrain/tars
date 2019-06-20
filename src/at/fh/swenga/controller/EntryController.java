@@ -159,21 +159,21 @@ public class EntryController {
 		p6.setEditor(userDao.getUserById(1));
 		p7.setEditor(userDao.getUserById(2));
 
-		p1.setProject(projectDao.getProjectById(1));
-		p2.setProject(projectDao.getProjectById(2));
-		p3.setProject(projectDao.getProjectById(3));
-		p4.setProject(projectDao.getProjectById(4));
-		p5.setProject(projectDao.getProjectById(1));
-		p6.setProject(projectDao.getProjectById(2));
-		p7.setProject(projectDao.getProjectById(3));
+		p1.setProject(projectDao.findById(1).get());
+		p2.setProject(projectDao.findById(2).get());
+		p3.setProject(projectDao.findById(3).get());
+		p4.setProject(projectDao.findById(4).get());
+		p5.setProject(projectDao.findById(1).get());
+		p6.setProject(projectDao.findById(2).get());
+		p7.setProject(projectDao.findById(3).get());
 
-		p1.setCategory(categoryDao.getCategoryById(1));
-		p2.setCategory(categoryDao.getCategoryById(2));
-		p3.setCategory(categoryDao.getCategoryById(3));
-		p4.setCategory(categoryDao.getCategoryById(4));
-		p5.setCategory(categoryDao.getCategoryById(1));
-		p6.setCategory(categoryDao.getCategoryById(2));
-		p7.setCategory(categoryDao.getCategoryById(3));
+		p1.setCategory(categoryDao.findById(1).get());
+		p2.setCategory(categoryDao.findById(2).get());
+		p3.setCategory(categoryDao.findById(3).get());
+		p4.setCategory(categoryDao.findById(4).get());
+		p5.setCategory(categoryDao.findById(1).get());
+		p6.setCategory(categoryDao.findById(2).get());
+		p7.setCategory(categoryDao.findById(3).get());
 
 		entryDao.persist(p1);
 		entryDao.persist(p2);
@@ -196,12 +196,14 @@ public class EntryController {
 	public String listEntries(Model model) {
 		List<Entry> entries = entryDao.getEntries();
 
-		for (Entry entry : entries) {
-			float hours = (float) entry.getMinutes() / 60F;
-			float hoursRounded = (float) Math.round(hours * 100) / 100;
-			entry.setMinutes(hoursRounded);
+		if (entries == null) {
+			for (Entry entry : entries) {
+				float hours = (float) entry.getMinutes() / 60F;
+				float hoursRounded = (float) Math.round(hours * 100) / 100;
+				entry.setMinutes(hoursRounded);
+			}
 		}
-
+		
 		model.addAttribute("entries", entries);
 
 		return "listEntries";
@@ -212,13 +214,6 @@ public class EntryController {
 		model.addAttribute("entries", entryDao.searchEntries(searchString));
 		return "index";
 	}
-
-	/*
-	 * @Secured("ROLE_ADMIN")
-	 * 
-	 * @RequestMapping(value = { "/delete" }) public String deleteData(Model
-	 * model, @RequestParam int id) { entryDao.delete(id); return "forward:list"; }
-	 */
 
 	/**
 	 * delete entry
@@ -244,10 +239,10 @@ public class EntryController {
 	@RequestMapping(value = { "/addEntry" }, method = RequestMethod.GET)
 	public String addEntry(Model model) {
 
-		List<Project> projects = projectDao.getProjects();
+		List<Project> projects = projectDao.findAll();
 		model.addAttribute("projects", projects);
 
-		List<Category> categories = categoryDao.getCategories();
+		List<Category> categories = categoryDao.findAll();
 		model.addAttribute("categories", categories);
 
 		return "editEntry";
@@ -314,8 +309,8 @@ public class EntryController {
 		}
 		Entry new_entry = new Entry(note, activity, tsStart, tsEnd, now, now, true);
 
-		new_entry.setProject(projectDao.getProjectById(new_project));
-		new_entry.setCategory(categoryDao.getCategoryById(new_category));
+		new_entry.setProject(projectDao.findById(new_project).get());
+		new_entry.setCategory(categoryDao.findById(new_category).get());
 		new_entry.setMinutes(duration);
 		new_entry.setEditor(currentUser);
 
@@ -335,10 +330,10 @@ public class EntryController {
 	@RequestMapping(value = { "/editEntry" }, method = RequestMethod.GET)
 	public String editEntry(Model model, int id) {
 
-		List<Project> projects = projectDao.getProjects();
+		List<Project> projects = projectDao.findAll();
 		model.addAttribute("projects", projects);
 
-		List<Category> categories = categoryDao.getCategories();
+		List<Category> categories = categoryDao.findAll();
 		model.addAttribute("categories", categories);
 
 		Entry entry = entryDao.getEntryById(id);
@@ -377,8 +372,8 @@ public class EntryController {
 		}
 
 		Entry entry = entryDao.getEntryById(changedEntry.getEntryId());
-		Project project = projectDao.getProjectById(new_project);
-		Category category = categoryDao.getCategoryById(new_category);
+		Project project = projectDao.findById(new_project).get();
+		Category category = categoryDao.findById(new_category).get();
 
 		if (entry == null) {
 			model.addAttribute("errorMessage", "Entry does not exist! <br>");
@@ -413,9 +408,9 @@ public class EntryController {
 				if (tsEnd.before(tsStart)) {
 					model.addAttribute("errorMessage", "End Date must be after Start Date");
 					model.addAttribute("entry", entry);
-					List<Project> projects = projectDao.getProjects();
+					List<Project> projects = projectDao.findAll();
 					model.addAttribute("projects", projects);
-					List<Category> categories = categoryDao.getCategories();
+					List<Category> categories = categoryDao.findAll();
 					model.addAttribute("categories", categories);
 					return "editEntry";
 				} else {
