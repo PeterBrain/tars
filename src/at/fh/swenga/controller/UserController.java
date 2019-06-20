@@ -137,9 +137,6 @@ public class UserController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/listUsers" }, method = RequestMethod.GET)
 	public String listUsers(Model model) {
-		String username = userDao.getCurrentUser();
-		model.addAttribute("user", username);
-
 		List<User> users = userDao.getUsers();
 		model.addAttribute("users", users);
 
@@ -181,7 +178,6 @@ public class UserController {
 			@RequestParam String email, @RequestParam String userName, @RequestParam String dateOfBirth,
 			@RequestParam String password, @RequestParam String password_repeat,
 			@RequestParam List<Integer> new_userRoles) {
-
 		System.out.println(firstName);
 
 		String currentUsername = userDao.getCurrentUser();
@@ -236,7 +232,6 @@ public class UserController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/editUser" }, method = RequestMethod.GET)
 	public String editUser(Model model, int id) {
-
 		List<UserRole> userRoles = userRoleDao.getRoles();
 		model.addAttribute("userRoles", userRoles);
 

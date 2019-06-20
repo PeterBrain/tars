@@ -414,12 +414,10 @@ public class EntryController {
 				entry.setMinutes(duration);
 			}
 
-			model.addAttribute("message", "Changed entry " + changedEntry.getActivity());
+			model.addAttribute("message", "Changed entry " + changedEntry.getEntryId());
 
 			entryDao.merge(entry);
 		}
-
-		// model.addAttribute("entry", entry);
 
 		return "forward:listEntries";
 	}
