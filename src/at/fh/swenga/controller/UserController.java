@@ -9,6 +9,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
+import org.apache.commons.math3.stat.descriptive.summary.Sum;
 import org.fluttercode.datafactory.impl.DataFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -441,9 +442,9 @@ public class UserController {
 		List<Entry> entries = entryDao.getEntriesLastWeek();
 
 		Date now = new Date();
-		// get the durations per day
+		// list for the durations per day
 		List<Integer> durations = new ArrayList<Integer>();
-		// the weekdays stored in a list to associate
+		// the weekdays list to associate with durations
 		List<Integer> weekdays = new ArrayList<Integer>();
 
 		// fetch through the last 7 days
@@ -537,13 +538,14 @@ public class UserController {
 	}
 
 	/**
-	 * show consumed holiday in percent on dashboard
+	 * show progress bars on dashboard
 	 * 
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = { "/", "dashboard" }, method = RequestMethod.GET)
 	public String fillProgressBarHoliday(Model model) {
+		// show consumed holiday
 		String username = userDao.getCurrentUser();
 		User user = userDao.getUserByUserName(username);
 
@@ -553,6 +555,26 @@ public class UserController {
 		float holidayConsumedPercent = Math.round((holidayConsumed / holidayTotal * 100f) * 10f) / 10f;
 
 		model.addAttribute("holidayConsumedPercent", holidayConsumedPercent);
+
+		// show hours worked per week
+
+		// list of all entries within the last 7 days
+		List<Entry> entries = entryDao.getEntriesLastWeek();
+
+		Date now = new Date();
+		// list for the durations per day
+		List<Float> durations = new ArrayList<Float>();
+
+		float sumWorkedHours = 0;
+
+		for (Entry entry : entries) {
+			sumWorkedHours += entry.getMinutes() / 60;
+		}
+
+		float workingHoursWeek = user.getWorkingHoursWeek();
+		float workedHoursPercent = sumWorkedHours / workingHoursWeek * 100f;
+
+		model.addAttribute("workedHoursPercent", workedHoursPercent);
 
 		return "index";
 	}
