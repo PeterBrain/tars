@@ -1,7 +1,5 @@
 package at.fh.swenga.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -19,13 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.dao.SecurityMessageDao;
 import at.fh.swenga.dao.UserDao;
-<<<<<<< HEAD
-import at.fh.swenga.model.Category;
-import at.fh.swenga.model.Entry;
-=======
->>>>>>> c08d1eb7ac204b7fa234fddf06f25eb417f3470a
 import at.fh.swenga.model.SecurityMessage;
-import at.fh.swenga.model.User;
 
 @Controller
 public class SecurityController {
