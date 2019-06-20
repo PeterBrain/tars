@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,26 +30,26 @@ public class SecurityMessageDao {
 	public SecurityMessage getSecurityMessageById(int i) throws DataAccessException {
 		return entityManager.find(SecurityMessage.class, i);
 	}
-//
-//	public void persist(Category category) {
-//		entityManager.persist(category);
-//	}
-//
-//	@Secured("ROLE_ADMIN")
-//	public Category merge(Category category) {
-//		return entityManager.merge(category);
-//	}
-//
-//	@Secured("ROLE_ADMIN")
-//	public void delete(Category category) {
-//		entityManager.remove(category);
-//	}
-//
-//	@Secured("ROLE_ADMIN")
-//	public void delete(int id) {
-//		Category category = getCategoryById(id);
-//		if (category != null) {
-//			delete(category);
-//		}
-//	}
+
+	public void persist(SecurityMessage securityMessage) {
+		entityManager.persist(securityMessage);
+	}
+
+	@Secured("ROLE_ADMIN")
+	public SecurityMessage merge(SecurityMessage securityMessage) {
+		return entityManager.merge(securityMessage);
+	}
+
+	@Secured("ROLE_ADMIN")
+	public void delete(SecurityMessage securityMessage) {
+		entityManager.remove(securityMessage);
+	}
+
+	@Secured("ROLE_ADMIN")
+	public void delete(int id) {
+		SecurityMessage securityMessage = getSecurityMessageById(id);
+		if (securityMessage != null) {
+			delete(securityMessage);
+		}
+	}
 }
