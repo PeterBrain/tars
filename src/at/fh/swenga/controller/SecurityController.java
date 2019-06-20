@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.dao.SecurityMessageDao;
 import at.fh.swenga.dao.UserDao;
-import at.fh.swenga.model.Category;
 import at.fh.swenga.model.SecurityMessage;
 
 @Controller
@@ -65,7 +64,6 @@ public class SecurityController {
 
 		return "listSecurityMessages";
 	}
-	
 
 	@RequestMapping(value = { "/deleteSecurityMessage" }, method = RequestMethod.GET)
 	public String deleteSecurityMessage(Model model, @RequestParam int id) {
@@ -76,12 +74,10 @@ public class SecurityController {
 		return "forward:listSecurityMessages";
 	}
 
-
 	@RequestMapping(value = { "/addSecurityMessage" }, method = RequestMethod.GET)
 	public String addSecurityMessage(Model model) {
 		return "editSecurityMessage";
 	}
-
 
 	@RequestMapping(value = { "/createSecurityMessage" }, method = RequestMethod.POST)
 	public String createSecurityMessage(Model model, @RequestParam String title, @RequestParam String message) {
@@ -91,7 +87,6 @@ public class SecurityController {
 		model.addAttribute("message", "Created new Message");
 		return "forward:listSecurityMessages";
 	}
-
 
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/editSecurityMessage" }, method = RequestMethod.GET)
@@ -108,10 +103,10 @@ public class SecurityController {
 		}
 	}
 
-
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/changeSecurityMessage" }, method = RequestMethod.POST)
-	public String changeSecurityMessage(@Valid SecurityMessage changedSecurityMessage, BindingResult bindingResult, Model model) {
+	public String changeSecurityMessage(@Valid SecurityMessage changedSecurityMessage, BindingResult bindingResult,
+			Model model) {
 
 		if (bindingResult.hasErrors()) {
 			String errorMessage = "";
@@ -123,12 +118,13 @@ public class SecurityController {
 			return "editSecurityMessage";
 		}
 
-		SecurityMessage securityMessage = securityMessageDao.getSecurityMessageById(changedSecurityMessage.getSecurityMessageId());
+		SecurityMessage securityMessage = securityMessageDao
+				.getSecurityMessageById(changedSecurityMessage.getSecurityMessageId());
 
 		if (securityMessage == null) {
 			model.addAttribute("errorMessage", "Security Message does not exist!<br>");
 		} else {
-			securityMessage.setHeading(changedSecurityMessage.getHeading());
+			securityMessage.setTitle(changedSecurityMessage.getTitle());
 			securityMessage.setMessage(changedSecurityMessage.getMessage());
 
 			securityMessageDao.merge(securityMessage);

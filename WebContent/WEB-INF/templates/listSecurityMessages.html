@@ -76,7 +76,7 @@
 									<tbody>
 										<tr th:each="securityMessage : ${securityMessages}">
 											<td th:text="${securityMessage.securityMessageId}"></td>
-											<td th:text="${securityMessage.heading}"></td>
+											<td th:text="${securityMessage.title}"></td>
 											<td th:text="${securityMessage.message}"></td>
 											<td sec:authorize="hasRole('ADMIN')">
 												<a th:href="@{/editSecurityMessage(id=${securityMessage.securityMessageId})}" class="btn btn-warning btn-circle btn-sm" sec:authorize="hasRole('ADMIN')">
