@@ -172,27 +172,26 @@ public class UserController {
 	 * @param dateOfBirth
 	 * @param password
 	 * @param password_repeat
+	 * @param new_userRoles
 	 * @return
 	 */
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/createUser" }, method = RequestMethod.POST)
 	public String createUser(Model model, @RequestParam String firstName, @RequestParam String lastName,
 			@RequestParam String email, @RequestParam String userName, @RequestParam String dateOfBirth,
-			@RequestParam String password, @RequestParam String password_repeat) {
+			@RequestParam String password, @RequestParam String password_repeat,
+			@RequestParam List<Integer> new_userRoles) {
 
 		System.out.println(firstName);
 
 		String currentUsername = userDao.getCurrentUser();
 		model.addAttribute("user", currentUsername);
 
-		UserRole adminRole = userRoleDao.getRole("ROLE_ADMIN");
-		if (adminRole == null) {
-			adminRole = new UserRole("ROLE_ADMIN");
-		}
+		List<UserRole> newUserRoles = new ArrayList<>();
 
-		UserRole userRole = userRoleDao.getRole("ROLE_USER");
-		if (userRole == null) {
-			userRole = new UserRole("ROLE_USER");
+		for (int i = 0; i < new_userRoles.size(); i++) {
+			UserRole userRole = userRoleDao.getRoleById(new_userRoles.get(i));
+			newUserRoles.add(userRole);
 		}
 
 		// convert string to date
@@ -208,7 +207,12 @@ public class UserController {
 		if (password.equals(password_repeat)) {
 			User new_user = new User(firstName, lastName, dob, email, userName, password, true);
 			new_user.encryptPassword();
-			new_user.addUserRole(userRole);
+			new_user.addUserRole(userRoleDao.getRole("ROLE_USER"));
+
+			for (int i = 0; i < newUserRoles.size(); i++) {
+				new_user.addUserRole(newUserRoles.get(i));
+			}
+
 			userDao.persist(new_user);
 
 			List<User> users = userDao.getUsers();
@@ -254,6 +258,7 @@ public class UserController {
 	 * @param bindingResult
 	 * @param model
 	 * @param password_repeat
+	 * @param new_userRoles
 	 * @return
 	 */
 	@Secured("ROLE_ADMIN")
@@ -290,6 +295,7 @@ public class UserController {
 			user.setEmail(changedUser.getEmail());
 			user.setUserName(changedUser.getUserName());
 
+<<<<<<< HEAD
 			/*
 			 * List<UserRole> userRoles = userRoleDao.getRoles();
 			 * System.out.println(user.getUserRoles().toString());
@@ -298,6 +304,15 @@ public class UserController {
 			// for (int i = 0; i < userRoles.size(); i++) {
 			user.removeAllUserRoles();// userRoles.get(0)
 			// }
+=======
+			user.removeAllUserRoles();
+			/*
+			 * List<UserRole> userRoles = userRoleDao.getRoles(); for (int i = 0; i <
+			 * userRoles.size(); i++) { user.removeAllUserRoles(userRoles.get(i)); }
+			 */
+
+			user.addUserRole(userRoleDao.getRole("ROLE_USER"));
+>>>>>>> eb0570295c51ccb6ee2894e4f647086b74cbb35c
 
 			for (int i = 0; i < newUserRoles.size(); i++) {
 				user.addUserRole(newUserRoles.get(i));
@@ -392,7 +407,7 @@ public class UserController {
 							user.encryptPassword();
 
 							userDao.persist(user);
-//							userDao.merge(user);
+							// userDao.merge(user);
 
 							model.addAttribute("message", "New password was set!");
 						} else {

@@ -9,21 +9,20 @@ db.password=xxx
 ```
 
 ## Inital setup steps
-0. create and fill db.properties file
-1. call http://[ip-address]/Tars/fillUsers
+1. create and fill db.properties file
+2. call http://[ip-address]/Tars/fillUsers
 
 ## ToDo
 * Methods:
-    * Export
+    * Export (M)
         * excel
         * email
-    * Modification History
+    * Modification History (M)
         * add history entry
-    * Charts
-        * Dashboard
-    * User
-        * edit user roles (rework)
-    * Settings
+    * Dashboard
+        * Charts (D)
+        * Overtime and holiday (M)
+    * Settings (HD)
         * admin should change some settings
 
 ---

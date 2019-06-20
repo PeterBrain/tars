@@ -113,11 +113,12 @@
 								<div class="form-group">
 									<label for="new_userRoles" class="control-label">User
 										Role</label> <select id="new_userRoles" class="form-control"
-										name="new_userRoles" multiple>
+										name="new_userRoles" multiple required>
 										<optgroup label="Possible user roles">
 											<option th:each="userRole : ${userRoles}"
 												th:value="${userRole.roleId}"
-												th:text="${userRole.roleName}">UserRole</option>
+												th:text="${userRole.roleName}"
+												th:selected="${user} ? ${userRole.roleName == 'ROLE_USER'} : 'false'">UserRole</option>
 										</optgroup>
 									</select>
 								</div>
