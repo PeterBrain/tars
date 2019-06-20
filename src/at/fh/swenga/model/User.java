@@ -52,6 +52,16 @@ public class User implements java.io.Serializable {
 
 	@Column(name = "password", nullable = false)
 	private String password;
+	
+	//TODO: @notnull annotation 3 mal
+	@Column(name = "holidaytotal", nullable = false)
+	private int holidayTotal;
+
+	@Column(name = "holidayconsumed", nullable = false)
+	private int holidayConsumed;
+
+	@Column(name = "workinghoursweek", nullable = false)
+	private int workingHoursWeek;
 
 	@Column(name = "enabled", nullable = false)
 	private boolean enabled;
@@ -73,7 +83,7 @@ public class User implements java.io.Serializable {
 	}
 
 	public User(String firstName, String lastName, @NotNull(message = "Date of birth cannot be null") Date dateOfBirth,
-			String email, String userName, String password, boolean enabled) {
+			String email, String userName, String password,int workingHoursWeek, int holidayConsumed, boolean enabled) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -82,6 +92,9 @@ public class User implements java.io.Serializable {
 		this.userName = userName;
 		this.password = password;
 		this.enabled = enabled;
+		this.workingHoursWeek = workingHoursWeek;
+		this.holidayConsumed = holidayConsumed;
+		this.holidayTotal = workingHoursWeek * 5;
 	}
 
 	// getter & setter
@@ -147,6 +160,30 @@ public class User implements java.io.Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public int getHolidayTotal() {
+		return holidayTotal;
+	}
+
+	public void setHolidayTotal(int holidayTotal) {
+		this.holidayTotal = holidayTotal;
+	}
+
+	public int getHolidayConsumed() {
+		return holidayConsumed;
+	}
+
+	public void setHolidayConsumed(int holidayConsumed) {
+		this.holidayConsumed = holidayConsumed;
+	}
+
+	public int getWorkingHoursWeek() {
+		return workingHoursWeek;
+	}
+
+	public void setWorkingHoursWeek(int workingHoursWeek) {
+		this.workingHoursWeek = workingHoursWeek;
 	}
 
 	public boolean isEnabled() {

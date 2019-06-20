@@ -88,21 +88,21 @@ public class UserController {
 		Date minDate = df.getDate(2020, 1, 1);
 		Date now = new Date();
 
-		User admin = new User("Hans", "Maier", now, "admin@example.com", "admin", "password", true);
+		User admin = new User("Hans", "Maier", now, "admin@example.com", "admin", "password", 40, 0, true);
 		admin.encryptPassword();
 		admin.addUserRole(userRole);
 		admin.addUserRole(projectLeaderRole);
 		admin.addUserRole(adminRole);
 		userDao.persist(admin);
 
-		User projectleader = new User("Projekt", "Leiter", now, "project@leader.com", "projectleader", "password",
-				true);
+		User projectleader = new User("Projekt", "Leiter", now, "project@leader.com", "projectleader", "password", 40,
+				0, true);
 		projectleader.encryptPassword();
 		projectleader.addUserRole(userRole);
 		projectleader.addUserRole(projectLeaderRole);
 		userDao.persist(projectleader);
 
-		User user = new User("Be", "Nutzer", now, "user@example.com", "user", "password", true);
+		User user = new User("Be", "Nutzer", now, "user@example.com", "user", "password", 40, 0, true);
 		user.encryptPassword();
 		user.addUserRole(userRole);
 		userDao.persist(user);
@@ -110,7 +110,8 @@ public class UserController {
 		for (int i = 0; i <= 5; i++) {
 			String firstname = df.getFirstName();
 			User userGen = new User(firstname, df.getLastName(), df.getDateBetween(minDate, now),
-					firstname + "@example.com", firstname.toLowerCase(), "password", true);
+					firstname + "@example.com", firstname.toLowerCase(), "password", 40, df.getNumberBetween(0, 40 * 5),
+					true);
 			userGen.encryptPassword();
 
 			if (i == 0) {
@@ -182,6 +183,7 @@ public class UserController {
 
 		String currentUsername = userDao.getCurrentUser();
 		model.addAttribute("user", currentUsername);
+		//User currentUser = userDao.getUserByUserName(currentUsername);
 
 		List<UserRole> newUserRoles = new ArrayList<>();
 
@@ -201,7 +203,7 @@ public class UserController {
 		}
 
 		if (password.equals(password_repeat)) {
-			User new_user = new User(firstName, lastName, dob, email, userName, password, true);
+			User new_user = new User(firstName, lastName, dob, email, userName, password, 40, 0, true);
 			new_user.encryptPassword();
 			new_user.addUserRole(userRoleDao.getRole("ROLE_USER"));
 
