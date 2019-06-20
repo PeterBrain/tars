@@ -60,7 +60,27 @@ public class EntryDao {
 			return resultList;
 		}
 	}
-	
+
+	public List<Entry> getEntriesByIds(List<Integer> ids) { // to be implemented
+		String currentUserName = userDao.getCurrentUser();
+		User currentUser = userDao.getUserByUserName(currentUserName);
+
+		UserRole adminRole = userRoleDao.getRole("ROLE_ADMIN");
+
+		// an admin should see all entries of all users
+		if (currentUser.getUserRoles().contains(adminRole)) {
+			TypedQuery<Entry> typedQuery = entityManager.createQuery("SELECT e FROM Entry e", Entry.class); // only selected rows
+			List<Entry> typedResultList = typedQuery.getResultList();
+			return typedResultList;
+		} else {
+			Query query = entityManager.createNamedQuery("Entry.findByEditor");
+			query = query.setParameter("user", currentUser);
+
+			List<Entry> resultList = query.getResultList();
+			return resultList;
+		}
+	}
+
 	public List<Entry> getEntriesLastWeek() {
 		String currentUserName = userDao.getCurrentUser();
 		User currentUser = userDao.getUserByUserName(currentUserName);
@@ -78,17 +98,17 @@ public class EntryDao {
 			query = query.setParameter("user", currentUser);
 
 			List<Entry> resultListAll = query.getResultList();
-			
+
 			Date now = new Date();
-			
+
 			List<Entry> resultList = new ArrayList<>();
-			
+
 			for (Entry entry : resultListAll) {
 				if (entry.getTimestampStart().after(java.sql.Date.valueOf(LocalDate.now().minusDays(7)))) {
 					resultList.add(entry);
-				}	
+				}
 			}
-			
+
 			return resultList;
 		}
 	}

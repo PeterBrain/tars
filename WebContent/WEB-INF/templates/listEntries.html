@@ -28,105 +28,119 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<div
-						class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">Archive</h1>
-						<a href="#"
-							class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-							<i class="fas fa-download fa-sm text-white-50"></i> Generate
-							Report
-						</a>
-					</div>
-
-					<!-- error message -->
-					<div th:unless="${errorMessage} == null" th:utext="${errorMessage}"
-						class="alert alert-danger" role="alert"></div>
-					<!-- error message -->
-
-					<!-- warning message -->
-					<div th:unless="${warningMessage} == null"
-						th:utext="${warningMessage}" class="alert alert-warning"
-						role="warning"></div>
-					<!-- warning message -->
-
-					<!-- success message -->
-					<div th:unless="${message} == null" th:utext="${message}"
-						class="alert alert-success" role="warning"></div>
-					<!-- success message -->
-
-					<!-- DataTales Example -->
-					<div class="card shadow mb-4">
-						<div class="card-header py-3">
-							<div class="row">
-								<h6
-									class="m-0 font-weight-bold text-primary col align-self-center">Time
-									entries</h6>
-								<a th:href="@{/addEntry}"
-									class="btn btn-success btn-circle float-right"> <i
-									class="fas fa-plus"></i>
-								</a>
+					<form action="report" method="post">
+						<div class="d-sm-flex align-items-center justify-content-between mb-4">
+							<h1 class="h3 mb-0 text-gray-800">Archive</h1>
+							<div>
+								<button type="submit" name="excel" value="Excel"
+									class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mr-2">
+									<i class="fas fa-download fa-sm text-white-50"></i> Generate
+									Excel Report
+								</button>
+								<button type="submit" name="mail" value="Mail"
+									class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+									<i class="fas fa-download fa-sm text-white-50"></i> Generate
+									Email Report
+								</button>
 							</div>
 						</div>
-						<div class="card-body">
-							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%"
-									cellspacing="0">
-									<thead>
-										<tr>
-											<th>ID</th>
-											<th sec:authorize="hasRole('ADMIN')">Username</th>
-											<th>Timestamp Created</th>
-											<th>Start</th>
-											<th>End</th>
-											<th>Note</th>
-											<th>Activity</th>
-											<th>Project</th>
-											<th>Category</th>
-											<th>Duration (Hours)</th>
-											<th>Action</th>
-										</tr>
-									</thead>
-									<tfoot>
-										<tr>
-											<th>ID</th>
-											<th sec:authorize="hasRole('ADMIN')">Username</th>
-											<th>Timestamp Created</th>
-											<th>Start</th>
-											<th>End</th>
-											<th>Note</th>
-											<th>Activity</th>
-											<th>Project</th>
-											<th>Category</th>
-											<th>Duration (Hours)</th>
-											<th>Action</th>
-										</tr>
-									</tfoot>
-									<tbody>
-										<tr th:each="entry : ${entries}">
-											<td th:text="${entry.entryId}"></td>
-											<td th:text="${entry.editor.userName}" sec:authorize="hasRole('ADMIN')"></td>
-											<td th:text="${#dates.format(entry.timestampCreated,'dd.MM.yyyy HH:mm')}"></td>
-											<td th:text="${#dates.format(entry.timestampStart,'dd.MM.yyyy HH:mm')}"></td>
-											<td th:text="${#dates.format(entry.timestampEnd,'dd.MM.yyyy HH:mm')}"></td>
-											<td th:text="${entry.note}"></td>
-											<td th:text="${entry.activity}"></td>
-											<td th:text="${entry.project.name}"></td>
-											<td th:text="${entry.category.name}"></td>											
-											<td th:text="${entry.minutes}"></td>
-											<td><a th:href="@{/editEntry(id=${entry.entryId})}"
-												class="btn btn-warning btn-circle btn-sm"
-												sec:authorize="hasRole('USER')"> <i class="fas fa-edit"></i>
-											</a> <a th:href="@{/deleteEntry(id=${entry.entryId})}"
-												class="btn btn-danger btn-circle btn-sm"
-												sec:authorize="hasRole('ADMIN')"> <i
-													class="fas fa-trash"></i>
-											</a></td>
-										</tr>
-									</tbody>
-								</table>
+
+						<!-- error message -->
+						<div th:unless="${errorMessage} == null"
+							th:utext="${errorMessage}" class="alert alert-danger"
+							role="alert"></div>
+						<!-- error message -->
+
+						<!-- warning message -->
+						<div th:unless="${warningMessage} == null"
+							th:utext="${warningMessage}" class="alert alert-warning"
+							role="warning"></div>
+						<!-- warning message -->
+
+						<!-- success message -->
+						<div th:unless="${message} == null" th:utext="${message}"
+							class="alert alert-success" role="warning"></div>
+						<!-- success message -->
+
+						<!-- DataTales Example -->
+						<div class="card shadow mb-4">
+							<div class="card-header py-3">
+								<div class="row">
+									<h6
+										class="m-0 font-weight-bold text-primary col align-self-center">Time
+										entries</h6>
+									<a th:href="@{/addEntry}"
+										class="btn btn-success btn-circle float-right"> <i
+										class="fas fa-plus"></i>
+									</a>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="table-responsive">
+									<table class="table table-bordered" id="dataTable" width="100%"
+										cellspacing="0">
+										<thead>
+											<tr>
+												<th>Select</th>
+												<th>ID</th>
+												<th sec:authorize="hasRole('ADMIN')">Username</th>
+												<th>Timestamp Created</th>
+												<th>Start</th>
+												<th>End</th>
+												<th>Note</th>
+												<th>Activity</th>
+												<th>Project</th>
+												<th>Category</th>
+												<th>Duration (Hours)</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tfoot>
+											<tr>
+												<th>Select</th>
+												<th>ID</th>
+												<th sec:authorize="hasRole('ADMIN')">Username</th>
+												<th>Timestamp Created</th>
+												<th>Start</th>
+												<th>End</th>
+												<th>Note</th>
+												<th>Activity</th>
+												<th>Project</th>
+												<th>Category</th>
+												<th>Duration (Hours)</th>
+												<th>Action</th>
+											</tr>
+										</tfoot>
+										<tbody>
+											<tr th:each="entry : ${entries}">
+												<td><input type="checkbox" name="entryId"
+													th:value="${entry.entryId}"></td>
+												<td th:text="${entry.entryId}"></td>
+												<td th:text="${entry.editor.userName}"
+													sec:authorize="hasRole('ADMIN')"></td>
+												<td th:text="${#dates.format(entry.timestampCreated,'dd.MM.yyyy HH:mm')}"></td>
+												<td th:text="${#dates.format(entry.timestampStart,'dd.MM.yyyy HH:mm')}"></td>
+												<td th:text="${#dates.format(entry.timestampEnd,'dd.MM.yyyy HH:mm')}"></td>
+												<td th:text="${entry.note}"></td>
+												<td th:text="${entry.activity}"></td>
+												<td th:text="${entry.project.name}"></td>
+												<td th:text="${entry.category.name}"></td>
+												<td th:text="${entry.minutes}"></td>
+												<td><a th:href="@{/editEntry(id=${entry.entryId})}"
+													class="btn btn-warning btn-circle btn-sm"
+													sec:authorize="hasRole('USER')"> <i class="fas fa-edit"></i>
+												</a> <a th:href="@{/deleteEntry(id=${entry.entryId})}"
+													class="btn btn-danger btn-circle btn-sm"
+													sec:authorize="hasRole('ADMIN')"> <i
+														class="fas fa-trash"></i>
+												</a></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
-					</div>
+					</form>
 
 				</div>
 				<!-- /.container-fluid -->
