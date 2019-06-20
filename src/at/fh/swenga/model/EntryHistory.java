@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 @Entity
-@Table(name = "entryhistory")
+@Table(name = "entry_history")
 public class EntryHistory implements java.io.Serializable {
 	
 	@Id

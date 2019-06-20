@@ -22,10 +22,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.dao.CategoryDao;
 import at.fh.swenga.dao.EntryDao;
+import at.fh.swenga.dao.EntryHistoryDao;
 import at.fh.swenga.dao.ProjectDao;
 import at.fh.swenga.dao.UserDao;
 import at.fh.swenga.model.Category;
 import at.fh.swenga.model.Entry;
+import at.fh.swenga.model.EntryHistory;
 import at.fh.swenga.model.Project;
 import at.fh.swenga.model.User;
 
@@ -34,6 +36,9 @@ public class EntryController {
 
 	@Autowired
 	EntryDao entryDao;
+
+	@Autowired
+	EntryHistoryDao entryHistoryDao;
 
 	@Autowired
 	UserDao userDao;
@@ -378,10 +383,19 @@ public class EntryController {
 		if (entry == null) {
 			model.addAttribute("errorMessage", "Entry does not exist! <br>");
 		} else {
+			// -------------------
+			// fill entry in change history
+			Date now = new Date();
+			EntryHistory entryHistory = new EntryHistory(now, entry.getNote(), entry.getActivity(),
+					entry.getTimestampStart(), entry.getTimestampEnd(), entry.getMinutes(), entry.getEntryId(),
+					entry.getProject().getName(), entry.getCategory().getName(), entry.getEditor().getUserName());
+
+			entryHistoryDao.persist(entryHistory);
+
+			// -------------------
 
 			long duration = 0;
 
-			Date now = new Date();
 			Date tsStart = changedEntry.getTimestampStart();
 			Date tsEnd = changedEntry.getTimestampEnd();
 
