@@ -32,18 +32,12 @@
 					</div>
 
 					<!-- security message -->
-					<div th:unless="${securityMessage} == null"
-						th:utext="${securityMessage}" class="alert alert-warning"
-						role="warning">
-						<span class="closebtn"
-							onclick="this.parentElement.style.display='none';">&times;</span>
-					</div>
-					<!-- security message -->
 
-<!-- 					<div class="alert alert-warning" role="warning"> -->
-<!-- 						<span class="closebtn" -->
-<!-- 							onclick="this.parentElement.style.display='none';">&times;</span> -->
-<!-- 					</div> -->
+					<div th:each="securityMessage : ${securityMessages}">
+						<div th:unless="${securityMessage} == null"
+							th:utext="'<b>' + ${securityMessage.title} + '</b>' + '<br>' + ${securityMessage.message}"
+							class="alert alert-warning" role="warning"></div>
+					</div>
 
 					<!-- Content Row -->
 					<div class="row">

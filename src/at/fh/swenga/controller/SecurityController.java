@@ -135,15 +135,6 @@ public class SecurityController {
 		return "forward:listSecurityMessages";
 	}
 
-	@RequestMapping(value = { "/", "dashboard" }, method = RequestMethod.GET)
-	public String showSecurityMessageAlert(Model model) {
-		List<SecurityMessage> securityMessages = securityMessageDao.getSecurityMessages();
-
-		model.addAttribute("securityMessages", securityMessages);
-
-		return "index";
-	}
-
 	/**
 	 * handle errors
 	 * 

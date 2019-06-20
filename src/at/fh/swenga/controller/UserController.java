@@ -24,11 +24,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import at.fh.swenga.dao.EntryDao;
+import at.fh.swenga.dao.SecurityMessageDao;
 import at.fh.swenga.dao.UserDao;
 import at.fh.swenga.dao.UserRoleDao;
 import at.fh.swenga.model.AjaxResponseBody;
 import at.fh.swenga.model.Entry;
 import at.fh.swenga.model.PasswordValidator;
+import at.fh.swenga.model.SecurityMessage;
 import at.fh.swenga.model.User;
 import at.fh.swenga.model.UserRole;
 
@@ -43,6 +45,9 @@ public class UserController {
 
 	@Autowired
 	EntryDao entryDao;
+
+	@Autowired
+	SecurityMessageDao securityMessageDao;
 
 	@Autowired
 	CategoryController categoryController;
@@ -575,6 +580,12 @@ public class UserController {
 		float workedHoursPercent = sumWorkedHours / workingHoursWeek * 100f;
 
 		model.addAttribute("workedHoursPercent", workedHoursPercent);
+
+		// security messages
+		
+		List<SecurityMessage> securityMessages = securityMessageDao.getSecurityMessages();
+
+		model.addAttribute("securityMessages", securityMessages);
 
 		return "index";
 	}
