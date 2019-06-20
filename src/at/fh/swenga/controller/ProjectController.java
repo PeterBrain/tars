@@ -48,6 +48,9 @@ public class ProjectController {
 
 		Project project3 = new Project("Project 3", "Default description 3", userDao.getUserById(2));
 		projectDao.persist(project3);
+		
+		Project project4 = new Project("Project 4", "Default description 4", userDao.getUserById(2));
+		projectDao.persist(project4);
 
 		return "forward:login";
 	}

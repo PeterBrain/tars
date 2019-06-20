@@ -35,14 +35,17 @@ public class CategoryController {
 	@RequestMapping(value = { "/fillCategories" })
 	public String fillCategories(Model model) {
 
-		Category category1 = new Category("Customer");
+		Category category1 = new Category("Meeting");
 		categoryDao.persist(category1);
 
-		Category category2 = new Category("Important");
+		Category category2 = new Category("Planning");
 		categoryDao.persist(category2);
 
-		Category category3 = new Category("Test");
+		Category category3 = new Category("Travel");
 		categoryDao.persist(category3);
+		
+		Category category4 = new Category("Coding");
+		categoryDao.persist(category4);
 
 		return "forward:login";
 	}
