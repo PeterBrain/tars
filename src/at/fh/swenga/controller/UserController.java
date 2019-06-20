@@ -437,21 +437,30 @@ public class UserController {
 	public AjaxResponseBody getSearchResultViaAjax() {
 		AjaxResponseBody result = new AjaxResponseBody();
 
+		// list of all entries within the last 7 days
 		List<Entry> entries = entryDao.getEntriesLastWeek();
 
 		Date now = new Date();
+		// get the durations per day
 		List<Integer> durations = new ArrayList<Integer>();
+		// the weekdays stored in a list to associate
 		List<Integer> weekdays = new ArrayList<Integer>();
 
+		// fetch through the last 7 days
 		for (int i = 7; i > 0; i--) {
+			// get a clean date without time
 			Date currentDate = java.sql.Date
 					.valueOf(now.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().minusDays(i));
 			int durationCount = 0;
 
+			// get the weekday of the current date
 			int currentWeekday = currentDate.getDay();
 			weekdays.add(currentWeekday);
 
+			// fetch through the days and check if more entries per day exist
+			// if so, add up the working hours
 			for (Entry entry : entries) {
+				// get a clean entry date without time
 				Date entryDate = java.sql.Date
 						.valueOf(entry.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 
@@ -461,20 +470,22 @@ public class UserController {
 					durationCount += entry.getMinutes();
 				}
 			}
+			// return hours not minutes
 			durations.add(durationCount / 60);
 		}
 
-//		for (Integer weekday : weekdays) {
-//			System.out.println(weekday);
-//		}
-
+		// creating a 2d array consisting of a weekday associated with the working hours
+		// per day
 		int dayCount = 7;
 		ArrayList<ArrayList<String>> workingHoursAndWeekdays = new ArrayList<>(dayCount);
 
+		// adding the 2nd array to each entry
 		for (int i = 0; i < dayCount; i++) {
 			workingHoursAndWeekdays.add(new ArrayList());
 		}
 
+		// the weekday list which is to be asscociated with the right starting day of
+		// the last 7 days
 		List<String> weekdaysList = new ArrayList<String>();
 		weekdaysList.add("Sun");
 		weekdaysList.add("Mon");
@@ -484,14 +495,17 @@ public class UserController {
 		weekdaysList.add("Fri");
 		weekdaysList.add("Sat");
 
+		// set the week days into the 2d array
 		for (int i = 0; i < weekdays.size(); i++) {
 			workingHoursAndWeekdays.get(0).add(weekdaysList.get(weekdays.get(i)));
 		}
 
+		// set the hours per weekday into the 2d array
 		for (Integer duration : durations) {
-			System.out.println(duration);
 			workingHoursAndWeekdays.get(1).add(duration.toString());
 		}
+
+		// test data for debug
 
 //		workingHoursAndWeekdays.get(0).add("Mon");
 //		workingHoursAndWeekdays.get(0).add("Tue");
@@ -509,13 +523,14 @@ public class UserController {
 //		workingHoursAndWeekdays.get(1).add("6");
 //		workingHoursAndWeekdays.get(1).add("7");
 
-//		print data
+//		print test data for debug
 //		dayCount = workingHoursAndWeekdays.size();
 //		for (int i = 0; i < dayCount; i++) {
 //			String tmp1 = workingHoursAndWeekdays.get(1).get(i);
 //			System.out.println(tmp1);
 //		}
 
+		// fill ajax response
 		result.setCode("200");
 		result.setMsg("Success");
 		result.setResult(workingHoursAndWeekdays);
