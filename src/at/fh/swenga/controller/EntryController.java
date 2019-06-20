@@ -58,12 +58,12 @@ public class EntryController {
 
 		// produces a date between 1/1/2020 and the current date
 		Date minDate = df.getDate(2019, 6, 12);
-		//Date maxDate = new Date();
+		// Date maxDate = new Date();
 		Date now = new Date();
 
-		//long duration = 0;
-		//Date tsStart = new Date();
-		//Date tsEnd = now;
+		// long duration = 0;
+		// Date tsStart = new Date();
+		// Date tsEnd = now;
 
 		Entry p1 = new Entry(df.getRandomWord(), df.getRandomWord(), df.getDateBetween(minDate, now), null, now, now,
 				true);
@@ -80,20 +80,20 @@ public class EntryController {
 		Entry p7 = new Entry(df.getRandomWord(), df.getRandomWord(), df.getDateBetween(minDate, now), null, now, now,
 				true);
 
-		p1.setTimestampEnd(java.sql.Timestamp.valueOf(
-				p1.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusHours(1)));
-		p2.setTimestampEnd(java.sql.Timestamp.valueOf(
-				p2.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusHours(5)));
-		p3.setTimestampEnd(java.sql.Timestamp.valueOf(
-				p3.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusHours(1)));
-		p4.setTimestampEnd(java.sql.Timestamp.valueOf(
-				p4.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusHours(8)));
-		p5.setTimestampEnd(java.sql.Timestamp.valueOf(
-				p5.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusHours(4)));
-		p6.setTimestampEnd(java.sql.Timestamp.valueOf(
-				p6.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusHours(6)));
-		p7.setTimestampEnd(java.sql.Timestamp.valueOf(
-				p7.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusHours(1)));
+		p1.setTimestampEnd(java.sql.Timestamp.valueOf(p1.getTimestampStart().toInstant().atZone(ZoneId.systemDefault())
+				.toLocalDateTime().plusHours(df.getNumberBetween(1, 12))));
+		p2.setTimestampEnd(java.sql.Timestamp.valueOf(p2.getTimestampStart().toInstant().atZone(ZoneId.systemDefault())
+				.toLocalDateTime().plusHours(df.getNumberBetween(1, 12))));
+		p3.setTimestampEnd(java.sql.Timestamp.valueOf(p3.getTimestampStart().toInstant().atZone(ZoneId.systemDefault())
+				.toLocalDateTime().plusHours(df.getNumberBetween(1, 12))));
+		p4.setTimestampEnd(java.sql.Timestamp.valueOf(p4.getTimestampStart().toInstant().atZone(ZoneId.systemDefault())
+				.toLocalDateTime().plusHours(df.getNumberBetween(1, 12))));
+		p5.setTimestampEnd(java.sql.Timestamp.valueOf(p5.getTimestampStart().toInstant().atZone(ZoneId.systemDefault())
+				.toLocalDateTime().plusHours(df.getNumberBetween(1, 12))));
+		p6.setTimestampEnd(java.sql.Timestamp.valueOf(p6.getTimestampStart().toInstant().atZone(ZoneId.systemDefault())
+				.toLocalDateTime().plusHours(df.getNumberBetween(1, 12))));
+		p7.setTimestampEnd(java.sql.Timestamp.valueOf(p7.getTimestampStart().toInstant().atZone(ZoneId.systemDefault())
+				.toLocalDateTime().plusHours(df.getNumberBetween(1, 12))));
 
 //		for (int i = 1; i < 5; i++) {
 //			tsStart = df.getDateBetween(minDate, now);
@@ -154,18 +154,18 @@ public class EntryController {
 		p6.setEditor(userDao.getUserById(1));
 		p7.setEditor(userDao.getUserById(2));
 
-		p1.setProject(projectDao.getProjectById(3));
-		p2.setProject(projectDao.getProjectById(1));
-		p3.setProject(projectDao.getProjectById(2));
-		p4.setProject(projectDao.getProjectById(3));
+		p1.setProject(projectDao.getProjectById(1));
+		p2.setProject(projectDao.getProjectById(2));
+		p3.setProject(projectDao.getProjectById(3));
+		p4.setProject(projectDao.getProjectById(4));
 		p5.setProject(projectDao.getProjectById(1));
 		p6.setProject(projectDao.getProjectById(2));
 		p7.setProject(projectDao.getProjectById(3));
 
-		p1.setCategory(categoryDao.getCategoryById(3));
-		p2.setCategory(categoryDao.getCategoryById(1));
-		p3.setCategory(categoryDao.getCategoryById(2));
-		p4.setCategory(categoryDao.getCategoryById(3));
+		p1.setCategory(categoryDao.getCategoryById(1));
+		p2.setCategory(categoryDao.getCategoryById(2));
+		p3.setCategory(categoryDao.getCategoryById(3));
+		p4.setCategory(categoryDao.getCategoryById(4));
 		p5.setCategory(categoryDao.getCategoryById(1));
 		p6.setCategory(categoryDao.getCategoryById(2));
 		p7.setCategory(categoryDao.getCategoryById(3));
