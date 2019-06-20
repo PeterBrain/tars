@@ -538,6 +538,20 @@ public class UserController {
 		return result;
 	}
 
+	@RequestMapping(value = { "/dashboard" }, method = RequestMethod.POST)
+	public String fillProgressBarHoliday(Model model) {
+		String username = userDao.getCurrentUser();
+		User user = userDao.getUserByUserName(username);
+//		int holidayTotal = 
+//		int holidayConsumed = 
+		
+//		model.addAttribute("user", )
+		
+		model.addAttribute("user", user);
+
+		return "/dashboard";
+	}
+
 	/*
 	 * @ExceptionHandler()
 	 * 
