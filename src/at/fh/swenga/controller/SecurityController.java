@@ -19,8 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.dao.SecurityMessageDao;
 import at.fh.swenga.dao.UserDao;
+<<<<<<< HEAD
 import at.fh.swenga.model.Category;
 import at.fh.swenga.model.Entry;
+=======
+>>>>>>> c08d1eb7ac204b7fa234fddf06f25eb417f3470a
 import at.fh.swenga.model.SecurityMessage;
 import at.fh.swenga.model.User;
 
@@ -129,7 +132,7 @@ public class SecurityController {
 		if (securityMessage == null) {
 			model.addAttribute("errorMessage", "Security Message does not exist!<br>");
 		} else {
-			securityMessage.setHeading(changedSecurityMessage.getHeading());
+			securityMessage.setTitle(changedSecurityMessage.getTitle());
 			securityMessage.setMessage(changedSecurityMessage.getMessage());
 
 			securityMessageDao.merge(securityMessage);

@@ -18,7 +18,7 @@ public class SecurityMessage implements java.io.Serializable {
 	private int securityMessageId;
 
 	@Column(name = "heading")
-	private String heading;
+	private String title;
 
 	@Column(name = "message")
 	private String message;
@@ -37,12 +37,12 @@ public class SecurityMessage implements java.io.Serializable {
 		this.securityMessageId = securityMessageId;
 	}
 
-	public String getHeading() {
-		return heading;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setHeading(String heading) {
-		this.heading = heading;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getMessage() {
@@ -53,9 +53,9 @@ public class SecurityMessage implements java.io.Serializable {
 		this.message = message;
 	}
 
-	public SecurityMessage(String heading, String message) {
+	public SecurityMessage(String title, String message) {
 		super();
-		this.heading = heading;
+		this.title = title;
 		this.message = message;
 	}
 
@@ -83,7 +83,7 @@ public class SecurityMessage implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "SecurityMessage [securityMessageId=" + securityMessageId + ", heading=" + heading + ", message="
+		return "SecurityMessage [securityMessageId=" + securityMessageId + ", title=" + title + ", message="
 				+ message + "]";
 	}
 
