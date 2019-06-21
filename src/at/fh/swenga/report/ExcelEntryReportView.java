@@ -89,7 +89,7 @@ public class ExcelEntryReportView extends AbstractXlsxView {
 		cell7.setCellValue("Category");
 		cell7.setCellStyle(style);
 
-		// create multiple rows with flight data
+		// create multiple rows with data
 		int rowNum = 1;
 		for (Entry entry : entries) {
 			// create the row data

@@ -70,7 +70,7 @@ public class EntryController {
 		// Date tsStart = new Date();
 		// Date tsEnd = now;
 
-		//Create Entries
+		// Create Entries
 		Entry p1 = new Entry(df.getRandomWord(), df.getRandomWord(), df.getDateBetween(minDate, now), null, now, now,
 				true);
 		Entry p2 = new Entry(df.getRandomWord(), df.getRandomWord(), df.getDateBetween(minDate, now), null, now, now,
@@ -86,7 +86,7 @@ public class EntryController {
 		Entry p7 = new Entry(df.getRandomWord(), df.getRandomWord(), df.getDateBetween(minDate, now), null, now, now,
 				true);
 
-		//Add end time depending on start time (1-12 hours difference)
+		// Add end time depending on start time (1-12 hours difference)
 		p1.setTimestampEnd(java.sql.Timestamp.valueOf(p1.getTimestampStart().toInstant().atZone(ZoneId.systemDefault())
 				.toLocalDateTime().plusHours(df.getNumberBetween(1, 12))));
 		p2.setTimestampEnd(java.sql.Timestamp.valueOf(p2.getTimestampStart().toInstant().atZone(ZoneId.systemDefault())
@@ -117,7 +117,7 @@ public class EntryController {
 //			p1.setMinutes(duration);
 //			entryDao.persist(p1);
 //		}
-		//Calculate durations
+		// Calculate durations
 		p1.setMinutes(
 				java.time.Duration
 						.between(p1.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
@@ -154,7 +154,7 @@ public class EntryController {
 								p7.getTimestampEnd().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
 						.toMinutes());
 
-		//Set Users for each Entry
+		// Set Users for each Entry
 		p1.setEditor(userDao.getUserById(2));
 		p2.setEditor(userDao.getUserById(1));
 		p3.setEditor(userDao.getUserById(2));
@@ -163,7 +163,7 @@ public class EntryController {
 		p6.setEditor(userDao.getUserById(1));
 		p7.setEditor(userDao.getUserById(2));
 
-		//Set Projects for each Entry
+		// Set Projects for each Entry
 		p1.setProject(projectDao.findById(1).get());
 		p2.setProject(projectDao.findById(2).get());
 		p3.setProject(projectDao.findById(3).get());
@@ -172,7 +172,7 @@ public class EntryController {
 		p6.setProject(projectDao.findById(2).get());
 		p7.setProject(projectDao.findById(3).get());
 
-		//Set Categories for each Entry
+		// Set Categories for each Entry
 		p1.setCategory(categoryDao.findById(1).get());
 		p2.setCategory(categoryDao.findById(2).get());
 		p3.setCategory(categoryDao.findById(3).get());
@@ -181,7 +181,7 @@ public class EntryController {
 		p6.setCategory(categoryDao.findById(2).get());
 		p7.setCategory(categoryDao.findById(3).get());
 
-		//Save entries to DB
+		// Save entries to DB
 		entryDao.persist(p1);
 		entryDao.persist(p2);
 		entryDao.persist(p3);
@@ -203,7 +203,7 @@ public class EntryController {
 	public String listEntries(Model model) {
 		List<Entry> entries = entryDao.getEntries();
 
-		//Dividing minutes by 60 and rounding result
+		// Dividing minutes by 60 and rounding result
 		if (entries != null) {
 			for (Entry entry : entries) {
 				float hours = (float) entry.getMinutes() / 60F;
@@ -211,19 +211,20 @@ public class EntryController {
 				entry.setMinutes(hoursRounded);
 			}
 		}
-		
+
 		model.addAttribute("entries", entries);
 
 		return "listEntries";
 	}
-/**
- * 
- * search entry
- * 
- * @param model
- * @param searchString
- * @return
- */
+
+	/**
+	 * 
+	 * search entry
+	 * 
+	 * @param model
+	 * @param searchString
+	 * @return
+	 */
 	@RequestMapping(value = { "/searchEntries" })
 	public String search(Model model, @RequestParam String searchString) {
 		model.addAttribute("entries", entryDao.searchEntries(searchString));
@@ -253,8 +254,8 @@ public class EntryController {
 	 */
 	@RequestMapping(value = { "/addEntry" }, method = RequestMethod.GET)
 	public String addEntry(Model model) {
-		
-		//Load Projects and Categories for Dropdown-selection
+
+		// Load Projects and Categories for Dropdown-selection
 
 		List<Project> projects = projectDao.findAll();
 		model.addAttribute("projects", projects);
@@ -312,12 +313,12 @@ public class EntryController {
 				return "editEntry";
 			}
 
-			//Check if end date is after start date
+			// Check if end date is after start date
 			if (tsEnd.before(tsStart)) {
 				model.addAttribute("errorMessage", "End Date must be after Start Date");
 				return "editEntry";
 			} else {
-				//Calculate duration between start and end
+				// Calculate duration between start and end
 				duration = java.time.Duration
 						.between(tsStart.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
 								tsEnd.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
@@ -325,16 +326,16 @@ public class EntryController {
 			}
 
 		}
-		//Create new entry
+		// Create new entry
 		Entry new_entry = new Entry(note, activity, tsStart, tsEnd, now, now, true);
 
-		//Add Project, Category, duration and User to entry
+		// Add Project, Category, duration and User to entry
 		new_entry.setProject(projectDao.findById(new_project).get());
 		new_entry.setCategory(categoryDao.findById(new_category).get());
 		new_entry.setMinutes(duration);
 		new_entry.setEditor(currentUser);
 
-		//Save new entry to DB
+		// Save new entry to DB
 		entryDao.persist(new_entry);
 
 		model.addAttribute("message", "Created new Entry");
@@ -351,14 +352,14 @@ public class EntryController {
 	@RequestMapping(value = { "/editEntry" }, method = RequestMethod.GET)
 	public String editEntry(Model model, int id) {
 
-		//Load projects and categories for Dropdown-selection
+		// Load projects and categories for Dropdown-selection
 		List<Project> projects = projectDao.findAll();
 		model.addAttribute("projects", projects);
 
 		List<Category> categories = categoryDao.findAll();
 		model.addAttribute("categories", categories);
 
-		//Get entry to edit
+		// Get entry to edit
 		Entry entry = entryDao.getEntryById(id);
 
 		if (entry != null) {
@@ -413,8 +414,8 @@ public class EntryController {
 			// -------------------
 
 			long duration = 0;
-			
-			//Overwrite entry with new data
+
+			// Overwrite entry with new data
 
 			Date tsStart = changedEntry.getTimestampStart();
 			Date tsEnd = changedEntry.getTimestampEnd();
@@ -428,10 +429,10 @@ public class EntryController {
 			entry.setProject(project);
 			entry.setCategory(category);
 
-			//Check if tsEnd is filled
+			// Check if tsEnd is filled
 			if (!(tsEnd == null)) {
 
-				//Check if end date is after start date
+				// Check if end date is after start date
 				if (tsEnd.before(tsStart)) {
 					model.addAttribute("errorMessage", "End Date must be after Start Date");
 					model.addAttribute("entry", entry);
@@ -441,7 +442,7 @@ public class EntryController {
 					model.addAttribute("categories", categories);
 					return "editEntry";
 				} else {
-					//Calculate duration
+					// Calculate duration
 					duration = java.time.Duration
 							.between(tsStart.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
 									tsEnd.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())

@@ -61,26 +61,6 @@ public class EntryDao {
 		}
 	}
 
-	public List<Entry> getEntriesByIds(List<Integer> ids) { // to be implemented
-		String currentUserName = userDao.getCurrentUser();
-		User currentUser = userDao.getUserByUserName(currentUserName);
-
-		UserRole adminRole = userRoleDao.getRole("ROLE_ADMIN");
-
-		// an admin should see all entries of all users
-		if (currentUser.getUserRoles().contains(adminRole)) {
-			TypedQuery<Entry> typedQuery = entityManager.createQuery("SELECT e FROM Entry e", Entry.class); // only selected rows
-			List<Entry> typedResultList = typedQuery.getResultList();
-			return typedResultList;
-		} else {
-			Query query = entityManager.createNamedQuery("Entry.findByEditor");
-			query = query.setParameter("user", currentUser);
-
-			List<Entry> resultList = query.getResultList();
-			return resultList;
-		}
-	}
-
 	public List<Entry> getEntriesLastWeek() {
 		String currentUserName = userDao.getCurrentUser();
 		User currentUser = userDao.getUserByUserName(currentUserName);

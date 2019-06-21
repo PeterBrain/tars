@@ -38,9 +38,9 @@
 	<jpa:repositories base-package="at.fh.swenga" />
 
 	<mvc:default-servlet-handler />
-	
+
 	<tx:annotation-driven />
-	
+
 	<!-- #################### -->
 
 	<bean class="org.springframework.web.servlet.view.XmlViewResolver">
@@ -72,7 +72,7 @@
 	<bean class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
 		<property name="templateEngine" ref="templateEngine" />
 	</bean>
-	
+
 	<!-- #################### -->
 
 	<bean id="conversionService"
@@ -98,7 +98,7 @@
 			<ref bean="pageableResolver" />
 		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
-	
+
 	<!-- #################### -->
 
 	<bean
@@ -130,15 +130,15 @@
 
 	<bean id="persistenceExceptionTranslationPostProcessor"
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
-		
+
 	<!-- #################### -->
 
 	<bean id="mailSender"
 		class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.mailtrap.io" />
 		<property name="port" value="2525" />
-		<property name="username" value="xxxxxxxxxxxxxxx" />
-		<property name="password" value="xxxxxxxxxxxxxxx" />
+		<property name="username" value="c6dc7d3241a5f9" />
+		<property name="password" value="8f183ef54d6f2e" />
 
 		<property name="javaMailProperties">
 			<props>
@@ -151,8 +151,8 @@
 	<bean id="customMailMessage"
 		class="org.springframework.mail.SimpleMailMessage">
 
-		<property name="from" value="ima@fh.com" />
-		<property name="to" value="noreply@example.com" />
+		<property name="from" value="noreply@tars.com" />
+		<property name="to" value="noreply@tars.com" />
 		<property name="subject" value="Testing Subject" />
 		<property name="text">
 			<value><![CDATA[Dear %s,
@@ -160,7 +160,7 @@
 Mail Content: 
 %s
  
-Regards
+Regards,
 %s]]>
 			</value>
 		</property>
