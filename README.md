@@ -1,7 +1,7 @@
 # TARS - Time and Activity Recording Software
 
 ## Purpose
-This piece of software should help memebers of a company, and the company itself, to manage working hours and activities on different projects. Therefore TARS - Time and Activity Recording Software (pretty self explaining).
+This piece of software should help memebers of a company, and the company itself, to manage working hours and activities on different projects. Therefore TARS - Time and Activity Recording Software (pretty self-explaining).
 
 ## Inital setup steps
 1. create and fill db.properties file
@@ -16,7 +16,7 @@ db.password=xxx
 ```
 
 Don't forget to edit your **dispatcher-servlet.xml** file at the root of **WEB-INF** folder and fill in your username and password of [mailtrap.io](https://mailtrap.io/)!
-```
+```xml
 <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
     <property name="host" value="smtp.mailtrap.io" />
     <property name="port" value="2525" />
@@ -43,11 +43,12 @@ The table below shows the members of the team, who worked on specific features. 
 | Export                | Peter Löcker                           |
 | Security Messages     | Kazianschütz Kevin, Köstinger Nikolaus |
 | Charts                | Köstinger Nikolaus                     |
-| Mofification History  | Kazianschütz Kevin, Köstinger Nikolaus |
+| Modification History  | Kazianschütz Kevin, Köstinger Nikolaus |
 
 ## Lessons learned
-* The most difficult part has to do with FetchType.Lazy... we didn't manage to get this working (we used EAGER)
-* Time & activity recording (who did what?) was difficult at the end... we should have used this software for this project. How recursive is that?
+* The most difficult part has to do with FetchType.Lazy. We didn't manage to get this working (we used EAGER)
+* At first we used DAOs and entitiyManager for database queries. Later on it was much more difficult to add Spring Data JPA to the project. It would have saved us some time, if we had used it beforehand.
+* Time & activity recording (who did what?) was difficult at the end. We should have used this software for this project. How recursive is that?
 
 ## Contributors
 * [@xK3v](https://github.com/xK3v) - Kazianschütz Kevin
