@@ -5,7 +5,7 @@ This piece of software should help memebers of a company, and the company itself
 
 ## Setup Guide
 1. Download lastest project source from `master` branch
-2. Create new `Dynamic Web Project` eclipse project with name `Tars`, convert to maven project and import sources
+2. Create new `Dynamic Web Project` eclipse project with name `Tars`, convert to maven project and import sources (drag & drop unzipped github files on the project in eclipse)
 3. Create and fill `src/db.properties` file as shown below
 4. Edit `WebContent/WEB-INF/dispatcher-servlet.xml` at bean with `id="entityManagerFactory"` and change in `jpa-properties` to required attributes (`validate`, `update`, or `create-drop`)
 5. Edit `WebContent/WEB-INF/dispatcher-servlet.xml` at bean with `id="mailSender"` and set username and password for [mailtrap.io](https://mailtrap.io/)
