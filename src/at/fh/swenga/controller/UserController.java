@@ -102,7 +102,7 @@ public class UserController {
 
 		// add an exclusive project leader
 		User projectleader = new User("Projekt", "Leiter", now, "project@leader.com", "projectleader", "password", 40,
-				0, true);
+				80, true);
 		projectleader.encryptPassword();
 		projectleader.addUserRole(userRole);
 		projectleader.addUserRole(projectLeaderRole);
@@ -118,8 +118,8 @@ public class UserController {
 		for (int i = 0; i <= 12; i++) {
 			String firstname = df.getFirstName();
 			User userGen = new User(firstname, df.getLastName(), df.getDateBetween(minDate, now),
-					firstname + "@example.com", firstname.toLowerCase(), "password", 40, df.getNumberBetween(0, 40 * 5),
-					true);
+					firstname + "@example.com", firstname.toLowerCase(), "password", 40,
+					df.getNumberBetween(10, 40 * 5), true);
 			userGen.encryptPassword();
 
 			if (i % 2 == 0) {
@@ -600,7 +600,7 @@ public class UserController {
 
 		// calculate percentag
 		float workingHoursWeek = user.getWorkingHoursWeek();
-		float workedHoursPercent = sumWorkedHours / workingHoursWeek * 100f;
+		float workedHoursPercent = Math.round((sumWorkedHours / workingHoursWeek * 100f) * 10f) / 10f;
 
 		model.addAttribute("workedHoursPercent", workedHoursPercent);
 

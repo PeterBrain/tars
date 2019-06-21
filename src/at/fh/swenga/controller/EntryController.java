@@ -204,16 +204,16 @@ public class EntryController {
 				.toMinutes());
 
 		// Set Users for each Entry
-		p1.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
-		p2.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
-		p3.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
-		p4.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
-		p5.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
-		p6.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
-		p7.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
-		p8.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
-		p9.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
-		p10.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
+		p1.setEditor(userDao.getUserById(1));
+		p2.setEditor(userDao.getUserById(2));
+		p3.setEditor(userDao.getUserById(3));
+		p4.setEditor(userDao.getUserById(4));
+		p5.setEditor(userDao.getUserById(5));
+		p6.setEditor(userDao.getUserById(6));
+		p7.setEditor(userDao.getUserById(7));
+		p8.setEditor(userDao.getUserById(8));
+		p9.setEditor(userDao.getUserById(9));
+		p10.setEditor(userDao.getUserById(10));
 		p11.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
 		p12.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
 
