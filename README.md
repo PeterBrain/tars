@@ -5,14 +5,14 @@ This piece of software should help memebers of a company, and the company itself
 
 ## Setup Guide
 1. Clone github repo
-2. In Eclipse select `File` -> `Import` -> `Existing Projects into Workspace` -> `Browse Folder` -> `Finish`
-3. Check Project-Properties (Java Build Path, Targeted Runtimes, ...)
-4. Create and fill `src/db.properties` file as shown below
-5. Edit `WebContent/WEB-INF/dispatcher-servlet.xml` at bean with `id="mailSender"` and set username and password for [mailtrap.io](https://mailtrap.io/)
-6. Publish project to Tomcat and start Tomcat
-7. Open Web application ([http://localhost:8080/Tars/](http://localhost:8080/Tars/))
-8. Call [http://localhost:8080/Tars/fillUsers](http://localhost:8080/Tars/fillUsers) to fill the database with testing data
-9. Log in with credentials (Pattern: [username]/[password]): admin/password, user/password
+1. In Eclipse select `File` -> `Import` -> `Existing Projects into Workspace` -> `Browse Folder` -> `Finish`
+1. Check Project-Properties (Java Build Path, Targeted Runtimes, ...)
+1. Create and fill `src/db.properties` file as shown below
+1. Edit `WebContent/WEB-INF/dispatcher-servlet.xml` at bean with `id="mailSender"` and set username and password for [mailtrap.io](https://mailtrap.io/)
+1. Publish project to Tomcat and start Tomcat
+1. Open Web application ([http://localhost:8080/Tars/](http://localhost:8080/Tars/))
+1. Call [http://localhost:8080/Tars/fillUsers](http://localhost:8080/Tars/fillUsers) to fill the database with testing data
+1. Log in with credentials (Pattern: [username]/[password]): admin/password, user/password
 
 **`db.properties`** file at the root of **`src`** folder:
 ```
