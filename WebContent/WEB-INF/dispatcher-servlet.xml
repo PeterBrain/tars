@@ -137,8 +137,8 @@
 		class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.mailtrap.io" />
 		<property name="port" value="2525" />
-		<property name="username" value="c6dc7d3241a5f9" />
-		<property name="password" value="8f183ef54d6f2e" />
+		<property name="username" value="xxxxxxxxxxxx" />
+		<property name="password" value="xxxxxxxxxxxx" />
 
 		<property name="javaMailProperties">
 			<props>
