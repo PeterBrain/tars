@@ -120,13 +120,13 @@ public class EntryDao {
 	 * @param searchString
 	 * @return
 	 */
-	public List<Entry> searchEntries(String searchString) {
+	/*public List<Entry> searchEntries(String searchString) {
 		TypedQuery<Entry> typedQuery = entityManager.createQuery(
 				"SELECT e FROM Entry e WHERE e.firstName LIKE :search or e.lastName LIKE :search", Entry.class);
 		typedQuery.setParameter("search", "%" + searchString + "%");
 		List<Entry> typedResultList = typedQuery.getResultList();
 		return typedResultList;
-	}
+	}*/
 
 	/**
 	 * get Entry object using id

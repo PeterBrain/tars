@@ -4,7 +4,7 @@
 This piece of software should help memebers of a company, and the company itself, to manage working hours and activities on different projects. Therefore TARS - Time and Activity Recording Software (pretty self-explaining).
 
 ## Setup Guide
-1. Download project source
+1. Download lastest project source from `master` branch
 2. Create new `Dynamic Web Project` eclipse project with name `Tars`, convert to maven project and import sources
 3. Create and fill `src/db.properties` file as shown below
 4. Edit `WebContent/WEB-INF/dispatcher-servlet.xml` at bean with `id="entityManagerFactory"` and change in `jpa-properties` to required attributes (`validate`, `update`, or `create-drop`)
@@ -13,7 +13,7 @@ This piece of software should help memebers of a company, and the company itself
 7. Publish project to Tomcat and start Tomcat
 8. Open Web application ([http://localhost:8080/Tars/](http://localhost:8080/Tars/))
 9. Call [http://localhost:8080/Tars/fillUsers](http://localhost:8080/Tars/fillUsers) to fill the database with testing data
-10. Login credentials: admin/password, user/password
+10. Login with credentials (Pattern: [username]/[password]): admin/password, user/password
 
 **`db.properties`** file at the root of **`src`** folder:
 ```
@@ -43,16 +43,16 @@ Fill in your username and password of [mailtrap.io](https://mailtrap.io/)!
 ## Available Users
 The table below shows some available users added by the `/fillUsers` call. The password for all users is `password`.
 
-| Username              | Roles                                  |
-| :-------------------- | :------------------------------------- |
-| admin                 | ADMIN                                  |
-| projectleader         | PROJECT-LEADER                         |
-| user                  | USER                                   |
-| lindsey               | PROJECT-LEADER                         |
-| charlene              | USER                                   |
-| tim                   | PROJECT-LEADER                         |
-| devin                 | USER                                   |
-| nancy                 | PROJECT-LEADER                         |
+| Username      | Role           |
+| :------------ | :------------- |
+| admin         | ADMIN          |
+| projectleader | PROJECT-LEADER |
+| user          | USER           |
+| lindsey       | PROJECT-LEADER |
+| charlene      | USER           |
+| tim           | PROJECT-LEADER |
+| devin         | USER           |
+| nancy         | PROJECT-LEADER |
 
 ## Workload distribution
 The table below shows the members of the team, who worked on specific features. At the end of the project all team members worked on each feature in the backend and frontend.

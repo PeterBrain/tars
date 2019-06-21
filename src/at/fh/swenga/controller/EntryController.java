@@ -295,11 +295,11 @@ public class EntryController {
 	 * @param searchString
 	 * @return
 	 */
-	@RequestMapping(value = { "/searchEntries" })
+	/*@RequestMapping(value = { "/searchEntries" })
 	public String search(Model model, @RequestParam String searchString) {
 		model.addAttribute("entries", entryDao.searchEntries(searchString));
 		return "index";
-	}
+	}*/
 
 	/**
 	 * delete entry
