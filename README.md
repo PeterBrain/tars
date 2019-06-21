@@ -4,13 +4,11 @@
 This piece of software should help memebers of a company, and the company itself, to manage working hours and activities on different projects. Therefore TARS - Time and Activity Recording Software (pretty self-explaining).
 
 ## Setup Guide
-1. [Download](https://github.com/PeterBrain/tars/archive/master.zip) latest source from `master`-branch
-2. Create new `Dynamic Web Project` eclipse project with name `Tars`, convert it to a maven project and import sources (drag & drop unzipped github files on the project in eclipse)
-3. Create and fill `src/db.properties` file as shown below
-4. Edit `WebContent/WEB-INF/dispatcher-servlet.xml`
-    * at bean with `id="entityManagerFactory"` and change in `jpa-properties` to required attributes (`validate`, `update`, or `create-drop`)
-    * at bean with `id="mailSender"` and set username and password for [mailtrap.io](https://mailtrap.io/)
-5. Setup your eclipse project (Server, Runtime, ...)
+1. Clone github repo
+2. In Eclipse select `File` -> `Import` -> `Existing Projects into Workspace` -> `Browse Folder` -> `Finish`
+3. Check Project-Properties (Java Build Path, Targeted Runtimes, ...)
+4. Create and fill `src/db.properties` file as shown below
+5. Edit `WebContent/WEB-INF/dispatcher-servlet.xml` at bean with `id="mailSender"` and set username and password for [mailtrap.io](https://mailtrap.io/)
 6. Publish project to Tomcat and start Tomcat
 7. Open Web application ([http://localhost:8080/Tars/](http://localhost:8080/Tars/))
 8. Call [http://localhost:8080/Tars/fillUsers](http://localhost:8080/Tars/fillUsers) to fill the database with testing data
