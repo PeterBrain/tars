@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -25,11 +26,13 @@ import at.fh.swenga.dao.EntryDao;
 import at.fh.swenga.dao.EntryHistoryDao;
 import at.fh.swenga.dao.ProjectDao;
 import at.fh.swenga.dao.UserDao;
+import at.fh.swenga.dao.UserRoleDao;
 import at.fh.swenga.model.Category;
 import at.fh.swenga.model.Entry;
 import at.fh.swenga.model.EntryHistory;
 import at.fh.swenga.model.Project;
 import at.fh.swenga.model.User;
+import at.fh.swenga.model.UserRole;
 
 @Controller
 public class EntryController {
@@ -42,6 +45,9 @@ public class EntryController {
 
 	@Autowired
 	UserDao userDao;
+
+	@Autowired
+	UserRoleDao userRoleDao;
 
 	@Autowired
 	ProjectDao projectDao;
@@ -355,6 +361,10 @@ public class EntryController {
 	@RequestMapping(value = { "/editEntry" }, method = RequestMethod.GET)
 	public String editEntry(Model model, int id) {
 
+		// get current user
+		String username = userDao.getCurrentUser();
+		User user = userDao.getUserByUserName(username);
+
 		// Load projects and categories for Dropdown-selection
 		List<Project> projects = projectDao.findAll();
 		model.addAttribute("projects", projects);
@@ -364,10 +374,23 @@ public class EntryController {
 
 		// Get entry to edit
 		Entry entry = entryDao.getEntryById(id);
+		UserRole userRole = userRoleDao.getRole("ROLE_ADMIN");
+		System.out.println(userRole.getRoleName());
+		Set<UserRole> userRoles = user.getUserRoles();
+
+		for (UserRole userRoleLoop : userRoles) {
+			System.out.println(userRoleLoop.getRoleName());
+		}
 
 		if (entry != null) {
-			model.addAttribute("entry", entry);
-			return "editEntry";
+			if (entry.getEditor().equals(user) || userRoles.contains(userRole)) {
+				model.addAttribute("entry", entry);
+				return "editEntry";
+			} else {
+				model.addAttribute("errorMessage", "No permission to edit entry with id: " + id);
+				return "forward:listEntries";
+			}
+
 		} else {
 			model.addAttribute("errorMessage", "Couldn't find entry with id: " + id);
 			return "forward:listEntries";
@@ -426,7 +449,7 @@ public class EntryController {
 
 			entry.setActivity(changedEntry.getActivity());
 			entry.setNote(changedEntry.getNote());
-			//entry.setTimestampCreated(changedEntry.getTimestampCreated());
+			// entry.setTimestampCreated(changedEntry.getTimestampCreated());
 			entry.setTimestampModified(now);
 			entry.setTimestampStart(changedEntry.getTimestampStart());
 			entry.setTimestampEnd(changedEntry.getTimestampEnd());
