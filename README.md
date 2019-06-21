@@ -6,23 +6,23 @@ This piece of software should help memebers of a company, and the company itself
 ## Setup Guide
 1. Download project source
 2. Create `New dynamic Web project` eclipse project, convert to maven project and import sources
-3. create and fill `src/db.properties` file
-4. Change jpa-properties in `WebContent/WEB-INF/dispatcher-servlet.xml` to required attributes (`validate`, `update`, or `create-drop`)
-5. edit `WebContent/WEB-INF/dispatcher-servlet.xml` at bean with `id="mailSender"` and set username and password for [mailtrap.io](https://mailtrap.io/)
+3. Create and fill `src/db.properties` file as shown below
+4. Edit `WebContent/WEB-INF/dispatcher-servlet.xml` at bean with `id="entityManagerFactory"` and change in `jpa-properties` to required attributes (`validate`, `update`, or `create-drop`)
+5. Edit `WebContent/WEB-INF/dispatcher-servlet.xml` at bean with `id="mailSender"` and set username and password for [mailtrap.io](https://mailtrap.io/)
 6. Setup your eclipse project (Server, Runtime, ...)
 7. Publish project to Tomcat and start Tomcat
-8. [Open Web application](http://localhost:8080/Tars/)
-9. Call `http://localhost:8080/Tars/fillUsers`
+8. Open [Web application](http://localhost:8080/Tars/)
+9. Call [http://localhost:8080/Tars/fillUsers](http://localhost:8080/Tars/fillUsers) to fill the database with testing data
 10. Login credentials: admin/password, user/password
 
-Don't forget to create and edit your **`db.properties`** file at the root of **`src`** folder!
+**`db.properties`** file at the root of **`src`** folder:
 ```
 db.url=jdbc:mysql://localhost/xxx
 db.username=xxx
 db.password=xxx
 ```
 
-Don't forget to edit your **`dispatcher-servlet.xml`** file at the root of **`WEB-INF`** folder and fill in your username and password of [mailtrap.io](https://mailtrap.io/)!
+**`dispatcher-servlet.xml`** file at the root of **`WEB-INF`** folder:
 ```xml
 <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
     <property name="host" value="smtp.mailtrap.io" />
@@ -38,6 +38,8 @@ Don't forget to edit your **`dispatcher-servlet.xml`** file at the root of **`WE
     </property>
 </bean>
 ```
+Fill in your username and password of [mailtrap.io](https://mailtrap.io/)!
+
 ## Available Users
 The table below shows some available users added by the `/fillUsers` call. The password for all users is `password`.
 
