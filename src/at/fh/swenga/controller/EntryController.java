@@ -85,6 +85,16 @@ public class EntryController {
 				true);
 		Entry p7 = new Entry(df.getRandomWord(), df.getRandomWord(), df.getDateBetween(minDate, now), null, now, now,
 				true);
+		Entry p8 = new Entry(df.getRandomWord(), df.getRandomWord(), df.getDateBetween(minDate, now), null, now, now,
+				true);
+		Entry p9 = new Entry(df.getRandomWord(), df.getRandomWord(), df.getDateBetween(minDate, now), null, now, now,
+				true);
+		Entry p10 = new Entry(df.getRandomWord(), df.getRandomWord(), df.getDateBetween(minDate, now), null, now, now,
+				true);
+		Entry p11 = new Entry(df.getRandomWord(), df.getRandomWord(), df.getDateBetween(minDate, now), null, now, now,
+				true);
+		Entry p12 = new Entry(df.getRandomWord(), df.getRandomWord(), df.getDateBetween(minDate, now), null, now, now,
+				true);
 
 		// Add end time depending on start time (1-12 hours difference)
 		// convert to localdatetime and then to localdate back again
@@ -102,6 +112,16 @@ public class EntryController {
 				.toLocalDateTime().plusHours(df.getNumberBetween(1, 12))));
 		p7.setTimestampEnd(java.sql.Timestamp.valueOf(p7.getTimestampStart().toInstant().atZone(ZoneId.systemDefault())
 				.toLocalDateTime().plusHours(df.getNumberBetween(1, 12))));
+		p8.setTimestampEnd(java.sql.Timestamp.valueOf(p8.getTimestampStart().toInstant().atZone(ZoneId.systemDefault())
+				.toLocalDateTime().plusHours(df.getNumberBetween(1, 12))));
+		p9.setTimestampEnd(java.sql.Timestamp.valueOf(p9.getTimestampStart().toInstant().atZone(ZoneId.systemDefault())
+				.toLocalDateTime().plusHours(df.getNumberBetween(1, 12))));
+		p10.setTimestampEnd(java.sql.Timestamp.valueOf(p10.getTimestampStart().toInstant()
+				.atZone(ZoneId.systemDefault()).toLocalDateTime().plusHours(df.getNumberBetween(1, 12))));
+		p11.setTimestampEnd(java.sql.Timestamp.valueOf(p11.getTimestampStart().toInstant()
+				.atZone(ZoneId.systemDefault()).toLocalDateTime().plusHours(df.getNumberBetween(1, 12))));
+		p12.setTimestampEnd(java.sql.Timestamp.valueOf(p12.getTimestampStart().toInstant()
+				.atZone(ZoneId.systemDefault()).toLocalDateTime().plusHours(df.getNumberBetween(1, 12))));
 
 //		for (int i = 1; i < 5; i++) {
 //			tsStart = df.getDateBetween(minDate, now);
@@ -154,33 +174,70 @@ public class EntryController {
 						.between(p7.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
 								p7.getTimestampEnd().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
 						.toMinutes());
+		p8.setMinutes(
+				java.time.Duration
+						.between(p8.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
+								p8.getTimestampEnd().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
+						.toMinutes());
+		p9.setMinutes(
+				java.time.Duration
+						.between(p9.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
+								p9.getTimestampEnd().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
+						.toMinutes());
+		p10.setMinutes(java.time.Duration
+				.between(p10.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
+						p10.getTimestampEnd().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
+				.toMinutes());
+		p11.setMinutes(java.time.Duration
+				.between(p11.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
+						p11.getTimestampEnd().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
+				.toMinutes());
+		p12.setMinutes(java.time.Duration
+				.between(p12.getTimestampStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
+						p12.getTimestampEnd().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
+				.toMinutes());
 
 		// Set Users for each Entry
-		p1.setEditor(userDao.getUserById(2));
-		p2.setEditor(userDao.getUserById(1));
-		p3.setEditor(userDao.getUserById(2));
-		p4.setEditor(userDao.getUserById(3));
-		p5.setEditor(userDao.getUserById(4));
-		p6.setEditor(userDao.getUserById(1));
-		p7.setEditor(userDao.getUserById(2));
+		p1.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
+		p2.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
+		p3.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
+		p4.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
+		p5.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
+		p6.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
+		p7.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
+		p8.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
+		p9.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
+		p10.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
+		p11.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
+		p12.setEditor(userDao.getUserById(df.getNumberBetween(1, 10)));
 
 		// Set Projects for each Entry
-		p1.setProject(projectDao.findById(1).get());
-		p2.setProject(projectDao.findById(2).get());
-		p3.setProject(projectDao.findById(3).get());
-		p4.setProject(projectDao.findById(4).get());
-		p5.setProject(projectDao.findById(1).get());
-		p6.setProject(projectDao.findById(2).get());
-		p7.setProject(projectDao.findById(3).get());
+		p1.setProject(projectDao.findById(df.getNumberBetween(1, 5)).get());
+		p2.setProject(projectDao.findById(df.getNumberBetween(1, 5)).get());
+		p3.setProject(projectDao.findById(df.getNumberBetween(1, 5)).get());
+		p4.setProject(projectDao.findById(df.getNumberBetween(1, 5)).get());
+		p5.setProject(projectDao.findById(df.getNumberBetween(1, 5)).get());
+		p6.setProject(projectDao.findById(df.getNumberBetween(1, 5)).get());
+		p7.setProject(projectDao.findById(df.getNumberBetween(1, 5)).get());
+		p8.setProject(projectDao.findById(df.getNumberBetween(1, 5)).get());
+		p9.setProject(projectDao.findById(df.getNumberBetween(1, 5)).get());
+		p10.setProject(projectDao.findById(df.getNumberBetween(1, 5)).get());
+		p11.setProject(projectDao.findById(df.getNumberBetween(1, 5)).get());
+		p12.setProject(projectDao.findById(df.getNumberBetween(1, 5)).get());
 
 		// Set Categories for each Entry
-		p1.setCategory(categoryDao.findById(1).get());
-		p2.setCategory(categoryDao.findById(2).get());
-		p3.setCategory(categoryDao.findById(3).get());
-		p4.setCategory(categoryDao.findById(4).get());
-		p5.setCategory(categoryDao.findById(1).get());
-		p6.setCategory(categoryDao.findById(2).get());
-		p7.setCategory(categoryDao.findById(3).get());
+		p1.setCategory(categoryDao.findById(df.getNumberBetween(1, 5)).get());
+		p2.setCategory(categoryDao.findById(df.getNumberBetween(1, 5)).get());
+		p3.setCategory(categoryDao.findById(df.getNumberBetween(1, 5)).get());
+		p4.setCategory(categoryDao.findById(df.getNumberBetween(1, 5)).get());
+		p5.setCategory(categoryDao.findById(df.getNumberBetween(1, 5)).get());
+		p6.setCategory(categoryDao.findById(df.getNumberBetween(1, 5)).get());
+		p7.setCategory(categoryDao.findById(df.getNumberBetween(1, 5)).get());
+		p8.setCategory(categoryDao.findById(df.getNumberBetween(1, 5)).get());
+		p9.setCategory(categoryDao.findById(df.getNumberBetween(1, 5)).get());
+		p10.setCategory(categoryDao.findById(df.getNumberBetween(1, 5)).get());
+		p11.setCategory(categoryDao.findById(df.getNumberBetween(1, 5)).get());
+		p12.setCategory(categoryDao.findById(df.getNumberBetween(1, 5)).get());
 
 		// Save entries to DB
 		entryDao.persist(p1);
@@ -190,6 +247,11 @@ public class EntryController {
 		entryDao.persist(p5);
 		entryDao.persist(p6);
 		entryDao.persist(p7);
+		entryDao.persist(p8);
+		entryDao.persist(p9);
+		entryDao.persist(p10);
+		entryDao.persist(p11);
+		entryDao.persist(p12);
 
 		return "forward:login";
 	}
@@ -426,7 +488,7 @@ public class EntryController {
 
 			entry.setActivity(changedEntry.getActivity());
 			entry.setNote(changedEntry.getNote());
-			//entry.setTimestampCreated(changedEntry.getTimestampCreated());
+			// entry.setTimestampCreated(changedEntry.getTimestampCreated());
 			entry.setTimestampModified(now);
 			entry.setTimestampStart(changedEntry.getTimestampStart());
 			entry.setTimestampEnd(changedEntry.getTimestampEnd());
