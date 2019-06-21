@@ -13,45 +13,45 @@ import javax.persistence.Version;
 @Entity
 @Table(name = "entry_history")
 public class EntryHistory implements java.io.Serializable {
-	
+
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int EntryHistoryId;
-	
+
 	@Column(name = "timestamp")
 	private Date timestamp;
-	
+
 	@Column(name = "note")
 	private String note;
-	
+
 	@Column(name = "activity")
 	private String activity;
-	
+
 	@Column(name = "start")
 	private Date timestampStart;
-	
+
 	@Column(name = "end")
 	private Date timestampEnd;
-	
+
 	@Column(name = "minutes")
 	private float minutes;
-	
+
 	@Column(name = "entry")
 	private int entryId;
-	
+
 	@Column(name = "project")
 	private String project;
-	
+
 	@Column(name = "category")
 	private String category;
-	
+
 	@Column(name = "username")
 	private String username;
-	
+
 	@Version
 	private long version;
-	
+
 	public EntryHistory() {
 		// TODO Auto-generated constructor stub
 	}
@@ -196,6 +196,5 @@ public class EntryHistory implements java.io.Serializable {
 				+ ", minutes=" + minutes + ", entryId=" + entryId + ", project=" + project + ", category=" + category
 				+ ", username=" + username + ", version=" + version + "]";
 	}
-	
-	
+
 }

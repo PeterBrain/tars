@@ -2,7 +2,6 @@ package at.fh.swenga.model;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,7 +31,7 @@ public class Project implements java.io.Serializable {
 	@OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
 	private Set<Entry> entries;
 
-	//https://howtodoinjava.com/hibernate/hibernate-one-to-many-mapping-using-annotations/
+	// https://howtodoinjava.com/hibernate/hibernate-one-to-many-mapping-using-annotations/
 	@ManyToOne
 	private User projectLeader;
 
