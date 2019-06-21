@@ -8,7 +8,7 @@ This piece of software should help memebers of a company, and the company itself
 2. edit dispatcher-servlet.xml at bean with id="mailSender"
 3. call http://[ip-address]/Tars/fillUsers
 
-Don't forget to create/edit your **db.properties** file at the root of **src** folder!
+Don't forget to create and edit your **db.properties** file at the root of **src** folder!
 ```
 db.url=jdbc:mysql://localhost/xxx
 db.username=xxx
@@ -20,8 +20,8 @@ Don't forget to edit your **dispatcher-servlet.xml** file at the root of **WEB-I
 <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
     <property name="host" value="smtp.mailtrap.io" />
     <property name="port" value="2525" />
-    <property name="username" value="xxxxxxxxxxxxxxx" /> <!-- this value -->
-    <property name="password" value="xxxxxxxxxxxxxxx" /> <!-- this value -->
+    <property name="username" value="xxxxxxxxxxxxxxx" /> <!-- edit this value -->
+    <property name="password" value="xxxxxxxxxxxxxxx" /> <!-- edit this value -->
 
     <property name="javaMailProperties">
         <props>
@@ -35,7 +35,7 @@ Don't forget to edit your **dispatcher-servlet.xml** file at the root of **WEB-I
 ## Workload distribution
 The table below shows the members of the team, who worked on specific features. At the end of the project all team members worked on each feature in the backend and frontend.
 
-| Feature / Work        | Team Member                            |
+| Feature / Work        | Team Member(s)                         |
 | :-------------------- | :------------------------------------- |
 | User Management       | Köstinger Nikolaus, Peter Löcker       |
 | Entries               | Kazianschütz Kevin, Peter Löcker       |
@@ -46,7 +46,7 @@ The table below shows the members of the team, who worked on specific features. 
 | Mofification History  | Kazianschütz Kevin, Köstinger Nikolaus |
 
 ## Lessons learned
-* The most difficult part has to do with CascadeTypes.Lazy... we didn't manage to get this working
+* The most difficult part has to do with FetchType.Lazy... we didn't manage to get this working (we used EAGER)
 * Time & activity recording (who did what?) was difficult at the end... we should have used this software for this project. How recursive is that?
 
 ## Contributors
