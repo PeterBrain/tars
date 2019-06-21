@@ -150,7 +150,6 @@
 
 	<bean id="customMailMessage"
 		class="org.springframework.mail.SimpleMailMessage">
-
 		<property name="from" value="noreply@tars.com" />
 		<property name="to" value="noreply@tars.com" />
 		<property name="subject" value="Testing Subject" />
