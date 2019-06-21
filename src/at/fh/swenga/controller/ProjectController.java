@@ -41,6 +41,7 @@ public class ProjectController {
 	@RequestMapping(value = { "/fillProjects" })
 	public String fillProjects(Model model) {
 
+		// add test data for projects
 		Project project1 = new Project("Project 1", "Default description 1", userDao.getUserById(2));
 		projectDao.save(project1);
 
@@ -49,7 +50,7 @@ public class ProjectController {
 
 		Project project3 = new Project("Project 3", "Default description 3", userDao.getUserById(2));
 		projectDao.save(project3);
-		
+
 		Project project4 = new Project("Project 4", "Default description 4", userDao.getUserById(2));
 		projectDao.save(project4);
 
@@ -98,6 +99,7 @@ public class ProjectController {
 	public String addProject(Model model) {
 
 		List<User> users = userDao.getUsersWithRole(3);
+		// admin is not to supposed to be project leader
 		users.remove(0);
 		model.addAttribute("users", users);
 
@@ -117,6 +119,8 @@ public class ProjectController {
 	@RequestMapping(value = { "/createProject" }, method = RequestMethod.POST)
 	public String createProject(Model model, @RequestParam String name, @RequestParam String description,
 			@RequestParam String new_projectLeader) {
+
+		// create project and save to database
 		Project new_project = new Project(name, description, userDao.getUserByUserName(new_projectLeader));
 		projectDao.save(new_project);
 
@@ -136,6 +140,7 @@ public class ProjectController {
 	public String editProject(Model model, int id) {
 
 		List<User> users = userDao.getUsersWithRole(3);
+		// admin is not to supposed to be project leader
 		users.remove(0);
 		model.addAttribute("users", users);
 
@@ -164,6 +169,7 @@ public class ProjectController {
 	public String changeProject(@Valid Project changedProject, BindingResult bindingResult, Model model,
 			@RequestParam String new_projectLeader) {
 
+		// are there any errors
 		if (bindingResult.hasErrors()) {
 			String errorMessage = "";
 			for (FieldError fieldError : bindingResult.getFieldErrors()) {
@@ -177,9 +183,11 @@ public class ProjectController {
 		Optional<Project> projectOpt = projectDao.findById(changedProject.getProjectId());
 		User user = userDao.getUserByUserName(new_projectLeader);
 
+		// check if project exists
 		if (!projectOpt.isPresent())
 			throw new IllegalArgumentException("No project with id " + changedProject.getProjectId());
-		
+
+		// if project exists, set new parameters and save to database
 		Project project = projectOpt.get();
 		if (project == null) {
 			model.addAttribute("errorMessage", "Project does not exist!<br>");

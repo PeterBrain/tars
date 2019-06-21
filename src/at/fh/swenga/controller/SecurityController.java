@@ -57,6 +57,12 @@ public class SecurityController {
 		}
 	}
 
+	/**
+	 * list all security messages on dashboard
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/listSecurityMessages" })
 	public String listSecurityMessages(Model model) {
 		List<SecurityMessage> securityMessages = securityMessageDao.getSecurityMessages();
@@ -65,6 +71,13 @@ public class SecurityController {
 		return "listSecurityMessages";
 	}
 
+	/**
+	 * delete a security message
+	 * 
+	 * @param model
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value = { "/deleteSecurityMessage" }, method = RequestMethod.GET)
 	public String deleteSecurityMessage(Model model, @RequestParam int id) {
 		securityMessageDao.delete(id);
@@ -74,11 +87,25 @@ public class SecurityController {
 		return "forward:listSecurityMessages";
 	}
 
+	/**
+	 * open security message page
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "/addSecurityMessage" }, method = RequestMethod.GET)
 	public String addSecurityMessage(Model model) {
 		return "editSecurityMessage";
 	}
 
+	/**
+	 * create a security message
+	 * 
+	 * @param model
+	 * @param title
+	 * @param message
+	 * @return
+	 */
 	@RequestMapping(value = { "/createSecurityMessage" }, method = RequestMethod.POST)
 	public String createSecurityMessage(Model model, @RequestParam String title, @RequestParam String message) {
 		SecurityMessage new_securityMessage = new SecurityMessage(title, message);
@@ -88,6 +115,13 @@ public class SecurityController {
 		return "forward:listSecurityMessages";
 	}
 
+	/**
+	 * open edit security message page
+	 * 
+	 * @param model
+	 * @param id
+	 * @return
+	 */
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/editSecurityMessage" }, method = RequestMethod.GET)
 	public String editSecurityMessage(Model model, int id) {
@@ -103,6 +137,14 @@ public class SecurityController {
 		}
 	}
 
+	/**
+	 * edit a security message
+	 * 
+	 * @param changedSecurityMessage
+	 * @param bindingResult
+	 * @param model
+	 * @return
+	 */
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = { "/changeSecurityMessage" }, method = RequestMethod.POST)
 	public String changeSecurityMessage(@Valid SecurityMessage changedSecurityMessage, BindingResult bindingResult,
