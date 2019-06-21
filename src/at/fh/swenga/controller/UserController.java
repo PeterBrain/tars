@@ -92,7 +92,7 @@ public class UserController {
 		Date minDate = df.getDate(2020, 1, 1);
 		Date now = new Date();
 
-		User admin = new User("Hans", "Maier", now, "admin@example.com", "admin", "password", 40, 30, true);
+		User admin = new User("Ad", "Ministrator", now, "admin@example.com", "admin", "password", 40, 30, true);
 		admin.encryptPassword();
 		admin.addUserRole(userRole);
 		admin.addUserRole(projectLeaderRole);
@@ -111,14 +111,14 @@ public class UserController {
 		user.addUserRole(userRole);
 		userDao.persist(user);
 
-		for (int i = 0; i <= 5; i++) {
+		for (int i = 0; i <= 12; i++) {
 			String firstname = df.getFirstName();
 			User userGen = new User(firstname, df.getLastName(), df.getDateBetween(minDate, now),
 					firstname + "@example.com", firstname.toLowerCase(), "password", 40, df.getNumberBetween(0, 40 * 5),
 					true);
 			userGen.encryptPassword();
 
-			if (i == 0) {
+			if (i % 2 == 0) {
 				userGen.addUserRole(projectLeaderRole);
 			}
 
