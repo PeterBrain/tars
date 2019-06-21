@@ -368,6 +368,11 @@ public class EntryController {
 			tsStart = sdf.parse(timestampStart);
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", "Start date invalid");
+			List<Project> projects = projectDao.findAll();
+			model.addAttribute("projects", projects);
+
+			List<Category> categories = categoryDao.findAll();
+			model.addAttribute("categories", categories);
 			return "editEntry";
 		}
 		Date tsEnd = null;
@@ -381,12 +386,22 @@ public class EntryController {
 				tsEnd = sdf.parse(timestampEnd);
 			} catch (Exception e) {
 				model.addAttribute("errorMessage", "End Date invalid");
+				List<Project> projects = projectDao.findAll();
+				model.addAttribute("projects", projects);
+
+				List<Category> categories = categoryDao.findAll();
+				model.addAttribute("categories", categories);
 				return "editEntry";
 			}
 
 			// Check if end date is after start date
 			if (tsEnd.before(tsStart)) {
 				model.addAttribute("errorMessage", "End Date must be after Start Date");
+				List<Project> projects = projectDao.findAll();
+				model.addAttribute("projects", projects);
+
+				List<Category> categories = categoryDao.findAll();
+				model.addAttribute("categories", categories);
 				return "editEntry";
 			} else {
 				// Calculate duration between start and end
