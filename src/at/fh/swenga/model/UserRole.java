@@ -85,8 +85,4 @@ public class UserRole implements java.io.Serializable {
 			return false;
 		return true;
 	}
-<<<<<<< Updated upstream
-=======
-	
->>>>>>> Stashed changes
 }
