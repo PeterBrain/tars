@@ -20,12 +20,23 @@ public class UserRoleDao {
 	@PersistenceContext
 	protected EntityManager entityManager;
 
+	/**
+	 * get all roles
+	 * 
+	 * @return
+	 */
 	public List<UserRole> getRoles() {
 		TypedQuery<UserRole> typedQuery = entityManager.createQuery("SELECT ur FROM UserRole ur", UserRole.class);
 		List<UserRole> typedResultList = typedQuery.getResultList();
 		return typedResultList;
 	}
 
+	/**
+	 * get role by roleName
+	 * 
+	 * @param roleName
+	 * @return
+	 */
 	public UserRole getRole(String roleName) {
 		try {
 			TypedQuery<UserRole> typedQuery = entityManager
@@ -36,11 +47,23 @@ public class UserRoleDao {
 			return null;
 		}
 	}
-	
+
+	/**
+	 * get role using id
+	 * 
+	 * @param i
+	 * @return
+	 * @throws DataAccessException
+	 */
 	public UserRole getRoleById(int i) throws DataAccessException {
 		return entityManager.find(UserRole.class, i);
 	}
 
+	/**
+	 * persist role
+	 * 
+	 * @param userRole
+	 */
 	public void persist(UserRole userRole) {
 		entityManager.persist(userRole);
 	}
