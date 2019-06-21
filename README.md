@@ -47,7 +47,7 @@ The table below shows the members of the team, who worked on specific features. 
 
 ## Lessons learned
 * The most difficult part has to do with FetchType.Lazy. We didn't manage to get this working (we used EAGER)
-* At first we used DAOs and entitiyManager for database queries. Later on it was much more difficult to add Spring Data JPA to the project. It would have saved us some time, if we had used it beforehand.
+* At first we used DAOs and entitiyManager for database queries. Later on it was much more difficult to add Spring Data JPA to the project. It would have saved us some time, if we had used it from the beginning.
 * Time & activity recording (who did what?) was difficult at the end. We should have used this software for this project. How recursive is that?
 
 ## Contributors
