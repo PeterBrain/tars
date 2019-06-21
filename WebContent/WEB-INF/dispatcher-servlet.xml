@@ -8,6 +8,7 @@
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/aop 
@@ -23,7 +24,9 @@
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/security 
-		http://www.springframework.org/schema/security/spring-security.xsd">
+		http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/data/jpa
+	    http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
 	<sec:global-method-security
 		secured-annotations="enabled" />
@@ -32,10 +35,13 @@
 	<context:component-scan
 		base-package="at.fh.swenga" />
 
-	<!-- JSR-303/JSR-349 support will be detected on classpath and enabled automatically -->
-	<mvc:annotation-driven />
+	<jpa:repositories base-package="at.fh.swenga" />
 
 	<mvc:default-servlet-handler />
+
+	<tx:annotation-driven />
+
+	<!-- #################### -->
 
 	<bean class="org.springframework.web.servlet.view.XmlViewResolver">
 		<property name="location">
@@ -47,7 +53,7 @@
 		class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
 		<property name="prefix" value="/WEB-INF/templates/" />
 		<property name="suffix" value=".html" />
-		<property name="templateMode" value="HTML" />
+		<property name="templateMode" value="HTML5" />
 		<property name="cacheable" value="false" />
 	</bean>
 
@@ -66,6 +72,34 @@
 	<bean class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
 		<property name="templateEngine" ref="templateEngine" />
 	</bean>
+
+	<!-- #################### -->
+
+	<bean id="conversionService"
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean" />
+
+	<bean
+		class="org.springframework.data.repository.support.DomainClassConverter">
+		<constructor-arg ref="conversionService" />
+	</bean>
+
+	<bean id="sortResolver"
+		class="org.springframework.data.web.SortHandlerMethodArgumentResolver" />
+
+	<bean id="pageableResolver"
+		class="org.springframework.data.web.PageableHandlerMethodArgumentResolver">
+		<constructor-arg ref="sortResolver" />
+	</bean>
+
+	<mvc:annotation-driven
+		conversion-service="conversionService">
+		<mvc:argument-resolvers>
+			<ref bean="sortResolver" />
+			<ref bean="pageableResolver" />
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
+
+	<!-- #################### -->
 
 	<bean
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
@@ -94,17 +128,17 @@
 			ref="entityManagerFactory" />
 	</bean>
 
-	<tx:annotation-driven />
-
 	<bean id="persistenceExceptionTranslationPostProcessor"
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+	<!-- #################### -->
 
 	<bean id="mailSender"
 		class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.mailtrap.io" />
 		<property name="port" value="2525" />
-		<property name="username" value="xxxxxxxxxxxxxxx" />
-		<property name="password" value="xxxxxxxxxxxxxxx" />
+		<property name="username" value="xxxxxxxxxxxx" />
+		<property name="password" value="xxxxxxxxxxxx" />
 
 		<property name="javaMailProperties">
 			<props>
@@ -117,8 +151,8 @@
 	<bean id="customMailMessage"
 		class="org.springframework.mail.SimpleMailMessage">
 
-		<property name="from" value="ima@fh.com" />
-		<property name="to" value="noreply@example.com" />
+		<property name="from" value="noreply@tars.com" />
+		<property name="to" value="noreply@tars.com" />
 		<property name="subject" value="Testing Subject" />
 		<property name="text">
 			<value><![CDATA[Dear %s,
@@ -126,7 +160,7 @@
 Mail Content: 
 %s
  
-Regards
+Regards,
 %s]]>
 			</value>
 		</property>

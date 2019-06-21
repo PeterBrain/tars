@@ -1,23 +1,17 @@
 package at.fh.swenga.dao;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-import org.springframework.dao.DataAccessException;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import at.fh.swenga.model.Project;
 
 @Repository
 @Transactional
-public class ProjectDao {
+public interface ProjectDao extends JpaRepository<Project, Integer> {
 
-	@PersistenceContext
+	/*@PersistenceContext
 	protected EntityManager entityManager;
 
 	public List<Project> getProjects() {
@@ -43,12 +37,12 @@ public class ProjectDao {
 	public void delete(Project project) {
 		entityManager.remove(project);
 	}
-
+	
 	@Secured("ROLE_PROJECT_LEADER")
 	public void delete(int id) {
 		Project project = getProjectById(id);
 		if (project != null) {
 			delete(project);
 		}
-	}
+	}*/
 }

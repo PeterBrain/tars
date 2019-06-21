@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.dao.EntryDao;
+import at.fh.swenga.dao.EntryRepository;
 import at.fh.swenga.dao.UserDao;
 import at.fh.swenga.model.Entry;
 import at.fh.swenga.model.User;
@@ -33,24 +34,22 @@ public class ReportController {
 	@Autowired
 	private SimpleMailMessage templateMessage;
 
+	@Autowired
+	EntryRepository entryRepository;
+
 	@RequestMapping(value = { "/report" })
 	public String report(Model model, @RequestParam(required = false) String excel,
 			@RequestParam(required = false) String mail,
 			@RequestParam(name = "entryId", required = false) List<Integer> entryIds) {
 
-		// User didn't select any entry ? -> go back to list
 		if (CollectionUtils.isEmpty(entryIds)) {
 			model.addAttribute("errorMessage", "No entry or entries selected!");
 			return "forward:listEntries";
 		}
 
-		// Convert the list of ids to a list of entries.
-		// The method findAll() can do this
-		// List<Entry> entries = entryDao.findAllById(entryIds);
-		List<Entry> entries = entryDao.getEntriesByIds(entryIds);
+		List<Entry> entries = entryRepository.findAllById(entryIds);
 		model.addAttribute("entries", entries);
 
-		// Which submit button was pressed? -> call the right report view
 		if (StringUtils.isNoneEmpty(excel)) {
 			return "excelReport";
 		} else if (StringUtils.isNoneEmpty(mail)) {
@@ -71,16 +70,16 @@ public class ReportController {
 					+ entry.getTimestampStart() + " " + entry.getTimestampEnd() + "\n";
 		}
 
-		// Create a thread safe "copy" of the template message and customize it
+		// thread safe "copy" of the template message
 		SimpleMailMessage msg = new SimpleMailMessage(this.templateMessage);
 
 		String username = userDao.getCurrentUser();
 		User user = userDao.getUserByUserName(username);
 
-		// You can override default settings from dispatcher-servlet.xml:
+		// override default settings from dispatcher-servlet.xml
 		// msg.setFrom(from);
-		// msg.setTo(to);
-		// msg.setSubject(subject);
+		msg.setTo(user.getEmail());
+		msg.setSubject("EXPORT | TARS - Time & Activity Recording Software");
 		msg.setText(String.format(msg.getText(), user.getFirstName() + " " + user.getLastName(), content,
 				"TARS - Time & Activity Recording Software"));
 		try {

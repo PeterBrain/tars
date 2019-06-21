@@ -1,6 +1,7 @@
 package at.fh.swenga.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -41,16 +42,16 @@ public class ProjectController {
 	public String fillProjects(Model model) {
 
 		Project project1 = new Project("Project 1", "Default description 1", userDao.getUserById(2));
-		projectDao.persist(project1);
+		projectDao.save(project1);
 
 		Project project2 = new Project("Project 2", "Default description 2", userDao.getUserById(2));
-		projectDao.persist(project2);
+		projectDao.save(project2);
 
 		Project project3 = new Project("Project 3", "Default description 3", userDao.getUserById(2));
-		projectDao.persist(project3);
+		projectDao.save(project3);
 		
 		Project project4 = new Project("Project 4", "Default description 4", userDao.getUserById(2));
-		projectDao.persist(project4);
+		projectDao.save(project4);
 
 		return "forward:login";
 	}
@@ -63,7 +64,7 @@ public class ProjectController {
 	 */
 	@RequestMapping(value = { "/listProjects" })
 	public String listProjects(Model model) {
-		List<Project> projects = projectDao.getProjects();
+		List<Project> projects = projectDao.findAll();
 		model.addAttribute("projects", projects);
 
 		return "listProjects";
@@ -79,7 +80,7 @@ public class ProjectController {
 	@Secured("ROLE_PROJECT_LEADER")
 	@RequestMapping(value = { "/deleteProject" }, method = RequestMethod.GET)
 	public String deleteProject(Model model, @RequestParam int id) {
-		projectDao.delete(id);
+		projectDao.deleteById(id);
 
 		model.addAttribute("message", "Project deleted");
 
@@ -117,7 +118,7 @@ public class ProjectController {
 	public String createProject(Model model, @RequestParam String name, @RequestParam String description,
 			@RequestParam String new_projectLeader) {
 		Project new_project = new Project(name, description, userDao.getUserByUserName(new_projectLeader));
-		projectDao.persist(new_project);
+		projectDao.save(new_project);
 
 		model.addAttribute("message", "Created new Project");
 		return "forward:listProjects";
@@ -138,7 +139,7 @@ public class ProjectController {
 		users.remove(0);
 		model.addAttribute("users", users);
 
-		Project project = projectDao.getProjectById(id);
+		Project project = projectDao.findById(id).get();
 
 		if (project != null) {
 			model.addAttribute("project", project);
@@ -173,9 +174,13 @@ public class ProjectController {
 			return "editProject";
 		}
 
-		Project project = projectDao.getProjectById(changedProject.getProjectId());
+		Optional<Project> projectOpt = projectDao.findById(changedProject.getProjectId());
 		User user = userDao.getUserByUserName(new_projectLeader);
 
+		if (!projectOpt.isPresent())
+			throw new IllegalArgumentException("No project with id " + changedProject.getProjectId());
+		
+		Project project = projectOpt.get();
 		if (project == null) {
 			model.addAttribute("errorMessage", "Project does not exist!<br>");
 		} else {
@@ -183,7 +188,7 @@ public class ProjectController {
 			project.setDescription(changedProject.getDescription());
 			project.setProjectLeader(user);
 
-			projectDao.merge(project);
+			projectDao.save(project);
 
 			model.addAttribute("message", "Changed project " + changedProject.getProjectId());
 		}

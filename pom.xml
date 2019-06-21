@@ -12,7 +12,7 @@
 			<dependency>
 				<groupId>org.springframework.data</groupId>
 				<artifactId>spring-data-releasetrain</artifactId>
-				<version>Lovelace-SR8</version>
+				<version>Lovelace-SR9</version>
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
@@ -44,6 +44,12 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-dbcp2</artifactId>
 			<version>2.6.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.9</version>
 		</dependency>
 
 		<dependency>
