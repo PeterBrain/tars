@@ -4,16 +4,17 @@
 This piece of software should help memebers of a company, and the company itself, to manage working hours and activities on different projects. Therefore TARS - Time and Activity Recording Software (pretty self-explaining).
 
 ## Setup Guide
-1. Download lastest project source from `master` branch
-2. Create new `Dynamic Web Project` eclipse project with name `Tars`, convert to maven project and import sources (drag & drop unzipped github files on the project in eclipse)
+1. Download latest source from `master`-branch
+2. Create new `Dynamic Web Project` eclipse project with name `Tars`, convert it to a maven project and import sources (drag & drop unzipped github files on the project in eclipse)
 3. Create and fill `src/db.properties` file as shown below
-4. Edit `WebContent/WEB-INF/dispatcher-servlet.xml` at bean with `id="entityManagerFactory"` and change in `jpa-properties` to required attributes (`validate`, `update`, or `create-drop`)
-5. Edit `WebContent/WEB-INF/dispatcher-servlet.xml` at bean with `id="mailSender"` and set username and password for [mailtrap.io](https://mailtrap.io/)
-6. Setup your eclipse project (Server, Runtime, ...)
-7. Publish project to Tomcat and start Tomcat
-8. Open Web application ([http://localhost:8080/Tars/](http://localhost:8080/Tars/))
-9. Call [http://localhost:8080/Tars/fillUsers](http://localhost:8080/Tars/fillUsers) to fill the database with testing data
-10. Login with credentials (Pattern: [username]/[password]): admin/password, user/password
+4. Edit `WebContent/WEB-INF/dispatcher-servlet.xml`
+    * at bean with `id="entityManagerFactory"` and change in `jpa-properties` to required attributes (`validate`, `update`, or `create-drop`)
+    * at bean with `id="mailSender"` and set username and password for [mailtrap.io](https://mailtrap.io/)
+5. Setup your eclipse project (Server, Runtime, ...)
+6. Publish project to Tomcat and start Tomcat
+7. Open Web application ([http://localhost:8080/Tars/](http://localhost:8080/Tars/))
+8. Call [http://localhost:8080/Tars/fillUsers](http://localhost:8080/Tars/fillUsers) to fill the database with testing data
+9. Log in with credentials (Pattern: [username]/[password]): admin/password, user/password
 
 **`db.properties`** file at the root of **`src`** folder:
 ```
@@ -22,7 +23,7 @@ db.username=xxx
 db.password=xxx
 ```
 
-**`dispatcher-servlet.xml`** file at the root of **`WEB-INF`** folder:
+**`dispatcher-servlet.xml`** file at the root of **`WebContent/WEB-INF`** folder:
 ```xml
 <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
     <property name="host" value="smtp.mailtrap.io" />
@@ -68,7 +69,7 @@ The table below shows the members of the team, who worked on specific features. 
 | Modification History  | Kazianschütz Kevin, Köstinger Nikolaus |
 
 ## Lessons learned
-* The most difficult part has to do with FetchType.Lazy. We didn't manage to get this working (we used EAGER)
+* The most difficult part has to do with FetchType.Lazy. We didn't manage to get this working (so used EAGER)
 * At first we used DAOs and entitiyManager for database queries. Later on it was much more difficult to add Spring Data JPA to the project. It would have saved us some time, if we had used it from the beginning.
 * Time & activity recording (who did what?) was difficult at the end. We should have used this software for this project. How recursive is that?
 
