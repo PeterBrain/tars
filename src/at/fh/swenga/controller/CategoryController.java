@@ -44,7 +44,7 @@ public class CategoryController {
 
 		Category category3 = new Category("Travel");
 		categoryDao.save(category3);
-		
+
 		Category category4 = new Category("Coding");
 		categoryDao.save(category4);
 
@@ -59,13 +59,10 @@ public class CategoryController {
 	 */
 	@RequestMapping(value = { "/listCategories" })
 	public String listCategory(Model model) {
-<<<<<<< HEAD
-		
+
 		// retrieve the list of categories and add it to the model
-		List<Category> categories = categoryDao.getCategories();
-=======
+//		List<Category> categories = categoryDao.getCategories();
 		List<Category> categories = categoryDao.findAll();
->>>>>>> 151eeabefbb3c649b912f22de52068f9d2409992
 		model.addAttribute("categories", categories);
 
 		return "listCategories";
@@ -78,7 +75,6 @@ public class CategoryController {
 	 * @param id
 	 * @return
 	 */
-<<<<<<< HEAD
 //	@RequestMapping(value = { "/deleteCategory" }, method = RequestMethod.GET)
 //	public String deleteCategory(Model model, @RequestParam int id) {
 //		categoryDao.delete(id);
@@ -87,7 +83,6 @@ public class CategoryController {
 //
 //		return "forward:listCategories";
 //	}
-=======
 	@RequestMapping(value = { "/deleteCategory" }, method = RequestMethod.GET)
 	public String deleteCategory(Model model, @RequestParam int id) {
 		categoryDao.deleteById(id);
@@ -96,7 +91,6 @@ public class CategoryController {
 
 		return "forward:listCategories";
 	}
->>>>>>> 151eeabefbb3c649b912f22de52068f9d2409992
 
 	/**
 	 * open add category form
