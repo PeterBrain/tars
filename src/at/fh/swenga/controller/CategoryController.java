@@ -83,14 +83,14 @@ public class CategoryController {
 //
 //		return "forward:listCategories";
 //	}
-	@RequestMapping(value = { "/deleteCategory" }, method = RequestMethod.GET)
-	public String deleteCategory(Model model, @RequestParam int id) {
-		categoryDao.deleteById(id);
-
-		model.addAttribute("message", "Category deleted");
-
-		return "forward:listCategories";
-	}
+//	@RequestMapping(value = { "/deleteCategory" }, method = RequestMethod.GET)
+//	public String deleteCategory(Model model, @RequestParam int id) {
+//		categoryDao.deleteById(id);
+//
+//		model.addAttribute("message", "Category deleted");
+//
+//		return "forward:listCategories";
+//	}
 
 	/**
 	 * open add category form

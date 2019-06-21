@@ -343,17 +343,17 @@ public class UserController {
 	 * @param model
 	 * @return
 	 */
-	@Secured("ROLE_ADMIN")
-	@RequestMapping(value = { "/deleteUser" }, method = RequestMethod.GET)
-	public String deleteUser(Model model, @RequestParam int id) {
-		userDao.delete(id);
-
-		List<User> users = userDao.getUsers();
-		model.addAttribute("users", users);
-		model.addAttribute("message", "User deleted");
-
-		return "listUsers";
-	}
+//	@Secured("ROLE_ADMIN")
+//	@RequestMapping(value = { "/deleteUser" }, method = RequestMethod.GET)
+//	public String deleteUser(Model model, @RequestParam int id) {
+//		userDao.delete(id);
+//
+//		List<User> users = userDao.getUsers();
+//		model.addAttribute("users", users);
+//		model.addAttribute("message", "User deleted");
+//
+//		return "listUsers";
+//	}
 
 	/**
 	 * open edit password form

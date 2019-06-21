@@ -66,16 +66,16 @@ public class UserDao {
 		return entityManager.merge(user);
 	}
 
-	@Secured("ROLE_ADMIN")
-	public void delete(int id) {
-		User user = getUserById(id);
-		if (user != null) {
-			delete(user);
-		}
-	}
-
-	@Secured("ROLE_ADMIN")
-	public void delete(User user) {
-		entityManager.remove(user);
-	}
+//	@Secured("ROLE_ADMIN")
+//	public void delete(int id) {
+//		User user = getUserById(id);
+//		if (user != null) {
+//			delete(user);
+//		}
+//	}
+//
+//	@Secured("ROLE_ADMIN")
+//	public void delete(User user) {
+//		entityManager.remove(user);
+//	}
 }

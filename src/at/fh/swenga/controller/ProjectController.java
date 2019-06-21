@@ -77,15 +77,15 @@ public class ProjectController {
 	 * @param id
 	 * @return
 	 */
-	@Secured("ROLE_PROJECT_LEADER")
-	@RequestMapping(value = { "/deleteProject" }, method = RequestMethod.GET)
-	public String deleteProject(Model model, @RequestParam int id) {
-		projectDao.deleteById(id);
-
-		model.addAttribute("message", "Project deleted");
-
-		return "forward:listProjects";
-	}
+//	@Secured("ROLE_PROJECT_LEADER")
+//	@RequestMapping(value = { "/deleteProject" }, method = RequestMethod.GET)
+//	public String deleteProject(Model model, @RequestParam int id) {
+//		projectDao.deleteById(id);
+//
+//		model.addAttribute("message", "Project deleted");
+//
+//		return "forward:listProjects";
+//	}
 
 	/**
 	 * open add project form
