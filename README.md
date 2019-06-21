@@ -31,6 +31,19 @@ Don't forget to edit your **`dispatcher-servlet.xml`** file at the root of **`WE
     </property>
 </bean>
 ```
+## Available Users
+The table below shows some available users added by the `/fillUsers` call. The password for all users is `password`.
+
+| Username              | Roles                                  |
+| :-------------------- | :------------------------------------- |
+| admin                 | ADMIN                                  |
+| projectleader         | PROJECT-LEADER                         |
+| user                  | USER                                   |
+| lindsey               | PROJECT-LEADER                         |
+| charlene              | USER                                   |
+| tim                   | PROJECT-LEADERlaus                     |
+| devin                 | USER                                   |
+| nancy                 | PROJECT-LEADER                         |
 
 ## Workload distribution
 The table below shows the members of the team, who worked on specific features. At the end of the project all team members worked on each feature in the backend and frontend.
