@@ -55,13 +55,15 @@ public class User implements java.io.Serializable {
 	@Column(name = "password", nullable = false)
 	private String password;
 
-	// TODO: @notnull annotation 3 mal
+	@NotNull(message = "Total Holiday cannot be null")
 	@Column(name = "holidaytotal", nullable = false)
 	private int holidayTotal;
 
+	@NotNull(message = "Consumed Holiday cannot be null")
 	@Column(name = "holidayconsumed", nullable = false)
 	private int holidayConsumed;
 
+	@NotNull(message = "Working hours per week cannot be null")
 	@Column(name = "workinghoursweek", nullable = false)
 	private int workingHoursWeek;
 
