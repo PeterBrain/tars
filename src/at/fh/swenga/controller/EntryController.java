@@ -70,7 +70,7 @@ public class EntryController {
 		// Date tsStart = new Date();
 		// Date tsEnd = now;
 
-		// Create Entries
+		// Create test entries
 		Entry p1 = new Entry(df.getRandomWord(), df.getRandomWord(), df.getDateBetween(minDate, now), null, now, now,
 				true);
 		Entry p2 = new Entry(df.getRandomWord(), df.getRandomWord(), df.getDateBetween(minDate, now), null, now, now,
@@ -87,6 +87,7 @@ public class EntryController {
 				true);
 
 		// Add end time depending on start time (1-12 hours difference)
+		// convert to localdatetime and then to localdate back again
 		p1.setTimestampEnd(java.sql.Timestamp.valueOf(p1.getTimestampStart().toInstant().atZone(ZoneId.systemDefault())
 				.toLocalDateTime().plusHours(df.getNumberBetween(1, 12))));
 		p2.setTimestampEnd(java.sql.Timestamp.valueOf(p2.getTimestampStart().toInstant().atZone(ZoneId.systemDefault())
@@ -201,6 +202,7 @@ public class EntryController {
 	 */
 	@RequestMapping(value = { "/listEntries" })
 	public String listEntries(Model model) {
+		// get all entries
 		List<Entry> entries = entryDao.getEntries();
 
 		// Dividing minutes by 60 and rounding result
@@ -283,14 +285,15 @@ public class EntryController {
 			@RequestParam String timestampStart, @RequestParam String timestampEnd, @RequestParam int new_project,
 			@RequestParam int new_category) {
 
+		// get the current user object
 		String currentUsername = userDao.getCurrentUser();
 		User currentUser = userDao.getUserByUserName(currentUsername);
 
+		// set a new date to now and the working duration initially to 0
 		Date now = new Date();
-
 		long duration = 0;
 
-		// convert string to date
+		// convert timestampStart (string) to date
 		Date tsStart = new Date();
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
@@ -303,7 +306,7 @@ public class EntryController {
 		// if Start AND End time are filled in:
 		if (!(timestampEnd.isEmpty())) {
 
-			// convert string to date
+			// convert timestampEnd (string) to date
 			tsEnd = new Date();
 			try {
 				SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
@@ -409,6 +412,7 @@ public class EntryController {
 					entry.getTimestampStart(), entry.getTimestampEnd(), entry.getMinutes(), entry.getEntryId(),
 					entry.getProject().getName(), entry.getCategory().getName(), entry.getEditor().getUserName());
 
+			// save to database
 			entryHistoryDao.persist(entryHistory);
 
 			// -------------------

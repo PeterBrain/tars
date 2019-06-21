@@ -112,6 +112,7 @@ public class CategoryController {
 	 */
 	@RequestMapping(value = { "/createCategory" }, method = RequestMethod.POST)
 	public String createCategory(Model model, @RequestParam String name) {
+		// create a new category, save it to the database and add a message to the model
 		Category new_category = new Category(name);
 		categoryDao.save(new_category);
 
@@ -153,6 +154,7 @@ public class CategoryController {
 	@RequestMapping(value = { "/changeCategory" }, method = RequestMethod.POST)
 	public String changeCategory(@Valid Category changedCategory, BindingResult bindingResult, Model model) {
 
+		// check for errors
 		if (bindingResult.hasErrors()) {
 			String errorMessage = "";
 			for (FieldError fieldError : bindingResult.getFieldErrors()) {
@@ -163,6 +165,7 @@ public class CategoryController {
 			return "editCategory";
 		}
 
+		// if no errors occured, set the category to the changed one
 		Category category = categoryDao.findById(changedCategory.getCategoryId()).get();
 
 		if (category == null) {
