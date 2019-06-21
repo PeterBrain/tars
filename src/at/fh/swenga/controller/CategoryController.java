@@ -35,6 +35,7 @@ public class CategoryController {
 	@RequestMapping(value = { "/fillCategories" })
 	public String fillCategories(Model model) {
 
+		// test data for category select
 		Category category1 = new Category("Meeting");
 		categoryDao.persist(category1);
 
@@ -58,6 +59,8 @@ public class CategoryController {
 	 */
 	@RequestMapping(value = { "/listCategories" })
 	public String listCategory(Model model) {
+		
+		// retrieve the list of categories and add it to the model
 		List<Category> categories = categoryDao.getCategories();
 		model.addAttribute("categories", categories);
 
@@ -71,14 +74,14 @@ public class CategoryController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = { "/deleteCategory" }, method = RequestMethod.GET)
-	public String deleteCategory(Model model, @RequestParam int id) {
-		categoryDao.delete(id);
-
-		model.addAttribute("message", "Category deleted");
-
-		return "forward:listCategories";
-	}
+//	@RequestMapping(value = { "/deleteCategory" }, method = RequestMethod.GET)
+//	public String deleteCategory(Model model, @RequestParam int id) {
+//		categoryDao.delete(id);
+//
+//		model.addAttribute("message", "Category deleted");
+//
+//		return "forward:listCategories";
+//	}
 
 	/**
 	 * open add category form
