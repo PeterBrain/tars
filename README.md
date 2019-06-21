@@ -58,10 +58,10 @@ The table below shows the members of the team, who worked on specific features. 
 
 | Feature / Work        | Team Member(s)                         |
 | :-------------------- | :------------------------------------- |
-| User Management       | Köstinger Nikolaus, Peter Löcker       |
-| Entries               | Kazianschütz Kevin, Peter Löcker       |
-| Projects & Categories | Kazianschütz Kevin, Peter Löcker       |
-| Export                | Peter Löcker                           |
+| User Management       | Köstinger Nikolaus, Löcker Peter       |
+| Entries               | Kazianschütz Kevin, Löcker Peter       |
+| Projects & Categories | Kazianschütz Kevin, Löcker Peter       |
+| Export                | Löcker Peter                           |
 | Security Messages     | Kazianschütz Kevin, Köstinger Nikolaus |
 | Charts                | Köstinger Nikolaus                     |
 | Modification History  | Kazianschütz Kevin, Köstinger Nikolaus |
