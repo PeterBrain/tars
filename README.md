@@ -41,7 +41,7 @@ The table below shows some available users added by the `/fillUsers` call. The p
 | user                  | USER                                   |
 | lindsey               | PROJECT-LEADER                         |
 | charlene              | USER                                   |
-| tim                   | PROJECT-LEADERlaus                     |
+| tim                   | PROJECT-LEADER                         |
 | devin                 | USER                                   |
 | nancy                 | PROJECT-LEADER                         |
 
