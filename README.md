@@ -4,18 +4,18 @@
 This piece of software should help memebers of a company, and the company itself, to manage working hours and activities on different projects. Therefore TARS - Time and Activity Recording Software (pretty self-explaining).
 
 ## Inital setup steps
-1. create and fill db.properties file
-2. edit dispatcher-servlet.xml at bean with id="mailSender"
-3. call http://[ip-address]/Tars/fillUsers
+1. create and fill `db.properties` file
+2. edit `dispatcher-servlet.xml` at bean with `id="mailSender"`
+3. call `http://[ip-address]/Tars/fillUsers`
 
-Don't forget to create and edit your **db.properties** file at the root of **src** folder!
+Don't forget to create and edit your **`db.properties`** file at the root of **`src`** folder!
 ```
 db.url=jdbc:mysql://localhost/xxx
 db.username=xxx
 db.password=xxx
 ```
 
-Don't forget to edit your **dispatcher-servlet.xml** file at the root of **WEB-INF** folder and fill in your username and password of [mailtrap.io](https://mailtrap.io/)!
+Don't forget to edit your **`dispatcher-servlet.xml`** file at the root of **`WEB-INF`** folder and fill in your username and password of [mailtrap.io](https://mailtrap.io/)!
 ```xml
 <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
     <property name="host" value="smtp.mailtrap.io" />
