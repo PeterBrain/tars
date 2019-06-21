@@ -26,10 +26,6 @@
 					<!-- Page Heading -->
 					<div class="d-sm-flex align-items-center justify-content-between mb-4">
 						<h1 class="h3 mb-0 text-gray-800">Projects</h1>
-						<!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-							<i class="fas fa-download fa-sm text-white-50"></i>
-							Generate Report
-						</a> -->
 					</div>
 					
 					<!-- error message -->
@@ -72,7 +68,7 @@
 											<th>Name</th>
 											<th>Description</th>
 											<th>Project Leader</th>
-											<th sec:authorize="hasRole('PROJECT_LEADERN')">Action</th>
+											<th sec:authorize="hasRole('PROJECT_LEADER')">Action</th>
 										</tr>
 									</tfoot>
 									<tbody>
