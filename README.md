@@ -4,7 +4,7 @@
 This piece of software should help memebers of a company, and the company itself, to manage working hours and activities on different projects. Therefore TARS - Time and Activity Recording Software (pretty self-explaining).
 
 ## Setup Guide
-1. Download latest source from `master`-branch
+1. [Download](https://github.com/PeterBrain/tars/archive/master.zip) latest source from `master`-branch
 2. Create new `Dynamic Web Project` eclipse project with name `Tars`, convert it to a maven project and import sources (drag & drop unzipped github files on the project in eclipse)
 3. Create and fill `src/db.properties` file as shown below
 4. Edit `WebContent/WEB-INF/dispatcher-servlet.xml`
