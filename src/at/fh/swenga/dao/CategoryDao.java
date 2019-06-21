@@ -1,13 +1,6 @@
 package at.fh.swenga.dao;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-
-import org.springframework.dao.DataAccessException;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,9 +8,9 @@ import at.fh.swenga.model.Category;
 
 @Repository
 @Transactional
-public class CategoryDao {
+public interface CategoryDao extends JpaRepository<Category, Integer> {
 
-	@PersistenceContext
+	/*@PersistenceContext
 	protected EntityManager entityManager;
 
 	public List<Category> getCategories() {
@@ -50,5 +43,5 @@ public class CategoryDao {
 		if (category != null) {
 			delete(category);
 		}
-	}
+	}*/
 }

@@ -31,20 +31,6 @@ Don't forget to edit your **dispatcher-servlet.xml** file at the root of **WEB-I
 2. edit dispatcher-servlet.xml at bean with id="mailSender"
 3. call http://[ip-address]/Tars/fillUsers
 
-## ToDo
-* Methods:
-    * Archive (M)
-        * edit Entry (stack overflow as admin)
-    * Export (M) (works, but needs to be optimized)
-        * excel (only selected ids)
-        * email (only selected ids)
-    * Modification History (M)
-        * add history entry
-    * Dashboard
-        * Overtime and holiday (M)
-    * Settings (HD)
-        * admin should change some settings
-
 ## Contributors
 * [@xK3v](https://github.com/xK3v) - Kevin Kazianschütz
 * [@DiOps](https://github.com/DiOps) - Nikolaus Köstinger

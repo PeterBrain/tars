@@ -36,16 +36,16 @@ public class CategoryController {
 	public String fillCategories(Model model) {
 
 		Category category1 = new Category("Meeting");
-		categoryDao.persist(category1);
+		categoryDao.save(category1);
 
 		Category category2 = new Category("Planning");
-		categoryDao.persist(category2);
+		categoryDao.save(category2);
 
 		Category category3 = new Category("Travel");
-		categoryDao.persist(category3);
+		categoryDao.save(category3);
 		
 		Category category4 = new Category("Coding");
-		categoryDao.persist(category4);
+		categoryDao.save(category4);
 
 		return "forward:login";
 	}
@@ -58,7 +58,7 @@ public class CategoryController {
 	 */
 	@RequestMapping(value = { "/listCategories" })
 	public String listCategory(Model model) {
-		List<Category> categories = categoryDao.getCategories();
+		List<Category> categories = categoryDao.findAll();
 		model.addAttribute("categories", categories);
 
 		return "listCategories";
@@ -73,7 +73,7 @@ public class CategoryController {
 	 */
 	@RequestMapping(value = { "/deleteCategory" }, method = RequestMethod.GET)
 	public String deleteCategory(Model model, @RequestParam int id) {
-		categoryDao.delete(id);
+		categoryDao.deleteById(id);
 
 		model.addAttribute("message", "Category deleted");
 
@@ -101,7 +101,7 @@ public class CategoryController {
 	@RequestMapping(value = { "/createCategory" }, method = RequestMethod.POST)
 	public String createCategory(Model model, @RequestParam String name) {
 		Category new_category = new Category(name);
-		categoryDao.persist(new_category);
+		categoryDao.save(new_category);
 
 		model.addAttribute("message", "Created new Category");
 		return "forward:listCategories";
@@ -118,7 +118,7 @@ public class CategoryController {
 	@RequestMapping(value = { "/editCategory" }, method = RequestMethod.GET)
 	public String editCategory(Model model, int id) {
 
-		Category category = categoryDao.getCategoryById(id);
+		Category category = categoryDao.findById(id).get();
 
 		if (category != null) {
 			model.addAttribute("category", category);
@@ -151,14 +151,14 @@ public class CategoryController {
 			return "editCategory";
 		}
 
-		Category category = categoryDao.getCategoryById(changedCategory.getCategoryId());
+		Category category = categoryDao.findById(changedCategory.getCategoryId()).get();
 
 		if (category == null) {
 			model.addAttribute("errorMessage", "Category does not exist!<br>");
 		} else {
 			category.setName(changedCategory.getName());
 
-			categoryDao.merge(category);
+			categoryDao.save(category);
 
 			model.addAttribute("message", "Changed category " + changedCategory.getCategoryId());
 		}
