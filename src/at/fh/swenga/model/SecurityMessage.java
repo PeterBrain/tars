@@ -83,8 +83,8 @@ public class SecurityMessage implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "SecurityMessage [securityMessageId=" + securityMessageId + ", title=" + title + ", message="
-				+ message + "]";
+		return "SecurityMessage [securityMessageId=" + securityMessageId + ", title=" + title + ", message=" + message
+				+ "]";
 	}
 
 }

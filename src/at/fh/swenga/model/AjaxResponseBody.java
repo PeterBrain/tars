@@ -1,7 +1,6 @@
 package at.fh.swenga.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonView;
 

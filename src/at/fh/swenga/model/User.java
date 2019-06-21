@@ -12,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -55,8 +54,8 @@ public class User implements java.io.Serializable {
 
 	@Column(name = "password", nullable = false)
 	private String password;
-	
-	//TODO: @notnull annotation 3 mal
+
+	// TODO: @notnull annotation 3 mal
 	@Column(name = "holidaytotal", nullable = false)
 	private int holidayTotal;
 
@@ -75,9 +74,9 @@ public class User implements java.io.Serializable {
 	@OneToMany(mappedBy = "editor", fetch = FetchType.EAGER)
 	private Set<Entry> entries;
 
-	//https://howtodoinjava.com/hibernate/hibernate-one-to-many-mapping-using-annotations/
+	// https://howtodoinjava.com/hibernate/hibernate-one-to-many-mapping-using-annotations/
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name="USER_ID")
+	@JoinColumn(name = "USER_ID")
 	private Set<Project> projects;
 
 	@Version
@@ -88,7 +87,8 @@ public class User implements java.io.Serializable {
 	}
 
 	public User(String firstName, String lastName, @NotNull(message = "Date of birth cannot be null") Date dateOfBirth,
-			String email, String userName, String password,int workingHoursWeek, int holidayConsumed, boolean enabled) {
+			String email, String userName, String password, int workingHoursWeek, int holidayConsumed,
+			boolean enabled) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -213,13 +213,13 @@ public class User implements java.io.Serializable {
 		}
 		userRoles.add(userRole);
 	}
-	
+
 	public void removeUserRole(UserRole userRole) {
 		if (userRoles != null) {
 			userRoles.remove(userRole);
 		}
 	}
-	
+
 	public void removeAllUserRoles() {
 		userRoles = new HashSet<UserRole>();
 	}

@@ -15,10 +15,21 @@ public class EntryHistoryDao {
 	@PersistenceContext
 	protected EntityManager entityManager;
 
+	/**
+	 * persist EntryHistory
+	 * 
+	 * @param entryHistory
+	 */
 	public void persist(EntryHistory entryHistory) {
 		entityManager.persist(entryHistory);
 	}
 
+	/**
+	 * merge EntryHistory
+	 * 
+	 * @param entryHistory
+	 * @return
+	 */
 	public EntryHistory merge(EntryHistory entryHistory) {
 		return entityManager.merge(entryHistory);
 	}
