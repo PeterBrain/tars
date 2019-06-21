@@ -3,10 +3,17 @@
 ## Purpose
 This piece of software should help memebers of a company, and the company itself, to manage working hours and activities on different projects. Therefore TARS - Time and Activity Recording Software (pretty self-explaining).
 
-## Inital setup steps
-1. create and fill `src/db.properties` file
-2. edit `WebContent/WEB-INF/dispatcher-servlet.xml` at bean with `id="mailSender"` and set username and password for [mailtrap.io](https://mailtrap.io/)
-3. call `http://[ip-address]/Tars/fillUsers`
+## Setup Guide
+1. Download project source
+2. Create `New dynamic Web project` eclipse project, convert to maven project and import sources
+3. create and fill `src/db.properties` file
+4. Change jpa-properties in `WebContent/WEB-INF/dispatcher-servlet.xml` to required attributes (`validate`, `update`, or `create-drop`)
+5. edit `WebContent/WEB-INF/dispatcher-servlet.xml` at bean with `id="mailSender"` and set username and password for [mailtrap.io](https://mailtrap.io/)
+6. Setup your eclipse project (Server, Runtime, ...)
+7. Publish project to Tomcat and start Tomcat
+8. [Open Web application](http://localhost:8080/Tars/)
+9. Call `http://localhost:8080/Tars/fillUsers`
+10. Login credentials: admin/password, user/password
 
 Don't forget to create and edit your **`db.properties`** file at the root of **`src`** folder!
 ```
