@@ -5,7 +5,7 @@ This piece of software should help memebers of a company, and the company itself
 
 ## Inital setup steps
 1. create and fill `db.properties` file
-2. edit `dispatcher-servlet.xml` at bean with `id="mailSender"`
+2. edit `dispatcher-servlet.xml` at bean with `id="mailSender"` and set username and password for [mailtrap.io](https://mailtrap.io/)
 3. call `http://[ip-address]/Tars/fillUsers`
 
 Don't forget to create and edit your **`db.properties`** file at the root of **`src`** folder!
