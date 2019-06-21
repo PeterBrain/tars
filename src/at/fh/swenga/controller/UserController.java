@@ -9,7 +9,6 @@ import java.util.List;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
-import org.apache.commons.math3.stat.descriptive.summary.Sum;
 import org.fluttercode.datafactory.impl.DataFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -68,6 +67,7 @@ public class UserController {
 	@Transactional
 	public String fillData(Model model) {
 
+		// create the user roles
 		UserRole adminRole = userRoleDao.getRole("ROLE_ADMIN");
 		if (adminRole == null) {
 			adminRole = new UserRole("ROLE_ADMIN");
@@ -92,6 +92,7 @@ public class UserController {
 		Date minDate = df.getDate(2020, 1, 1);
 		Date now = new Date();
 
+		// add an exclusive admin
 		User admin = new User("Ad", "Ministrator", now, "admin@example.com", "admin", "password", 40, 30, true);
 		admin.encryptPassword();
 		admin.addUserRole(userRole);
@@ -99,6 +100,7 @@ public class UserController {
 		admin.addUserRole(adminRole);
 		userDao.persist(admin);
 
+		// add an exclusive project leader
 		User projectleader = new User("Projekt", "Leiter", now, "project@leader.com", "projectleader", "password", 40,
 				0, true);
 		projectleader.encryptPassword();
@@ -106,11 +108,13 @@ public class UserController {
 		projectleader.addUserRole(projectLeaderRole);
 		userDao.persist(projectleader);
 
+		// add an exclusive default user
 		User user = new User("Be", "Nutzer", now, "user@example.com", "user", "password", 40, 120, true);
 		user.encryptPassword();
 		user.addUserRole(userRole);
 		userDao.persist(user);
 
+		// add more random generated users
 		for (int i = 0; i <= 12; i++) {
 			String firstname = df.getFirstName();
 			User userGen = new User(firstname, df.getLastName(), df.getDateBetween(minDate, now),
@@ -126,6 +130,7 @@ public class UserController {
 			userDao.persist(userGen);
 		}
 
+		// after users were create, add some categories, projects and entries
 		categoryController.fillCategories(model);
 		projectController.fillProjects(model);
 		entryController.fillEntries(model);
@@ -149,7 +154,7 @@ public class UserController {
 	}
 
 	/**
-	 * open add user form
+	 * open add user page
 	 * 
 	 * @param model
 	 * @return
@@ -191,6 +196,7 @@ public class UserController {
 
 		List<UserRole> newUserRoles = new ArrayList<>();
 
+		// make multi select of user roles
 		for (int i = 0; i < new_userRoles.size(); i++) {
 			UserRole userRole = userRoleDao.getRoleById(new_userRoles.get(i));
 			newUserRoles.add(userRole);
@@ -206,6 +212,7 @@ public class UserController {
 			return "editUser";
 		}
 
+		// if passwords match, create the new user
 		if (password.equals(password_repeat)) {
 			User new_user = new User(firstName, lastName, dob, email, userName, password, 40, 0, true);
 			new_user.encryptPassword();
@@ -215,8 +222,10 @@ public class UserController {
 				new_user.addUserRole(newUserRoles.get(i));
 			}
 
+			// save user to database
 			userDao.persist(new_user);
 
+			// add updated users list to model and return listUsers
 			List<User> users = userDao.getUsers();
 			model.addAttribute("users", users);
 
@@ -282,11 +291,13 @@ public class UserController {
 
 		List<UserRole> newUserRoles = new ArrayList<>();
 
+		// make multi select of user roles
 		for (int i = 0; i < new_userRoles.size(); i++) {
 			UserRole userRole = userRoleDao.getRoleById(new_userRoles.get(i));
 			newUserRoles.add(userRole);
 		}
 
+		// if user exists, set new parameters
 		if (user == null) {
 			model.addAttribute("errorMessage", "User does not exist!<br>");
 		} else {
@@ -316,6 +327,8 @@ public class UserController {
 				user.addUserRole(newUserRoles.get(i));
 			}
 
+			// check if there is a new password, if so, check if the new ones match
+			// then set the password and encrypt it
 			if (!changedUser.getPassword().isEmpty()) {
 				if (changedUser.getPassword().equals(password_repeat)) {
 					user.setPassword(password_repeat);
@@ -387,19 +400,26 @@ public class UserController {
 			@RequestParam String password_new, @RequestParam String password_repeat) {
 		User user = userDao.getUserById(userId);
 
+		// check if user exists
 		if (user == null) {
 			System.out.println("User does not exist");
 			model.addAttribute("errorMessage", "User does not exist!<br>");
 		} else {
+			// check if the old password is given
 			if (!password_old.isEmpty()) {
+				// is the old password correct?
 				if (user.checkIfValidOldPassword(user, password_old)) {
 					System.out.println("Current password is correct!");
 
+					// do the new passwords match?
 					if (password_new.equals(password_repeat)) {
-						System.out.println("Old password equals new password");
+						System.out.println("Passwords do not match!");
 
 						PasswordValidator passwordValidator = new PasswordValidator();
 
+						// vaildate the password with the password policies
+						// if all goes well, set the new password, encrypt it and save it in the
+						// database
 						if (passwordValidator.validate(password_repeat)) {
 							user.setPassword(password_repeat);
 							user.encryptPassword();
@@ -557,6 +577,7 @@ public class UserController {
 		float holidayTotal = (float) user.getHolidayTotal();
 		float holidayConsumed = (float) user.getHolidayConsumed();
 
+		// calculate percentag
 		float holidayConsumedPercent = Math.round((holidayConsumed / holidayTotal * 100f) * 10f) / 10f;
 
 		model.addAttribute("holidayConsumedPercent", holidayConsumedPercent);
@@ -572,17 +593,19 @@ public class UserController {
 
 		float sumWorkedHours = 0;
 
+		// sum up the worked hours of all entries
 		for (Entry entry : entries) {
 			sumWorkedHours += entry.getMinutes() / 60;
 		}
 
+		// calculate percentag
 		float workingHoursWeek = user.getWorkingHoursWeek();
 		float workedHoursPercent = sumWorkedHours / workingHoursWeek * 100f;
 
 		model.addAttribute("workedHoursPercent", workedHoursPercent);
 
 		// security messages
-		
+
 		List<SecurityMessage> securityMessages = securityMessageDao.getSecurityMessages();
 
 		model.addAttribute("securityMessages", securityMessages);

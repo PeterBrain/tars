@@ -42,6 +42,7 @@ public class ReportController {
 			@RequestParam(required = false) String mail,
 			@RequestParam(name = "entryId", required = false) List<Integer> entryIds) {
 
+		// check if checkboxes were selected
 		if (CollectionUtils.isEmpty(entryIds)) {
 			model.addAttribute("errorMessage", "No entry or entries selected!");
 			return "forward:listEntries";
@@ -50,6 +51,7 @@ public class ReportController {
 		List<Entry> entries = entryRepository.findAllById(entryIds);
 		model.addAttribute("entries", entries);
 
+		// check which submit button was pressed
 		if (StringUtils.isNoneEmpty(excel)) {
 			return "excelReport";
 		} else if (StringUtils.isNoneEmpty(mail)) {
@@ -64,6 +66,7 @@ public class ReportController {
 
 	private void sendMail(List<Entry> entries) {
 
+		// build content of entries for mail
 		String content = "";
 		for (Entry entry : entries) {
 			content += entry.getNote() + " " + entry.getActivity() + " " + entry.getEditor().getUserName() + " "
