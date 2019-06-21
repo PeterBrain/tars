@@ -130,7 +130,7 @@
 									<input type="hidden" id="timestampCreated"
 										placeholder="timestampCreated" name="timestampCreated"
 										class="form_datetime"
-										th:value="${entry} ? ${#dates.format(entry.timestampModified, 'dd.MM.yyyy HH:mm')}"
+										th:value="${entry} ? ${#dates.format(entry.timestampCreated, 'dd.MM.yyyy HH:mm')}"
 										readonly>
 								</div>
 

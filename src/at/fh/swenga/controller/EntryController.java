@@ -422,7 +422,7 @@ public class EntryController {
 
 			entry.setActivity(changedEntry.getActivity());
 			entry.setNote(changedEntry.getNote());
-			entry.setTimestampCreated(changedEntry.getTimestampCreated());
+			//entry.setTimestampCreated(changedEntry.getTimestampCreated());
 			entry.setTimestampModified(now);
 			entry.setTimestampStart(changedEntry.getTimestampStart());
 			entry.setTimestampEnd(changedEntry.getTimestampEnd());
